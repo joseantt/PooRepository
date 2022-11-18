@@ -19,8 +19,8 @@ public class CentroEmpleador {
 		this.direccion = direccion;
 		this.telefono = telefono;
 		this.tipo = tipo;
-		this.solicitudes = solicitudes;
-		this.empleados = empleados;
+		solicitudes = new ArrayList<Solicitud>();
+		empleados = new ArrayList<Persona>();
 	}
 	
 	public String getCodigo() {
