@@ -15,7 +15,7 @@ public class Obrero extends Persona {
 
 	
 	public ArrayList<String> getOficios() {
-		return oficios;;
+		return oficios;
 	}
 
 }
