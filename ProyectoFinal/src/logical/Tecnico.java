@@ -11,7 +11,7 @@ public class Tecnico extends Persona {
 			Date fechaNacimiento, char sexo, char nivelEducativo, String areaEspecialidad, int añosExperiencia) {
 		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, nivelEducativo);
 		this.areaEspecialidad = areaEspecialidad;
-		this.añosExperiencia = añosExperiencia;´´
+		this.añosExperiencia = añosExperiencia;
 	}
 	
 	

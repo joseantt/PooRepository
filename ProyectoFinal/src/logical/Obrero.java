@@ -10,7 +10,7 @@ public class Obrero extends Persona {
 	public Obrero(String cedula, String nombres, String apellidos, String direccion, String telefono,
 			Date fechaNacimiento, char sexo, char nivelEducativo) {
 		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, nivelEducativo);
-		this.oficios = new ArrayList<>();ñ
+		this.oficios = new ArrayList<>();
 	}
 
 	
