@@ -1,3 +1,5 @@
+package logical;
+
 import java.util.Date;
 
 public class Universitario extends Persona{
