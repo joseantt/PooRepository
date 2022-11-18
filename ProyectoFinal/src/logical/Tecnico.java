@@ -3,7 +3,7 @@ package logical;
 import java.util.Date;
 
 public class Tecnico extends Persona {
-	private String areaEspecialidad;
+	private String areaEspecialidad;;
 	private int añosExperiencia; 
 	
 	
