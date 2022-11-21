@@ -1,14 +1,18 @@
 package logical;
 
+import java.util.ArrayList;
+
 public abstract class Usuario {
 	protected String nombUsuario;
 	protected String contraseña;
+	protected ArrayList<Solicitud> solicitudes;
 	
 	
 	public Usuario(String nombUsuario, String contraseña) {
 		super();
 		this.nombUsuario = nombUsuario;
 		this.contraseña = contraseña;
+		this.solicitudes = new ArrayList<Solicitud>();
 	}
 	
 	
@@ -18,5 +22,7 @@ public abstract class Usuario {
 	public String getContraseña() {
 		return contraseña;
 	}
-	
+	public ArrayList<Solicitud> getSolicitudes() {
+		return solicitudes;
+	}
 }

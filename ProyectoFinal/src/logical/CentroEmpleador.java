@@ -11,8 +11,7 @@ public class CentroEmpleador {
 	private ArrayList<Solicitud> solicitudes;
 	private ArrayList<Persona> empleados;
 	
-	public CentroEmpleador(String codigo, String nombre, String direccion, String telefono, String tipo,
-			ArrayList<Solicitud> solicitudes, ArrayList<Persona> empleados) {
+	public CentroEmpleador(String codigo, String nombre, String direccion, String telefono, String tipo) {
 		super();
 		this.codigo = codigo;
 		this.nombre = nombre;
