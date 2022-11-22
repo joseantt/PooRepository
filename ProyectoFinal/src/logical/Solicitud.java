@@ -1,5 +1,6 @@
 package logical;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Solicitud {
@@ -10,9 +11,15 @@ public class Solicitud {
 	private float sueldo;
 	private boolean puedeMudarse;
 	private boolean licenciaConducir;
+	private int horasLaborales;
+	private char condicionFisica;
+	private ArrayList<String> habilidadesBlandas;
+	private ArrayList<String> riesgosLaborales;
+	private Persona persona;
 	
 	
-	public Solicitud(String codigo, String tipoContrato, float sueldo, boolean puedeMudarse, boolean licenciaConducir) {
+	public Solicitud(String codigo, String tipoContrato, float sueldo, boolean puedeMudarse, boolean licenciaConducir, int horasLaborales,
+			char condicionFisica, Persona persona) {
 		super();
 		this.codigo = codigo;
 		this.tipoContrato = tipoContrato;
@@ -20,7 +27,12 @@ public class Solicitud {
 		this.puedeMudarse = puedeMudarse;
 		this.licenciaConducir = licenciaConducir;
 		this.estado = true;
+		this.horasLaborales = horasLaborales;
+		this.condicionFisica = condicionFisica;
+		this.persona = persona;
 		this.fechaCreacion = new Date();
+		this.habilidadesBlandas = new ArrayList<String>();
+		this.riesgosLaborales = new ArrayList<String>();
 	}
 	
 	
@@ -59,6 +71,33 @@ public class Solicitud {
 	}
 	public Date getFechaCreacion() {
 		return fechaCreacion;
+	}
+	public int getHorasLaborales() {
+		return horasLaborales;
+	}
+	public void setHorasLaborales(int horasLaborales) {
+		this.horasLaborales = horasLaborales;
+	}
+	public ArrayList<String> getHabilidadesBlandas() {
+		return habilidadesBlandas;
+	}
+	public void setHabilidadesBlandas(ArrayList<String> habilidadesBlandas) {
+		this.habilidadesBlandas = habilidadesBlandas;
+	}
+	public ArrayList<String> getRiesgosLaborales() {
+		return riesgosLaborales;
+	}
+	public void setRiesgosLaborales(ArrayList<String> riesgosLaborales) {
+		this.riesgosLaborales = riesgosLaborales;
+	}
+	public Persona getPersona() {
+		return persona;
+	}
+	public char getCondicionFisica() {
+		return condicionFisica;
+	}
+	public void setCondicionFisica(char condicionFisica) {
+		this.condicionFisica = condicionFisica;
 	}
 	
 	
