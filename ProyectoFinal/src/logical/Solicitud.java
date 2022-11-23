@@ -15,7 +15,7 @@ public abstract class Solicitud {
 	
 	
 	public Solicitud(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
-			boolean tieneVehiculo, char condicionFisica, String tipoContrato) {
+			boolean tieneVehiculo, char condicionFisica, String tipoContrato, Date fechaCreacion) {
 		super();
 		this.codigoSolicitud = codigoSolicitud;
 		this.sueldo = sueldo;
@@ -24,6 +24,8 @@ public abstract class Solicitud {
 		this.tieneVehiculo = tieneVehiculo;
 		this.condicionFisica = condicionFisica;
 		this.tipoContrato = tipoContrato;
+		this.estado = true;
+		this.fechaCreacion = fechaCreacion;
 	}
 	
 	

@@ -1,6 +1,7 @@
 package logical;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class SolicitudEmpresa extends Solicitud {
 	private String codigoEmpresa;
@@ -15,8 +16,8 @@ public class SolicitudEmpresa extends Solicitud {
 	
 	public SolicitudEmpresa(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
 			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String codigoEmpresa, String cantMatcheo, int empleadosNecesarios,
-			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion) {
-		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato);
+			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion, Date fechaCreacion) {
+		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
 		this.codigoEmpresa = codigoEmpresa;
 		this.cantMatcheo = cantMatcheo;
 		this.empleadosNecesarios = empleadosNecesarios;

@@ -64,6 +64,6 @@ public class CentroEmpleador {
 	public void setEmpleados(ArrayList<Persona> empleados) {
 		this.empleados = empleados;
 	}
-
+	
 	
 }

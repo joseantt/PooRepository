@@ -1,14 +1,16 @@
 package logical;
 
+import java.util.Date;
+
 public class SolicitudTecnico extends SolicitudPersona {
 	private String areaEspecialidad;
 	private int añosExperiencia;
 	
 	
 	public SolicitudTecnico(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
-			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String cedula, String areaEspecialidad, int añosExperiencia) {
+			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String cedula, String areaEspecialidad, int añosExperiencia, Date fechaCreacion) {
 		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato,
-				cedula);
+				cedula, fechaCreacion);
 		this.areaEspecialidad = areaEspecialidad;
 		this.añosExperiencia = añosExperiencia;
 	}
