@@ -44,6 +44,8 @@ public class RegistroSolicitud extends JDialog {
 	private JCheckBox chkbxVehiculo;
 	private JCheckBox chkbxLicencia;
 	private JCheckBox chkbxMudarse;
+	private JPanel panelDetalles1;
+	private JPanel panelDetalles2;
 
 	/**
 	 * Launch the application.
@@ -180,7 +182,7 @@ public class RegistroSolicitud extends JDialog {
 			panel_4.add(panel_7, "name_368670109865500");
 			panel_7.setLayout(null);
 			
-			JPanel panelDetalles1 = new JPanel();
+			panelDetalles1 = new JPanel();
 			panelDetalles1.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 			panelDetalles1.setLayout(null);
 			panelDetalles1.setBounds(12, 95, 645, 356);
@@ -273,7 +275,7 @@ public class RegistroSolicitud extends JDialog {
 			btnSiguiente.setBounds(552, 300, 65, 25);
 			panelDetalles1.add(btnSiguiente);
 			
-			JPanel panelDetalles2 = new JPanel();
+			panelDetalles2 = new JPanel();
 			panelDetalles2.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 			panelDetalles2.setLayout(null);
 			panelDetalles2.setBounds(12, 95, 645, 356);
