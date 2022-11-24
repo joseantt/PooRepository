@@ -1,5 +1,6 @@
 package logical;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Tecnico extends Persona {
@@ -8,8 +9,8 @@ public class Tecnico extends Persona {
 	
 	
 	public Tecnico(String cedula, String nombres, String apellidos, String direccion, String telefono,
-			Date fechaNacimiento, char sexo, char nivelEducativo, String areaEspecialidad, int añosExperiencia) {
-		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, nivelEducativo);
+			Date fechaNacimiento, char sexo, ArrayList<String> idiomas, String areaEspecialidad, int añosExperiencia) {
+		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, idiomas);
 		this.areaEspecialidad = areaEspecialidad;
 		this.añosExperiencia = añosExperiencia;
 	}

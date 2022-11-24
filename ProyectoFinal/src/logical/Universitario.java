@@ -1,12 +1,13 @@
 package logical;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Universitario extends Persona{
 
 		public Universitario(String cedula, String nombres, String apellidos, String direccion, String telefono,
-			Date fechaNacimiento, char sexo, char nivelEducativo, String carrera, int añoGraduacion) {
-		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, nivelEducativo);
+			Date fechaNacimiento, char sexo, ArrayList<String> idiomas, String carrera, int añoGraduacion) {
+		super(cedula, nombres, apellidos, direccion, telefono, fechaNacimiento, sexo, idiomas);
 		this.carrera = carrera;
 		this.añoGraduacion = añoGraduacion;
 	}

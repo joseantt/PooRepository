@@ -11,14 +11,13 @@ public abstract class Persona {
 	protected String telefono;
 	protected Date fechaNacimiento;
 	protected char sexo;
-	protected char nivelEducativo;
 	protected boolean estado;
 	protected ArrayList<String> idiomas;
 	protected ArrayList<Solicitud> solicitudes;
 	
 	
 	public Persona(String cedula, String nombres, String apellidos, String direccion, String telefono,
-			Date fechaNacimiento, char sexo, char nivelEducativo) {
+			Date fechaNacimiento, char sexo, ArrayList<String> idiomas) {
 		super();
 		this.cedula = cedula;
 		this.nombres = nombres;
@@ -27,9 +26,8 @@ public abstract class Persona {
 		this.telefono = telefono;
 		this.fechaNacimiento = fechaNacimiento;
 		this.sexo = sexo;
-		this.nivelEducativo = nivelEducativo;
 		this.estado = false;
-		idiomas = new ArrayList<String>();
+		this.idiomas = idiomas;
 		solicitudes = new ArrayList<Solicitud>();
 	}
 	
@@ -57,12 +55,6 @@ public abstract class Persona {
 	}
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
-	}
-	public char getNivelEducativo() {
-		return nivelEducativo;
-	}
-	public void setNivelEducativo(char nivelEducativo) {
-		this.nivelEducativo = nivelEducativo;
 	}
 	public boolean isEstado() {
 		return estado;
