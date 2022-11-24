@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 import javax.swing.JMenuBar;
 import javax.swing.JMenu;
+import javax.swing.JMenuItem;
 
 public class Principal extends JFrame {
 
@@ -42,17 +43,41 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu = new JMenu("Persona");
-		menuBar.add(mnNewMenu);
+		JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
+		menuBar.add(mnNewMenu_3);
 		
-		JMenu mnNewMenu_1 = new JMenu("Centro Empleador");
-		menuBar.add(mnNewMenu_1);
+		JMenuItem mntmNewMenuItem = new JMenuItem("Realizar Matching");
+		mnNewMenu_3.add(mntmNewMenuItem);
 		
 		JMenu mnNewMenu_2 = new JMenu("Solicitud");
 		menuBar.add(mnNewMenu_2);
 		
-		JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
-		menuBar.add(mnNewMenu_3);
+		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Realizar Solicitud");
+		mnNewMenu_2.add(mntmNewMenuItem_5);
+		
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado Solicitudes de Personas");
+		mnNewMenu_2.add(mntmNewMenuItem_6);
+		
+		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listado Solicitudes de Centros");
+		mnNewMenu_2.add(mntmNewMenuItem_7);
+		
+		JMenu mnNewMenu_1 = new JMenu("Centro Empleador");
+		menuBar.add(mnNewMenu_1);
+		
+		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar Centro Empleador");
+		mnNewMenu_1.add(mntmNewMenuItem_3);
+		
+		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado de Centros Empleadores");
+		mnNewMenu_1.add(mntmNewMenuItem_4);
+		
+		JMenu mnNewMenu = new JMenu("Persona");
+		menuBar.add(mnNewMenu);
+		
+		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Registrar Persona");
+		mnNewMenu.add(mntmNewMenuItem_1);
+		
+		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado de Personas");
+		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
