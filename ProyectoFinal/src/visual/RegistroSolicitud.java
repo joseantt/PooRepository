@@ -51,15 +51,6 @@ public class RegistroSolicitud extends JDialog {
 	private final JPanel contentPanel = new JPanel();
 	private ButtonGroup btnGroup_1 = new ButtonGroup();
 	private ButtonGroup btnGroup_2 = new ButtonGroup();
-	private JTextField txtCodigoSoli;
-	private JTextField txtFechaCreacion;
-	private JTextField textField_2;
-	private JLabel lblCedulaCodigo;
-	private JButton btnSiguiente;
-	private JCheckBox chkbxVehiculo;
-	private JCheckBox chkbxLicencia;
-	private JCheckBox chkbxMudarse;
-	private JPanel panelDetalles1;
 	private JPanel panelDetalles2;
 	private JRadioButton rdbtnUniversitario;
 	private JRadioButton rdbtnTecnico;
@@ -82,6 +73,16 @@ public class RegistroSolicitud extends JDialog {
 	private int selected = -1;
 	private JButton btnAdd;
 	private JButton btnRemove;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JPanel panelDetalles1;
+	private JButton btnSiguiente;
+	private JLabel lblCedulaCodigo;
+	private JList listIdiomasDisponibles;
+	private JList listIdiomasSelected;
+	private JComboBox cbxTipoContrato;
+	private JComboBox cbxCondFisica;
 	
 
 	public static void main(String[] args) {
@@ -97,7 +98,7 @@ public class RegistroSolicitud extends JDialog {
 	
 	public RegistroSolicitud() {
 		setTitle("Registro de solicitud");
-		setBounds(100, 100, 697, 819);
+		setBounds(100, 100, 697, 840);
 		modelDisponibles = new DefaultListModel<String>();
 		modelSelected = new DefaultListModel<String>();
 		getContentPane().setLayout(new BorderLayout());
@@ -159,7 +160,7 @@ public class RegistroSolicitud extends JDialog {
 			JPanel panel_3 = new JPanel();
 			panel_3.setLayout(null);
 			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tipo de persona", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(128, 128, 128)));
-			panel_3.setBounds(12, 464, 645, 77);
+			panel_3.setBounds(12, 484, 645, 77);
 			panel.add(panel_3);
 			
 			rdbtnUniversitario = new JRadioButton("Universitario");
@@ -202,7 +203,7 @@ public class RegistroSolicitud extends JDialog {
 			
 			panel_2 = new JPanel();
 			panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
-			panel_2.setBounds(12, 554, 645, 166);
+			panel_2.setBounds(12, 574, 645, 164);
 			panel.add(panel_2);
 			panel_2.setLayout(new CardLayout(0, 0));
 			
@@ -336,9 +337,85 @@ public class RegistroSolicitud extends JDialog {
 			btnRemove.setBounds(279, 85, 75, 25);
 			panelObrero.add(btnRemove);
 			
+			panelDetalles2 = new JPanel();
+			panelDetalles2.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
+			panelDetalles2.setLayout(null);
+			panelDetalles2.setBounds(12, 95, 645, 376);
+			panel.add(panelDetalles2);
+			panelDetalles2.setVisible(false);
+			
+			JButton btnAtras = new JButton("<<");
+			btnAtras.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					panelDetalles2.setVisible(false);
+					panelDetalles1.setVisible(true);
+				}
+			});
+			btnAtras.setBounds(552, 317, 65, 25);
+			panelDetalles2.add(btnAtras);
+			
+			JLabel label_7 = new JLabel("Cantidad de empleados:");
+			label_7.setHorizontalAlignment(SwingConstants.CENTER);
+			label_7.setBounds(12, 291, 633, 16);
+			panelDetalles2.add(label_7);
+			
+			JSlider sliderMatcheo = new JSlider();
+			sliderMatcheo.setPaintTicks(true);
+			sliderMatcheo.setBounds(109, 218, 450, 43);
+			sliderMatcheo.setMinorTickSpacing(2);  
+			sliderMatcheo.setMajorTickSpacing(10);  
+			sliderMatcheo.setPaintLabels(true);
+			panelDetalles2.add(sliderMatcheo);
+			
+			JLabel label_8 = new JLabel("Porcentaje de Matching:");
+			label_8.setHorizontalAlignment(SwingConstants.CENTER);
+			label_8.setBounds(12, 189, 633, 16);
+			panelDetalles2.add(label_8);
+			
+			JSpinner spnEmpleados = new JSpinner();
+			spnEmpleados.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
+			spnEmpleados.setBounds(239, 320, 179, 22);
+			panelDetalles2.add(spnEmpleados);
+			
+			JLabel lblNewLabel = new JLabel("Idiomas:");
+			lblNewLabel.setBounds(22, 26, 56, 16);
+			panelDetalles2.add(lblNewLabel);
+			
+			JPanel panel_6 = new JPanel();
+			panel_6.setBounds(22, 48, 240, 128);
+			panelDetalles2.add(panel_6);
+			panel_6.setLayout(new BorderLayout(0, 0));
+			
+			JScrollPane scrollPane_2 = new JScrollPane();
+			panel_6.add(scrollPane_2, BorderLayout.CENTER);
+			
+			listIdiomasDisponibles = new JList();
+			scrollPane_2.setViewportView(listIdiomasDisponibles);
+			
+			JPanel panel_7 = new JPanel();
+			panel_7.setBounds(383, 48, 234, 128);
+			panelDetalles2.add(panel_7);
+			panel_7.setLayout(new BorderLayout(0, 0));
+			
+			JScrollPane scrollPane_3 = new JScrollPane();
+			panel_7.add(scrollPane_3, BorderLayout.CENTER);
+			
+			listIdiomasSelected = new JList();
+			scrollPane_3.setViewportView(listIdiomasSelected);
+			
+			JButton btnNewButton = new JButton(">");
+			btnNewButton.setEnabled(false);
+			btnNewButton.setBounds(290, 81, 65, 25);
+			panelDetalles2.add(btnNewButton);
+			
+			JButton btnNewButton_1 = new JButton("<");
+			btnNewButton_1.setEnabled(false);
+			btnNewButton_1.setBounds(290, 119, 65, 25);
+			panelDetalles2.add(btnNewButton_1);
+			
 			panelDetalles1 = new JPanel();
-			panelDetalles1.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 			panelDetalles1.setLayout(null);
+			panelDetalles1.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
 			panelDetalles1.setBounds(12, 95, 645, 356);
 			panel.add(panelDetalles1);
 			
@@ -346,47 +423,49 @@ public class RegistroSolicitud extends JDialog {
 			label.setBounds(12, 40, 117, 16);
 			panelDetalles1.add(label);
 			
-			txtCodigoSoli = new JTextField();
-			txtCodigoSoli.setEditable(false);
-			txtCodigoSoli.setColumns(10);
-			txtCodigoSoli.setBounds(141, 37, 179, 22);
-			panelDetalles1.add(txtCodigoSoli);
+			textField = new JTextField();
+			textField.setText("SOL-1");
+			textField.setEditable(false);
+			textField.setColumns(10);
+			textField.setBounds(141, 37, 179, 22);
+			panelDetalles1.add(textField);
 			
 			JLabel label_1 = new JLabel("Fecha de creaci\u00F3n:");
 			label_1.setBounds(366, 40, 117, 16);
 			panelDetalles1.add(label_1);
 			
-			txtFechaCreacion = new JTextField();
-			txtFechaCreacion.setEditable(false);
-			txtFechaCreacion.setColumns(10);
-			txtFechaCreacion.setBounds(495, 37, 122, 22);
-			panelDetalles1.add(txtFechaCreacion);
+			textField_1 = new JTextField();
+			textField_1.setText("24/13/2022");
+			textField_1.setEditable(false);
+			textField_1.setColumns(10);
+			textField_1.setBounds(495, 37, 122, 22);
+			panelDetalles1.add(textField_1);
 			
-			chkbxMudarse = new JCheckBox("\u00BFPuede mudarse?");
-			chkbxMudarse.setBounds(12, 95, 136, 25);
-			panelDetalles1.add(chkbxMudarse);
+			JCheckBox checkBox = new JCheckBox("\u00BFPuede mudarse?");
+			checkBox.setBounds(12, 95, 136, 25);
+			panelDetalles1.add(checkBox);
 			
-			chkbxLicencia = new JCheckBox("\u00BFTiene licencia de conducir?");
-			chkbxLicencia.setBounds(214, 95, 194, 25);
-			panelDetalles1.add(chkbxLicencia);
+			JCheckBox checkBox_1 = new JCheckBox("\u00BFTiene licencia de conducir?");
+			checkBox_1.setBounds(214, 95, 194, 25);
+			panelDetalles1.add(checkBox_1);
 			
-			chkbxVehiculo = new JCheckBox("\u00BFTiene veh\u00EDculo?");
-			chkbxVehiculo.setBounds(481, 95, 136, 25);
-			panelDetalles1.add(chkbxVehiculo);
+			JCheckBox checkBox_2 = new JCheckBox("\u00BFTiene veh\u00EDculo?");
+			checkBox_2.setBounds(481, 95, 136, 25);
+			panelDetalles1.add(checkBox_2);
 			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Muy buena", "Buena", "Intermedia", "Mala"}));
-			comboBox.setBounds(454, 159, 163, 22);
-			panelDetalles1.add(comboBox);
+			cbxCondFisica = new JComboBox();
+			cbxCondFisica.setModel(new DefaultComboBoxModel(new String[] {"Muy buena", "Buena", "Intermedia", "Mala"}));
+			cbxCondFisica.setBounds(454, 159, 163, 22);
+			panelDetalles1.add(cbxCondFisica);
 			
 			JLabel label_2 = new JLabel("Condici\u00F3n f\u00EDsica:");
 			label_2.setBounds(344, 162, 105, 16);
 			panelDetalles1.add(label_2);
 			
-			JComboBox comboBox_1 = new JComboBox();
-			comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"Tiempo completo", "Tiempo parcial", "A distancia"}));
-			comboBox_1.setBounds(122, 159, 198, 22);
-			panelDetalles1.add(comboBox_1);
+			cbxTipoContrato = new JComboBox();
+			cbxTipoContrato.setModel(new DefaultComboBoxModel(new String[] {"Tiempo completo", "Tiempo parcial", "A distancia"}));
+			cbxTipoContrato.setBounds(122, 159, 198, 22);
+			panelDetalles1.add(cbxTipoContrato);
 			
 			JLabel label_3 = new JLabel("Tipo de contrato:");
 			label_3.setBounds(12, 159, 117, 16);
@@ -396,19 +475,19 @@ public class RegistroSolicitud extends JDialog {
 			label_4.setBounds(12, 224, 105, 16);
 			panelDetalles1.add(label_4);
 			
-			JSpinner spinner = new JSpinner();
-			spinner.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
-			spinner.setBounds(122, 221, 198, 22);
-			panelDetalles1.add(spinner);
+			JSpinner spnSueldoMin = new JSpinner();
+			spnSueldoMin.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
+			spnSueldoMin.setBounds(122, 221, 198, 22);
+			panelDetalles1.add(spnSueldoMin);
 			
 			JLabel label_5 = new JLabel("Sueldo m\u00E1ximo:");
 			label_5.setBounds(344, 224, 105, 16);
 			panelDetalles1.add(label_5);
 			
-			JSpinner spinner_1 = new JSpinner();
-			spinner_1.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-			spinner_1.setBounds(454, 221, 163, 22);
-			panelDetalles1.add(spinner_1);
+			JSpinner spnSueldoMax = new JSpinner();
+			spnSueldoMax.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
+			spnSueldoMax.setBounds(454, 221, 163, 22);
+			panelDetalles1.add(spnSueldoMax);
 			
 			textField_2 = new JTextField();
 			textField_2.setColumns(10);
@@ -423,52 +502,12 @@ public class RegistroSolicitud extends JDialog {
 			btnSiguiente = new JButton(">>");
 			btnSiguiente.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					panelDetalles1.setVisible(false);
 					panelDetalles2.setVisible(true);
+					panelDetalles1.setVisible(false);
 				}
 			});
-			btnSiguiente.setBounds(552, 300, 65, 25);
+			btnSiguiente.setBounds(552, 317, 65, 25);
 			panelDetalles1.add(btnSiguiente);
-			
-			panelDetalles2 = new JPanel();
-			panelDetalles2.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
-			panelDetalles2.setLayout(null);
-			panelDetalles2.setBounds(12, 95, 645, 356);
-			panel.add(panelDetalles2);
-			panelDetalles2.setVisible(false);
-			
-			JButton btnAtras = new JButton("<<");
-			btnAtras.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					panelDetalles2.setVisible(false);
-					panelDetalles1.setVisible(true);
-				}
-			});
-			btnAtras.setBounds(552, 300, 65, 25);
-			panelDetalles2.add(btnAtras);
-			
-			JLabel label_7 = new JLabel("Cantidad de empleados:");
-			label_7.setHorizontalAlignment(SwingConstants.CENTER);
-			label_7.setBounds(0, 196, 633, 16);
-			panelDetalles2.add(label_7);
-			
-			JSlider sliderMatcheo = new JSlider();
-			sliderMatcheo.setPaintTicks(true);
-			sliderMatcheo.setBounds(97, 123, 450, 43);
-			sliderMatcheo.setMinorTickSpacing(2);  
-			sliderMatcheo.setMajorTickSpacing(10);  
-			sliderMatcheo.setPaintLabels(true);
-			panelDetalles2.add(sliderMatcheo);
-			
-			JLabel label_8 = new JLabel("Porcentaje de Matching:");
-			label_8.setHorizontalAlignment(SwingConstants.CENTER);
-			label_8.setBounds(0, 94, 633, 16);
-			panelDetalles2.add(label_8);
-			
-			JSpinner spnEmpleados = new JSpinner();
-			spnEmpleados.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
-			spnEmpleados.setBounds(227, 225, 179, 22);
-			panelDetalles2.add(spnEmpleados);
 		}
 		{
 			JPanel buttonPane = new JPanel();
@@ -500,9 +539,7 @@ public class RegistroSolicitud extends JDialog {
 		loadDisponibles();
 	}
 	private void clean() {
-		txtCodigoSoli.setText("SOL-" + (BolsaLaboral.getInstance().getSolicitudes().size()+1));
 		Date date = Calendar.getInstance().getTime();
-		txtFechaCreacion.setText(dateFormat.format(date));
 	}
 	
 	private void loadDisponibles(){
