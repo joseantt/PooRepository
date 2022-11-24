@@ -20,8 +20,11 @@ import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.JToggleButton;
+import javax.swing.ListSelectionModel;
+
 import java.awt.event.ActionListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -30,6 +33,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JComboBox;
 import javax.swing.ButtonGroup;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.DefaultListModel;
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import java.awt.CardLayout;
@@ -38,6 +42,9 @@ import javax.swing.GroupLayout.Alignment;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
+import javax.swing.JList;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class RegistroSolicitud extends JDialog {
 
@@ -66,10 +73,17 @@ public class RegistroSolicitud extends JDialog {
 	private JPanel panelTecnico;
 	private JPanel panelUniversitario;
 	private DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+	private JList listOficiosDisp;
+	private JList listOficiosSelected;
+	private DefaultListModel<String> modelDisponibles;
+	private DefaultListModel<String> modelSelected;
+	private ArrayList<String> stringDisponibles = new ArrayList<String>();
+	private ArrayList<String> stringSelected = new ArrayList<String>();
+	private int selected = -1;
+	private JButton btnAdd;
+	private JButton btnRemove;
+	
 
-	/**
-	 * Launch the application.
-	 */
 	public static void main(String[] args) {
 		try {
 			RegistroSolicitud dialog = new RegistroSolicitud();
@@ -80,12 +94,12 @@ public class RegistroSolicitud extends JDialog {
 		}
 	}
 
-	/**
-	 * Create the dialog.
-	 */
+	
 	public RegistroSolicitud() {
 		setTitle("Registro de solicitud");
 		setBounds(100, 100, 697, 819);
+		modelDisponibles = new DefaultListModel<String>();
+		modelSelected = new DefaultListModel<String>();
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -123,6 +137,8 @@ public class RegistroSolicitud extends JDialog {
 			JRadioButton rdbtnPersona = new JRadioButton("Persona");
 			rdbtnPersona.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
+					panelDetalles1.setVisible(true);
+					panelDetalles2.setVisible(false);
 					btnSiguiente.setEnabled(false);
 					lblCedulaCodigo.setText("Cédula:");
 					rdbtnUniversitario.setEnabled(false);
@@ -249,6 +265,20 @@ public class RegistroSolicitud extends JDialog {
 			scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			panel_4.add(scrollPane, BorderLayout.CENTER);
 			
+			listOficiosDisp = new JList();
+			listOficiosDisp.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					selected = listOficiosDisp.getSelectedIndex();
+					if(selected > -1) {
+						btnAdd.setEnabled(true);
+					}
+				}
+			});
+			listOficiosDisp.setModel(modelDisponibles);
+			listOficiosDisp.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			scrollPane.setViewportView(listOficiosDisp);
+			
 			JPanel panel_5 = new JPanel();
 			panel_5.setBounds(366, 13, 255, 115);
 			panelObrero.add(panel_5);
@@ -258,13 +288,53 @@ public class RegistroSolicitud extends JDialog {
 			scrollPane_1.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 			panel_5.add(scrollPane_1, BorderLayout.CENTER);
 			
-			JButton btnNewButton = new JButton(">");
-			btnNewButton.setBounds(279, 30, 75, 25);
-			panelObrero.add(btnNewButton);
+			listOficiosSelected = new JList();
+			listOficiosSelected.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					selected = listOficiosSelected.getSelectedIndex();
+					if(selected > -1) {
+						btnRemove.setEnabled(true);
+					}
+				}
+			});
+			listOficiosSelected.setModel(modelSelected);
+			listOficiosSelected.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+			scrollPane_1.setViewportView(listOficiosSelected);
 			
-			JButton button = new JButton("<");
-			button.setBounds(279, 85, 75, 25);
-			panelObrero.add(button);
+			btnAdd = new JButton(">");
+			btnAdd.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnAdd.setEnabled(false);
+					String temp = stringDisponibles.get(selected);
+					stringSelected.add(temp);
+					modelSelected.addElement(temp);
+					stringDisponibles.remove(selected);
+					reloadDisponibles();
+					reloadSelected();
+					selected = -1;
+				}
+			});
+			btnAdd.setEnabled(false);
+			btnAdd.setBounds(279, 30, 75, 25);
+			panelObrero.add(btnAdd);
+			
+			btnRemove = new JButton("<");
+			btnRemove.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnRemove.setEnabled(false);
+					String temp = stringSelected.get(selected);
+					stringDisponibles.add(temp);
+					modelDisponibles.addElement(temp);
+					stringSelected.remove(selected);
+					reloadDisponibles();
+					reloadSelected();
+					selected = -1;
+				}
+			});
+			btnRemove.setEnabled(false);
+			btnRemove.setBounds(279, 85, 75, 25);
+			panelObrero.add(btnRemove);
 			
 			panelDetalles1 = new JPanel();
 			panelDetalles1.setBorder(new TitledBorder(null, "Detalles", TitledBorder.LEADING, TitledBorder.TOP, null, Color.GRAY));
@@ -427,10 +497,44 @@ public class RegistroSolicitud extends JDialog {
 			}
 		}
 		clean();
+		loadDisponibles();
 	}
 	private void clean() {
 		txtCodigoSoli.setText("SOL-" + (BolsaLaboral.getInstance().getSolicitudes().size()+1));
 		Date date = Calendar.getInstance().getTime();
 		txtFechaCreacion.setText(dateFormat.format(date));
+	}
+	
+	private void loadDisponibles(){
+		modelDisponibles.removeAllElements();
+		String aux = "";
+		stringDisponibles.removeAll(stringDisponibles);
+		stringDisponibles.add("Albañil");stringDisponibles.add("Pintor");stringDisponibles.add("Servicio de Limpieza");stringDisponibles.add("Vigilante");stringDisponibles.add("Sastre");stringDisponibles.add("Carnicero");stringDisponibles.add("Panadero");stringDisponibles.add("Repartidor");stringDisponibles.add("Agricultor");stringDisponibles.add("Vendedor");	
+		for(int i = 0; i < stringDisponibles.size(); i++) {
+			aux = stringDisponibles.get(i);
+			modelDisponibles.addElement(aux);
+		}
+	}
+	
+	private void reloadDisponibles(){
+		modelDisponibles.removeAllElements();
+		String aux = "";
+		for(int i = 0; i < stringDisponibles.size(); i++) {
+			aux = stringDisponibles.get(i);
+			modelDisponibles.addElement(aux);
+		}
+	}
+	
+	private void reloadSelected() {
+		modelSelected.removeAllElements();
+		String aux = "";
+		for(int i = 0; i < stringSelected.size(); i++) {
+			aux = stringSelected.get(i);
+			modelSelected.addElement(aux);
+		}
+	}
+	private void limpiarSelected() {
+		stringSelected = new ArrayList<String>();
+		reloadSelected();
 	}
 }
