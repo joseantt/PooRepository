@@ -21,12 +21,13 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JPasswordField;
 
 public class login extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField textField;
-	private JTextField textField_1;
+	private JPasswordField textField_1;
 
 	/**
 	 * Launch the application.
@@ -76,7 +77,9 @@ public class login extends JFrame {
 		});
 	}
 
-
+	/**
+	 * Create the frame.
+	 */
 	public login() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
@@ -90,7 +93,7 @@ public class login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(39, 39, 46, 14);
+		lblUsuario.setBounds(39, 39, 57, 14);
 		panel.add(lblUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
@@ -101,11 +104,6 @@ public class login extends JFrame {
 		textField.setBounds(39, 64, 191, 20);
 		panel.add(textField);
 		textField.setColumns(10);
-		
-		textField_1 = new JTextField();
-		textField_1.setBounds(39, 128, 191, 20);
-		panel.add(textField_1);
-		textField_1.setColumns(10);
 		
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
@@ -120,5 +118,9 @@ public class login extends JFrame {
 		});
 		btnLogin.setBounds(37, 175, 89, 23);
 		panel.add(btnLogin);
+		
+		textField_1 = new JPasswordField();
+		textField_1.setBounds(39, 125, 191, 22);
+		panel.add(textField_1);
 	}
 }

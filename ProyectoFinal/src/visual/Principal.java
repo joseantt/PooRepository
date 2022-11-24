@@ -8,8 +8,11 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
+
+import logical.Control;
+
 import javax.swing.JMenuBar;
-import javax.swing.JMenu;
+import javax.swing.JMenu; 
 import javax.swing.JMenuItem;
 
 public class Principal extends JFrame {
@@ -32,6 +35,8 @@ public class Principal extends JFrame {
 
 	
 	public Principal() {
+		if(Control.getInstance().getLoginUser()!= null)
+		{
 		setResizable(false);
 		setTitle("Bolsa Laboral");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -43,11 +48,13 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
-		menuBar.add(mnNewMenu_3);
-		
-		JMenuItem mntmNewMenuItem = new JMenuItem("Realizar Matching");
-		mnNewMenu_3.add(mntmNewMenuItem);
+		if(Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Admin") || Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria") || Control.getInstance().getLoginUser().getUserName().equalsIgnoreCase("Admin"))
+		{
+			JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
+			menuBar.add(mnNewMenu_3);
+			JMenuItem mntmNewMenuItem = new JMenuItem("Realizar Matching");
+			mnNewMenu_3.add(mntmNewMenuItem);
+		}
 		
 		JMenu mnNewMenu_2 = new JMenu("Solicitud");
 		menuBar.add(mnNewMenu_2);
@@ -87,5 +94,6 @@ public class Principal extends JFrame {
 		panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 		contentPane.add(panel, BorderLayout.CENTER);
 		panel.setLayout(new BorderLayout(0, 0));
+		}
 	}
 }
