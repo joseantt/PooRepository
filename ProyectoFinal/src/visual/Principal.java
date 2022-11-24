@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+
 import java.awt.Dimension;
 import java.awt.EventQueue;
 
@@ -9,11 +10,16 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
+<<<<<<< HEAD
 import logical.Control;
 
+=======
+>>>>>>> branch 'master' of https://github.com/joseantt/PooRepository
 import javax.swing.JMenuBar;
 import javax.swing.JMenu; 
 import javax.swing.JMenuItem;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Principal extends JFrame {
 
@@ -72,6 +78,15 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar Centro Empleador");
+		mntmNewMenuItem_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistrarPersona regPersona = new RegistrarPersona();
+				
+				regPersona.setModal(true);
+				regPersona.setVisible(true);
+			
+			}
+		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado de Centros Empleadores");
