@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 public class BolsaLaboral {
 	
+	private static BolsaLaboral bolsalaboral = null;
 	ArrayList<Persona> personas;
 	ArrayList<CentroEmpleador> centroEmpleados;
 	ArrayList<Solicitud> solicitudes;
@@ -14,7 +15,14 @@ public class BolsaLaboral {
 		centroEmpleados = new ArrayList<CentroEmpleador>();
 		solicitudes = new ArrayList<Solicitud>();
 	}
-
+	
+	public static BolsaLaboral getInstance() {
+		if (bolsalaboral==null) {
+			bolsalaboral = new BolsaLaboral(); 	
+		}
+		return bolsalaboral;
+	}
+	
 	public ArrayList<Persona> getPersonas() {
 		return personas;
 	}
@@ -48,4 +56,21 @@ public class BolsaLaboral {
 		
 		return solicitud;
 	}
+	
+	public Persona buscarPersonadByCedula(String cedula) {
+		Persona persona = null;
+		int ind = 0;
+		
+		while(ind < personas.size() && persona == null) {
+			if(personas.get(ind).getCedula().equalsIgnoreCase(cedula)) {
+				persona =  personas.get(ind);
+			}
+			ind++;
+		}
+		
+		return persona;
+	}
+	
+	
+	
 }
