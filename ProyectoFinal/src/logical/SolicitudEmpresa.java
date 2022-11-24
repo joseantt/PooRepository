@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class SolicitudEmpresa extends Solicitud {
 	private String codigoEmpresa;
-	private String cantMatcheo;
+	private int cantMatcheo;
 	private int empleadosNecesarios;
 	private ArrayList<String> oficios;
 	private String areaEspecialidad;
@@ -14,10 +14,10 @@ public class SolicitudEmpresa extends Solicitud {
 	private int añoGraduacion;
 	
 	
-	public SolicitudEmpresa(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
-			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String codigoEmpresa, String cantMatcheo, int empleadosNecesarios,
+	public SolicitudEmpresa(String codigoSolicitud, float sueldo, float sueldoMax, boolean puedeMudarse, boolean licenciaConducir,
+			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String codigoEmpresa, int cantMatcheo, int empleadosNecesarios,
 			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion, Date fechaCreacion) {
-		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
+		super(codigoSolicitud, sueldo, sueldoMax, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
 		this.codigoEmpresa = codigoEmpresa;
 		this.cantMatcheo = cantMatcheo;
 		this.empleadosNecesarios = empleadosNecesarios;
@@ -32,7 +32,7 @@ public class SolicitudEmpresa extends Solicitud {
 	public String getCodigoEmpresa() {
 		return codigoEmpresa;
 	}
-	public String getCantMatcheo() {
+	public int getCantMatcheo() {
 		return cantMatcheo;
 	}
 	public int getEmpleadosNecesarios() {
@@ -56,7 +56,7 @@ public class SolicitudEmpresa extends Solicitud {
 	public void setCodigoEmpresa(String codigoEmpresa) {
 		this.codigoEmpresa = codigoEmpresa;
 	}
-	public void setCantMatcheo(String cantMatcheo) {
+	public void setCantMatcheo(int cantMatcheo) {
 		this.cantMatcheo = cantMatcheo;
 	}
 	public void setEmpleadosNecesarios(int empleadosNecesarios) {

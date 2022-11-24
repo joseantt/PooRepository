@@ -6,6 +6,7 @@ public abstract class Solicitud {
 	protected String codigoSolicitud;
 	protected Date fechaCreacion;
 	protected float sueldo;
+	protected float sueldoMax;
 	protected boolean estado;
 	protected boolean puedeMudarse;
 	protected boolean licenciaConducir;
@@ -14,11 +15,12 @@ public abstract class Solicitud {
 	protected String tipoContrato;
 	
 	
-	public Solicitud(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
+	public Solicitud(String codigoSolicitud, float sueldo, float sueldoMax, boolean puedeMudarse, boolean licenciaConducir,
 			boolean tieneVehiculo, char condicionFisica, String tipoContrato, Date fechaCreacion) {
 		super();
 		this.codigoSolicitud = codigoSolicitud;
 		this.sueldo = sueldo;
+		this.sueldoMax = sueldoMax;
 		this.puedeMudarse = puedeMudarse;
 		this.licenciaConducir = licenciaConducir;
 		this.tieneVehiculo = tieneVehiculo;
@@ -34,6 +36,12 @@ public abstract class Solicitud {
 	}
 	public void setSueldo(float sueldo) {
 		this.sueldo = sueldo;
+	}
+	public float getSueldoMax() {
+		return sueldoMax;
+	}
+	public void setSueldoMax(float sueldo) {
+		this.sueldoMax = sueldo;
 	}
 	public boolean isEstado() {
 		return estado;
