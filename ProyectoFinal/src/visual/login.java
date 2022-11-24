@@ -112,7 +112,7 @@ public class login extends JFrame {
 					Principal frame = new Principal();
 					dispose();
 					frame.setVisible(true);
-				};
+				}; 
 				
 			}
 		});

@@ -43,12 +43,12 @@ public class Principal extends JFrame {
 		setBounds(100, 100, 452, 303);
 		dim = getToolkit().getScreenSize();
 		setSize(dim.width-20, dim.height-70);
-		setLocationRelativeTo(null);
+		setLocationRelativeTo(null); 
 		
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		if(Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Admin") || Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria") || Control.getInstance().getLoginUser().getUserName().equalsIgnoreCase("Admin"))
+		if(Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador") || Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria"))
 		{
 			JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
 			menuBar.add(mnNewMenu_3);
