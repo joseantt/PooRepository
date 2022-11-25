@@ -70,7 +70,12 @@ public class BolsaLaboral {
 		
 		return persona;
 	}
-	
+
+	public boolean eliminarPersona(Persona persona) {
+		
+		return personas.remove(persona);
+		
+	}
 	
 	
 }

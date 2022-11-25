@@ -2,7 +2,6 @@ package visual;
 
 import java.awt.BorderLayout;
 
-
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -86,23 +85,17 @@ public class RegistrarPersona extends JDialog {
 	private JButton btnQuitar2;
 	private JList JlistIdiomasDisponibles;
 	private JList JlistIdiomasSeleccionados;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			RegistrarPersona dialog = new RegistrarPersona();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private Persona TestPersona = null;
+	private JButton btnRegistrar;
+	private JButton btnCancelar;
 
-	/**
-	 * Create the dialog.
-	 */
-	public RegistrarPersona() {
+	public RegistrarPersona(Persona persona) {
+		TestPersona = persona;
+		if (TestPersona == null ) {
+			setTitle("Registro de Clientes");
+		}else {
+			setTitle("Modificar Persona: " +TestPersona.getCedula());
+		}
 		setResizable(false);
 		setTitle("Registrar Persona");
 		setBounds(100, 100, 583, 601);
@@ -486,8 +479,12 @@ public class RegistrarPersona extends JDialog {
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{
-				JButton btnRegistrar = new JButton("Registrar");
+			{				
+				btnRegistrar = new JButton("Registrar");
+				if (TestPersona != null) {
+					btnRegistrar.setText("Modificar");
+				}
+				
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						char sexo = 'A';
@@ -518,23 +515,31 @@ public class RegistrarPersona extends JDialog {
 							personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
 								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, spnFechaNacimiento.getValue().toString(), Integer.valueOf(spnAñoGraduacion.getValue().toString())) ;
 								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							personaAux.setNombres(txtNombre.getText());
+							personaAux.setApellidos(txtApellidos.getText());
+							personaAux.setDireccion(txtDireccion.getText());
+							personaAux.setTelefono(txtTelefono.getText());
+
 						}
-						
+
 						BolsaLaboral.getInstance().getPersonas().add(personaAux);
 						loadDisponibles();
 						loadIdiomasDisponibles();
 						limpiarIdiomasSelected();
 						limpiarSelected();
-						clean();
-						
+						clean();		
 					}
+					
+						
+					
 				});
 				btnRegistrar.setActionCommand("OK");
 				buttonPane.add(btnRegistrar);
 				getRootPane().setDefaultButton(btnRegistrar);
 			}
 			{
-				JButton btnCancelar = new JButton("Cancelar");
+				btnCancelar = new JButton("Cancelar");
 				btnCancelar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 					dispose();

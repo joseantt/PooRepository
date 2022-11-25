@@ -3,6 +3,7 @@ package logical;
 import java.util.ArrayList;
 import java.util.Date;
 
+
 public abstract class Persona {
 	protected String cedula;
 	protected String nombres;
@@ -83,4 +84,7 @@ public abstract class Persona {
 	public char getSexo() {
 		return sexo;
 	}
+	
+
+	
 }
