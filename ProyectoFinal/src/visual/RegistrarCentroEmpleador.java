@@ -120,6 +120,7 @@ public class RegistrarCentroEmpleador extends JDialog {
 							clean();
 							JOptionPane.showMessageDialog(null, "Registro realizado exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}
+						
 					}
 				});
 				okButton.setActionCommand("OK");
