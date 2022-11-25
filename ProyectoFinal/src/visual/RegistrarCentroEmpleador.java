@@ -124,6 +124,7 @@ public class RegistrarCentroEmpleador extends JDialog {
 						if(camposVacios()) {
 							JOptionPane.showMessageDialog(null, "Existen campos vacíos. Inténtelo de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
 						}else {
+							BolsaLaboral.getInstance().eliminarCentro(Centro);
 							CentroEmpleador centroEmp = new CentroEmpleador(txtCodigo.getText(), txtNombre.getText(), txtDireccion.getText(), txtTelefono.getText(), cbxTipo.getSelectedItem().toString());
 							BolsaLaboral.getInstance().getCentroEmpleados().add(centroEmp);
 							clean();
@@ -148,6 +149,13 @@ public class RegistrarCentroEmpleador extends JDialog {
 			}
 		}
 		clean();
+		if(Centro!=null)
+		{
+			txtCodigo.setText(Centro.getCodigo());
+			txtNombre.setText(Centro.getNombre());
+			txtDireccion.setText(Centro.getDireccion());
+			txtTelefono.setText(Centro.getTelefono());
+		}
 	}
 	
 	public void clean() {

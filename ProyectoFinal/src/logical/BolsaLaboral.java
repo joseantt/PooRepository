@@ -85,6 +85,7 @@ public class BolsaLaboral {
 	
 	public CentroEmpleador buscarCentro(String codigo) {
 		CentroEmpleador centro = null;
+		boolean aparecio=false;
 		int ind = 0;
 		
 		while(ind < centroEmpleados.size() && centro == null) {
@@ -93,7 +94,6 @@ public class BolsaLaboral {
 			}
 			ind++;
 		} 
-		 
 		return centro;
 	}
 	
