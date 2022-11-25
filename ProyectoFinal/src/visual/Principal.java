@@ -10,11 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-<<<<<<< HEAD
 import logical.Control;
 
-=======
->>>>>>> branch 'master' of https://github.com/joseantt/PooRepository
 import javax.swing.JMenuBar;
 import javax.swing.JMenu; 
 import javax.swing.JMenuItem;
