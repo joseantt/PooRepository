@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import logical.BolsaLaboral;
+import logical.*;
 
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
@@ -583,8 +583,42 @@ public class RegistroSolicitud extends JDialog {
 				JButton btnRegistrar = new JButton("Registrar");
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
-						clean();
+						CentroEmpleador centro = BolsaLaboral.getInstance().buscarCentro(txtCodigoTipo.getText());
+						Persona persona = BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText());	
+						if(rdbtnPersona.isSelected() && !camposVacios()) {
+							if(sueldoEnFormato() && persona != null) {
+								if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Universitario) {
+									SolicitudUniversitario sU = new SolicitudUniversitario(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
+											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Universitario)persona).getCarrera(),((Universitario)persona).getAñoGraduacion(), new Date());
+									BolsaLaboral.getInstance().getSolicitudes().add(sU);
+									persona.getSolicitudes().add(sU);
+								}
+								else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Tecnico) {
+									SolicitudTecnico sT = new SolicitudTecnico(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
+											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Tecnico)persona).getAreaEspecialidad(), ((Tecnico)persona).getAñosExperiencia(), new Date());
+									BolsaLaboral.getInstance().getSolicitudes().add(sT);
+									persona.getSolicitudes().add(sT);
+								}else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Obrero) {
+									SolicitudObrero sO = new SolicitudObrero(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
+											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), stringSelected, new Date());
+									BolsaLaboral.getInstance().getSolicitudes().add(sO);
+									persona.getSolicitudes().add(sO);
+								}
+								clean();
+								JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);	
+							}else {
+								JOptionPane.showMessageDialog(null, "Ha ocurrido un error al realizar la solicitud", "Error", JOptionPane.ERROR_MESSAGE);	
+							}
+						}else if(rdbtnCentroEmp.isSelected() && !camposVacios() && centro != null) {
+							SolicitudEmpresa sE = new SolicitudEmpresa(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
+									Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date());
+							BolsaLaboral.getInstance().getSolicitudes().add(sE);
+							clean();
+							JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
+						}else {
+							JOptionPane.showMessageDialog(null, "Ocurrió un error al realizar la solicitud. Vuelve a intentarlo", "Error", JOptionPane.ERROR_MESSAGE);
+						}
+						
 					}
 				});
 				btnRegistrar.setActionCommand("OK");
@@ -687,5 +721,25 @@ public class RegistroSolicitud extends JDialog {
 		reloadSelected(modelIdiomasSelected, stringIdiomasSelected);
 		loadDisponiblesIdiomas();
 		loadDisponibles();
+	}
+	
+	private boolean camposVacios() {
+		boolean existenVacios = false;
+		if(txtCodigoTipo.getText().equals("")) {
+			existenVacios = true;
+		}else if(rdbtnCentroEmp.isSelected() && stringIdiomasSelected.size() == 0) {
+			existenVacios = true;
+		}else if(rdbtnCentroEmp.isSelected() && rdbtnObrero.isSelected() && stringSelected.size() == 0) {
+			existenVacios = true;
+		}
+		return existenVacios;
+	}
+	
+	private boolean sueldoEnFormato() {
+		boolean formateado = false;
+		if(Float.valueOf(spnSueldoMin.getValue().toString()) < Float.valueOf(spnSueldoMax.getValue().toString())) {
+			formateado = true;
+		}
+		return formateado;
 	}
 }
