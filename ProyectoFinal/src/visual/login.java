@@ -28,7 +28,7 @@ public class login extends JFrame {
 	private JPanel contentPane;
 	private JTextField textField;
 	private JPasswordField textField_1;
-
+ 
 	/**
 	 * Launch the application.
 	 */
