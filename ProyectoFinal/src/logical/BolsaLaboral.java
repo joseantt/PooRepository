@@ -93,7 +93,7 @@ public class BolsaLaboral {
 			}
 			ind++;
 		} 
-		
+		 
 		return centro;
 	}
 	
