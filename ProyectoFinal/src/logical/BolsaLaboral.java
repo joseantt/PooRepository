@@ -83,19 +83,24 @@ public class BolsaLaboral {
 		
 	}
 	
-	public CentroEmpleador buscarCentro(String codigo) {
-		CentroEmpleador centro = null;
+	public int buscarIndexByPersona(String cedula) {
+		int aux = -1;
 		int ind = 0;
-		
-		while(ind < centroEmpleados.size() && centro == null) {
-			if(centroEmpleados.get(ind).getCodigo().equalsIgnoreCase(codigo)) {
-				centro =  centroEmpleados.get(ind);
+		boolean encontrado = false;
+		while(ind<personas.size() && !encontrado){
+			if(personas.get(ind).getCedula().equalsIgnoreCase(cedula)){
+				aux = ind;
+				encontrado = true;
 			}
 			ind++;
 		}
-		
-		return centro;
+		return aux;
 	}
 	
+	public void modificarPersona(Persona personaAux) {
+		int aux = -1;
+		aux = buscarIndexByPersona(personaAux.getCedula());
+		//personas
+	}
 	
 }

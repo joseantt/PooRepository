@@ -520,7 +520,7 @@ public class RegistrarPersona extends JDialog {
 							personaAux.setApellidos(txtApellidos.getText());
 							personaAux.setDireccion(txtDireccion.getText());
 							personaAux.setTelefono(txtTelefono.getText());
-
+							BolsaLaboral.getInstance().modificarPersona(personaAux);
 						}
 						
 						BolsaLaboral.getInstance().getPersonas().add(personaAux);
