@@ -83,5 +83,19 @@ public class BolsaLaboral {
 		
 	}
 	
+	public CentroEmpleador buscarCentro(String codigo) {
+		CentroEmpleador centro = null;
+		int ind = 0;
+		
+		while(ind < centroEmpleados.size() && centro == null) {
+			if(centroEmpleados.get(ind).getCodigo().equalsIgnoreCase(codigo)) {
+				centro =  centroEmpleados.get(ind);
+			}
+			ind++;
+		}
+		
+		return centro;
+	}
+	
 	
 }

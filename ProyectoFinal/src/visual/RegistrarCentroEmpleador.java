@@ -34,7 +34,7 @@ public class RegistrarCentroEmpleador extends JDialog {
 	 */
 	public static void main(String[] args) {
 		try {
-			RegistrarCentroEmpleador dialog = new RegistrarCentroEmpleador();
+			RegistrarCentroEmpleador dialog = new RegistrarCentroEmpleador(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -45,8 +45,14 @@ public class RegistrarCentroEmpleador extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public RegistrarCentroEmpleador() {
-		setTitle("Registro de Centro Empleador");
+	public RegistrarCentroEmpleador(CentroEmpleador Centro)
+	{
+		CentroEmpleador TestCentro = Centro;
+		if (TestCentro == null ) {
+			setTitle("Registro de Centro Empleador");
+		}else {
+			setTitle("Modificar Centro Empleador: " +TestCentro.getCodigo());
+		}
 		setBounds(100, 100, 535, 399);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -110,6 +116,9 @@ public class RegistrarCentroEmpleador extends JDialog {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("Registrar");
+				if (TestCentro != null) {
+					okButton.setText("Modificar");
+				}
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(camposVacios()) {
