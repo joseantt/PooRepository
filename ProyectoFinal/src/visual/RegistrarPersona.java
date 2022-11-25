@@ -222,7 +222,6 @@ public class RegistrarPersona extends JDialog {
 			});
 			JlistIdiomasDisponibles.setModel(modelIdiomasDisponibles);
 			JlistIdiomasDisponibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-
 			scrollPane.setViewportView(JlistIdiomasDisponibles);
 			
 			
@@ -546,8 +545,8 @@ public class RegistrarPersona extends JDialog {
 			}
 		}
 		clean();
-		loadDisponibles();
 		loadIdiomasDisponibles();
+		loadDisponibles();
 	}
 	private void clean() {
 		txtCedula.setText("");
@@ -600,7 +599,7 @@ public class RegistrarPersona extends JDialog {
 		stringIdiomasDisponibles.removeAll(stringIdiomasDisponibles);
 		stringIdiomasDisponibles.add("Español");stringIdiomasDisponibles.add("Inglés");stringIdiomasDisponibles.add("Francés");stringIdiomasDisponibles.add("Alemán");stringIdiomasDisponibles.add("Mandarín");stringIdiomasDisponibles.add("Hindi");stringIdiomasDisponibles.add("Árabe");stringIdiomasDisponibles.add("Bengalí");stringIdiomasDisponibles.add("Portugués");stringIdiomasDisponibles.add("Ruso");	
 		for(int i = 0; i < stringIdiomasDisponibles.size(); i++) {
-			aux = stringDisponibles.get(i);
+			aux = stringIdiomasDisponibles.get(i);
 			modelIdiomasDisponibles.addElement(aux);
 		}
 	}
