@@ -92,7 +92,7 @@ public class BolsaLaboral {
 				centro =  centroEmpleados.get(ind);
 			}
 			ind++;
-		}
+		} 
 		
 		return centro;
 	}
