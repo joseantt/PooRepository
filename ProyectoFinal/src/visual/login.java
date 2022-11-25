@@ -20,6 +20,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 
@@ -101,6 +102,7 @@ public class login extends JFrame {
 		lblContrasea.setBounds(39, 98, 105, 14);
 		panel.add(lblContrasea);
 		
+		
 		textField = new JTextField();
 		textField.setBounds(39, 64, 191, 20);
 		panel.add(textField);
@@ -109,7 +111,8 @@ public class login extends JFrame {
 		JButton btnLogin = new JButton("Login");
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(Control.getInstance().confirmLogin(textField.getText(),textField_1.getText())){
+				String myPass=String.valueOf(textField_1.getPassword());
+				if(Control.getInstance().confirmLogin(textField.getText(),myPass)){
 					Principal frame = new Principal();
 					dispose();
 					frame.setVisible(true);
@@ -117,11 +120,26 @@ public class login extends JFrame {
 				
 			}
 		});
+		
+
 		btnLogin.setBounds(37, 175, 89, 23);
 		panel.add(btnLogin);
 		
 		textField_1 = new JPasswordField();
 		textField_1.setBounds(39, 125, 191, 22);
 		panel.add(textField_1);
+		
+		textField_1.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				String myPass=String.valueOf(textField_1.getPassword());
+				if(Control.getInstance().confirmLogin(textField.getText(),myPass)){
+					Principal frame = new Principal();
+					dispose();
+					frame.setVisible(true);
+				};
+			}
+
+		});
 	}
 }
