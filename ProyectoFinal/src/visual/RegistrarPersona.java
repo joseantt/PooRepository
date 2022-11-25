@@ -522,7 +522,6 @@ public class RegistrarPersona extends JDialog {
 							personaAux.setTelefono(txtTelefono.getText());
 
 						}
-
 						BolsaLaboral.getInstance().getPersonas().add(personaAux);
 						loadDisponibles();
 						loadIdiomasDisponibles();
