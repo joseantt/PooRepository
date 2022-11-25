@@ -77,5 +77,11 @@ public class BolsaLaboral {
 		
 	}
 	
+	public boolean eliminarCentro(CentroEmpleador centro) {
+		
+		return centroEmpleados.remove(centro);
+		
+	}
+	
 	
 }
