@@ -24,6 +24,8 @@ import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class ListarCentros extends JDialog {
 
@@ -51,6 +53,11 @@ public class ListarCentros extends JDialog {
 	 * Create the dialog.
 	 */
 	public ListarCentros() {
+		this.addWindowFocusListener(new WindowAdapter() {
+		    public void windowGainedFocus(WindowEvent e) {
+		        loadClientes();
+		    }
+		});
 		setTitle("Listado de Centros");
 		setBounds(100, 100, 753, 436);
 		setLocationRelativeTo(null);
@@ -142,6 +149,7 @@ public class ListarCentros extends JDialog {
 			}
 		}
 		loadClientes();
+		
 	}
 
 		public static void loadClientes() {
