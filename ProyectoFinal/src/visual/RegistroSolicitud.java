@@ -43,6 +43,8 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -68,14 +70,19 @@ public class RegistroSolicitud extends JDialog {
 	private JList listOficiosSelected;
 	private DefaultListModel<String> modelDisponibles;
 	private DefaultListModel<String> modelSelected;
+	private DefaultListModel<String> modelIdiomasDisponibles;
+	private DefaultListModel<String> modelIdiomasSelected;
 	private ArrayList<String> stringDisponibles = new ArrayList<String>();
 	private ArrayList<String> stringSelected = new ArrayList<String>();
+	private ArrayList<String> stringIdiomasDisponibles = new ArrayList<String>();
+	private ArrayList<String> stringIdiomasSelected = new ArrayList<String>();
 	private int selected = -1;
+	private int selected2 = -1;
 	private JButton btnAdd;
 	private JButton btnRemove;
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
+	private JTextField txtCodigoSol;
+	private JTextField txtFecha;
+	private JTextField txtCodigoTipo;
 	private JPanel panelDetalles1;
 	private JButton btnSiguiente;
 	private JLabel lblCedulaCodigo;
@@ -83,6 +90,17 @@ public class RegistroSolicitud extends JDialog {
 	private JList listIdiomasSelected;
 	private JComboBox cbxTipoContrato;
 	private JComboBox cbxCondFisica;
+	private JCheckBox chkbxMudarse;
+	private JCheckBox chkbxLicencia;
+	private JCheckBox chkbxVehiculo;
+	private JButton btnAddIdiomas;
+	private JButton btnRemoveIdiomas;
+	private JSpinner spnSueldoMin;
+	private JSpinner spnSueldoMax;
+	private JSpinner spnEmpleados;
+	private JRadioButton rdbtnCentroEmp;
+	private JRadioButton rdbtnPersona;
+	private JSlider sliderMatcheo;
 	
 
 	public static void main(String[] args) {
@@ -101,6 +119,8 @@ public class RegistroSolicitud extends JDialog {
 		setBounds(100, 100, 697, 840);
 		modelDisponibles = new DefaultListModel<String>();
 		modelSelected = new DefaultListModel<String>();
+		modelIdiomasDisponibles = new DefaultListModel<String>();
+		modelIdiomasSelected = new DefaultListModel<String>();
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
@@ -117,7 +137,7 @@ public class RegistroSolicitud extends JDialog {
 			panel.add(panel_1);
 			panel_1.setLayout(null);
 			
-			JRadioButton rdbtnCentroEmp = new JRadioButton("Centro empleador");
+			rdbtnCentroEmp = new JRadioButton("Centro empleador");
 			rdbtnCentroEmp.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					btnSiguiente.setEnabled(true);
@@ -135,7 +155,7 @@ public class RegistroSolicitud extends JDialog {
 			rdbtnCentroEmp.setBounds(126, 22, 138, 25);
 			panel_1.add(rdbtnCentroEmp);
 			
-			JRadioButton rdbtnPersona = new JRadioButton("Persona");
+			rdbtnPersona = new JRadioButton("Persona");
 			rdbtnPersona.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					panelDetalles1.setVisible(true);
@@ -311,8 +331,8 @@ public class RegistroSolicitud extends JDialog {
 					stringSelected.add(temp);
 					modelSelected.addElement(temp);
 					stringDisponibles.remove(selected);
-					reloadDisponibles();
-					reloadSelected();
+					reloadDisponibles(modelDisponibles, stringDisponibles);
+					reloadSelected(modelSelected, stringSelected);
 					selected = -1;
 				}
 			});
@@ -328,8 +348,8 @@ public class RegistroSolicitud extends JDialog {
 					stringDisponibles.add(temp);
 					modelDisponibles.addElement(temp);
 					stringSelected.remove(selected);
-					reloadDisponibles();
-					reloadSelected();
+					reloadDisponibles(modelDisponibles, stringDisponibles);
+					reloadSelected(modelSelected, stringSelected);
 					selected = -1;
 				}
 			});
@@ -359,7 +379,7 @@ public class RegistroSolicitud extends JDialog {
 			label_7.setBounds(12, 291, 633, 16);
 			panelDetalles2.add(label_7);
 			
-			JSlider sliderMatcheo = new JSlider();
+			sliderMatcheo = new JSlider();
 			sliderMatcheo.setPaintTicks(true);
 			sliderMatcheo.setBounds(109, 218, 450, 43);
 			sliderMatcheo.setMinorTickSpacing(2);  
@@ -372,7 +392,7 @@ public class RegistroSolicitud extends JDialog {
 			label_8.setBounds(12, 189, 633, 16);
 			panelDetalles2.add(label_8);
 			
-			JSpinner spnEmpleados = new JSpinner();
+			spnEmpleados = new JSpinner();
 			spnEmpleados.setModel(new SpinnerNumberModel(new Integer(1), new Integer(1), null, new Integer(1)));
 			spnEmpleados.setBounds(239, 320, 179, 22);
 			panelDetalles2.add(spnEmpleados);
@@ -390,6 +410,17 @@ public class RegistroSolicitud extends JDialog {
 			panel_6.add(scrollPane_2, BorderLayout.CENTER);
 			
 			listIdiomasDisponibles = new JList();
+			listIdiomasDisponibles.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					selected2 = listIdiomasDisponibles.getSelectedIndex();
+					if(selected2 > -1) {
+						btnAddIdiomas.setEnabled(true);
+					}
+				}
+			});
+			listIdiomasDisponibles.setModel(modelIdiomasDisponibles);
+			listIdiomasDisponibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane_2.setViewportView(listIdiomasDisponibles);
 			
 			JPanel panel_7 = new JPanel();
@@ -401,17 +432,52 @@ public class RegistroSolicitud extends JDialog {
 			panel_7.add(scrollPane_3, BorderLayout.CENTER);
 			
 			listIdiomasSelected = new JList();
+			listIdiomasSelected.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					selected2 = listIdiomasSelected.getSelectedIndex();
+					if(selected2 > -1) {
+						btnRemoveIdiomas.setEnabled(true);
+					}
+				}
+			});
+			listIdiomasSelected.setModel(modelIdiomasSelected);
+			listIdiomasSelected.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 			scrollPane_3.setViewportView(listIdiomasSelected);
 			
-			JButton btnNewButton = new JButton(">");
-			btnNewButton.setEnabled(false);
-			btnNewButton.setBounds(290, 81, 65, 25);
-			panelDetalles2.add(btnNewButton);
+			btnAddIdiomas = new JButton(">");
+			btnAddIdiomas.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnAddIdiomas.setEnabled(false);
+					String temp = stringIdiomasDisponibles.get(selected2);
+					stringIdiomasSelected.add(temp);
+					modelIdiomasSelected.addElement(temp);
+					stringIdiomasDisponibles.remove(selected2);
+					reloadDisponibles(modelIdiomasDisponibles, stringIdiomasDisponibles);
+					reloadSelected(modelIdiomasSelected, stringIdiomasSelected);
+					selected2 = -1;
+				}
+			});
+			btnAddIdiomas.setEnabled(false);
+			btnAddIdiomas.setBounds(290, 81, 65, 25);
+			panelDetalles2.add(btnAddIdiomas);
 			
-			JButton btnNewButton_1 = new JButton("<");
-			btnNewButton_1.setEnabled(false);
-			btnNewButton_1.setBounds(290, 119, 65, 25);
-			panelDetalles2.add(btnNewButton_1);
+			btnRemoveIdiomas = new JButton("<");
+			btnRemoveIdiomas.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					btnRemoveIdiomas.setEnabled(false);
+					String temp = stringIdiomasSelected.get(selected2);
+					stringIdiomasDisponibles.add(temp);
+					modelIdiomasDisponibles.addElement(temp);
+					stringIdiomasSelected.remove(selected2);
+					reloadDisponibles(modelIdiomasDisponibles, stringIdiomasDisponibles);
+					reloadSelected(modelIdiomasSelected, stringIdiomasSelected);
+					selected2 = -1;
+				}
+			});
+			btnRemoveIdiomas.setEnabled(false);
+			btnRemoveIdiomas.setBounds(290, 119, 65, 25);
+			panelDetalles2.add(btnRemoveIdiomas);
 			
 			panelDetalles1 = new JPanel();
 			panelDetalles1.setLayout(null);
@@ -423,35 +489,35 @@ public class RegistroSolicitud extends JDialog {
 			label.setBounds(12, 40, 117, 16);
 			panelDetalles1.add(label);
 			
-			textField = new JTextField();
-			textField.setText("SOL-1");
-			textField.setEditable(false);
-			textField.setColumns(10);
-			textField.setBounds(141, 37, 179, 22);
-			panelDetalles1.add(textField);
+			txtCodigoSol = new JTextField();
+			txtCodigoSol.setText("SOL-1");
+			txtCodigoSol.setEditable(false);
+			txtCodigoSol.setColumns(10);
+			txtCodigoSol.setBounds(141, 37, 179, 22);
+			panelDetalles1.add(txtCodigoSol);
 			
 			JLabel label_1 = new JLabel("Fecha de creaci\u00F3n:");
 			label_1.setBounds(366, 40, 117, 16);
 			panelDetalles1.add(label_1);
 			
-			textField_1 = new JTextField();
-			textField_1.setText("24/13/2022");
-			textField_1.setEditable(false);
-			textField_1.setColumns(10);
-			textField_1.setBounds(495, 37, 122, 22);
-			panelDetalles1.add(textField_1);
+			txtFecha = new JTextField();
+			txtFecha.setText("24/13/2022");
+			txtFecha.setEditable(false);
+			txtFecha.setColumns(10);
+			txtFecha.setBounds(495, 37, 122, 22);
+			panelDetalles1.add(txtFecha);
 			
-			JCheckBox checkBox = new JCheckBox("\u00BFPuede mudarse?");
-			checkBox.setBounds(12, 95, 136, 25);
-			panelDetalles1.add(checkBox);
+			chkbxMudarse = new JCheckBox("\u00BFPuede mudarse?");
+			chkbxMudarse.setBounds(12, 95, 136, 25);
+			panelDetalles1.add(chkbxMudarse);
 			
-			JCheckBox checkBox_1 = new JCheckBox("\u00BFTiene licencia de conducir?");
-			checkBox_1.setBounds(214, 95, 194, 25);
-			panelDetalles1.add(checkBox_1);
+			chkbxLicencia = new JCheckBox("\u00BFTiene licencia de conducir?");
+			chkbxLicencia.setBounds(214, 95, 194, 25);
+			panelDetalles1.add(chkbxLicencia);
 			
-			JCheckBox checkBox_2 = new JCheckBox("\u00BFTiene veh\u00EDculo?");
-			checkBox_2.setBounds(481, 95, 136, 25);
-			panelDetalles1.add(checkBox_2);
+			chkbxVehiculo = new JCheckBox("\u00BFTiene veh\u00EDculo?");
+			chkbxVehiculo.setBounds(481, 95, 136, 25);
+			panelDetalles1.add(chkbxVehiculo);
 			
 			cbxCondFisica = new JComboBox();
 			cbxCondFisica.setModel(new DefaultComboBoxModel(new String[] {"Muy buena", "Buena", "Intermedia", "Mala"}));
@@ -475,7 +541,7 @@ public class RegistroSolicitud extends JDialog {
 			label_4.setBounds(12, 224, 105, 16);
 			panelDetalles1.add(label_4);
 			
-			JSpinner spnSueldoMin = new JSpinner();
+			spnSueldoMin = new JSpinner();
 			spnSueldoMin.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 			spnSueldoMin.setBounds(122, 221, 198, 22);
 			panelDetalles1.add(spnSueldoMin);
@@ -484,15 +550,15 @@ public class RegistroSolicitud extends JDialog {
 			label_5.setBounds(344, 224, 105, 16);
 			panelDetalles1.add(label_5);
 			
-			JSpinner spnSueldoMax = new JSpinner();
+			spnSueldoMax = new JSpinner();
 			spnSueldoMax.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
 			spnSueldoMax.setBounds(454, 221, 163, 22);
 			panelDetalles1.add(spnSueldoMax);
 			
-			textField_2 = new JTextField();
-			textField_2.setColumns(10);
-			textField_2.setBounds(168, 303, 308, 22);
-			panelDetalles1.add(textField_2);
+			txtCodigoTipo = new JTextField();
+			txtCodigoTipo.setColumns(10);
+			txtCodigoTipo.setBounds(168, 303, 308, 22);
+			panelDetalles1.add(txtCodigoTipo);
 			
 			lblCedulaCodigo = new JLabel("C\u00F3digo del centro empleador:");
 			lblCedulaCodigo.setHorizontalAlignment(SwingConstants.CENTER);
@@ -517,6 +583,7 @@ public class RegistroSolicitud extends JDialog {
 				JButton btnRegistrar = new JButton("Registrar");
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 						clean();
 					}
 				});
@@ -537,9 +604,41 @@ public class RegistroSolicitud extends JDialog {
 		}
 		clean();
 		loadDisponibles();
+		loadDisponiblesIdiomas();
 	}
 	private void clean() {
-		Date date = Calendar.getInstance().getTime();
+		txtCodigoSol.setText("SOL-"+(BolsaLaboral.getInstance().getSolicitudes().size()+1));
+		txtFecha.setText(dateFormat.format(new Date()));
+		chkbxLicencia.setSelected(false);
+		chkbxMudarse.setSelected(false);
+		chkbxVehiculo.setSelected(false);
+		cbxCarrera.setSelectedIndex(0);
+		cbxCondFisica.setSelectedIndex(0);
+		cbxEspecialidad.setSelectedIndex(0);
+		cbxTipoContrato.setSelectedIndex(0);
+		spnExperiencia.setValue(0);
+		spnGraduacion.setValue(2017);
+		spnSueldoMax.setValue(1);
+		spnSueldoMin.setValue(1);
+		txtCodigoTipo.setText("");
+		spnEmpleados.setValue(1);
+		limpiarSelected();
+		panelObrero.setVisible(false);
+		panelTecnico.setVisible(false);
+		btnGroup_1.setSelected(rdbtnCentroEmp.getModel(), true);
+		btnGroup_2.setSelected(rdbtnUniversitario.getModel(), true);
+		btnSiguiente.setEnabled(true);
+		lblCedulaCodigo.setText("C\u00F3digo del centro empleador:");
+		rdbtnUniversitario.setEnabled(true);
+		rdbtnTecnico.setEnabled(true);
+		rdbtnObrero.setEnabled(true);
+		cbxCarrera.setEnabled(true);
+		spnGraduacion.setEnabled(true);
+		cbxEspecialidad.setEnabled(true);
+		spnExperiencia.setEnabled(true);
+		panelDetalles2.setVisible(false);
+		panelDetalles1.setVisible(true);
+		sliderMatcheo.setValue(50);
 	}
 	
 	private void loadDisponibles(){
@@ -553,7 +652,18 @@ public class RegistroSolicitud extends JDialog {
 		}
 	}
 	
-	private void reloadDisponibles(){
+	private void loadDisponiblesIdiomas(){
+		modelIdiomasDisponibles.removeAllElements();
+		String aux = "";
+		stringIdiomasDisponibles.removeAll(stringIdiomasDisponibles);
+		stringIdiomasDisponibles.add("Español");stringIdiomasDisponibles.add("Inglés");stringIdiomasDisponibles.add("Francés");stringIdiomasDisponibles.add("Alemán");stringIdiomasDisponibles.add("Mandarín");stringIdiomasDisponibles.add("Hindi");stringIdiomasDisponibles.add("Árabe");stringIdiomasDisponibles.add("Bengalí");stringIdiomasDisponibles.add("Portugués");stringIdiomasDisponibles.add("Ruso");	
+		for(int i = 0; i < stringIdiomasDisponibles.size(); i++) {
+			aux = stringIdiomasDisponibles.get(i);
+			modelIdiomasDisponibles.addElement(aux);
+		}
+	}
+	
+	private void reloadDisponibles(DefaultListModel<String> modelDisponibles, ArrayList<String> stringDisponibles){
 		modelDisponibles.removeAllElements();
 		String aux = "";
 		for(int i = 0; i < stringDisponibles.size(); i++) {
@@ -562,7 +672,7 @@ public class RegistroSolicitud extends JDialog {
 		}
 	}
 	
-	private void reloadSelected() {
+	private void reloadSelected(DefaultListModel<String> modelSelected, ArrayList<String> stringSelected) {
 		modelSelected.removeAllElements();
 		String aux = "";
 		for(int i = 0; i < stringSelected.size(); i++) {
@@ -572,6 +682,10 @@ public class RegistroSolicitud extends JDialog {
 	}
 	private void limpiarSelected() {
 		stringSelected = new ArrayList<String>();
-		reloadSelected();
+		stringIdiomasSelected = new ArrayList<String>();
+		reloadSelected(modelSelected, stringSelected);
+		reloadSelected(modelIdiomasSelected, stringIdiomasSelected);
+		loadDisponiblesIdiomas();
+		loadDisponibles();
 	}
 }

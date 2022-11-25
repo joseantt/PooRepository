@@ -63,6 +63,14 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_2);
 		
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Realizar Solicitud");
+		mntmNewMenuItem_5.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistroSolicitud rS = new RegistroSolicitud();
+				rS.setModal(true);
+				rS.setLocationRelativeTo(null);
+				rS.setVisible(true);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado Solicitudes de Personas");
@@ -75,15 +83,6 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu_1);
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar Centro Empleador");
-		mntmNewMenuItem_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				RegistrarPersona regPersona = new RegistrarPersona();
-				
-				regPersona.setModal(true);
-				regPersona.setVisible(true);
-			
-			}
-		});
 		mnNewMenu_1.add(mntmNewMenuItem_3);
 		
 		JMenuItem mntmNewMenuItem_4 = new JMenuItem("Listado de Centros Empleadores");
@@ -93,6 +92,15 @@ public class Principal extends JFrame {
 		menuBar.add(mnNewMenu);
 		
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Registrar Persona");
+		mntmNewMenuItem_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				RegistrarPersona regPersona = new RegistrarPersona();
+				regPersona.setModal(true);
+				regPersona.setLocationRelativeTo(null);
+				regPersona.setVisible(true);
+			
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado de Personas");
