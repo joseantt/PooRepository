@@ -167,7 +167,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_1 = new JMenuItem("Registrar Persona");
 		mntmNewMenuItem_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistrarPersona regPersona = new RegistrarPersona(null);
+				RegistrarPersona regPersona = new RegistrarPersona();
 				regPersona.setModal(true);
 				regPersona.setLocationRelativeTo(null);
 				regPersona.setVisible(true);

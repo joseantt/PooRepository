@@ -14,7 +14,6 @@ import javax.swing.table.DefaultTableModel;
 
 import logical.BolsaLaboral;
 import logical.CentroEmpleador;
-import logical.Persona;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;

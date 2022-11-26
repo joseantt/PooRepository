@@ -91,11 +91,12 @@ public class ListarPersona extends JDialog {
 					btnModificar = new JButton("Modificar");
 					btnModificar.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							RegistrarPersona modPersona = new RegistrarPersona(selected);
+							modificarPersona modPersona = new modificarPersona(selected);
 							modPersona.setModal(true);
 							modPersona.setVisible(true);
 							btnEliminar.setEnabled(false);
 							btnModificar.setEnabled(false);
+							
 						}
 					});
 					
@@ -140,11 +141,15 @@ public class ListarPersona extends JDialog {
 				rows[3] = personaAux.getDireccion();
 				rows[4] = personaAux.getTelefono();
 				rows[5] = personaAux.getSexo();
-				rows[6] = personaAux.isEstado();
+				if (personaAux.isEstado() == true) {
+					rows [6] = "Empleado";
+				}
+				else {
+					rows [6] = "Desempleado";
+				}
 				model.addRow(rows);
 				
 			}
 	}
 
 }
-

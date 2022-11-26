@@ -46,7 +46,7 @@ import javax.swing.Box;
 import javax.swing.SpinnerNumberModel;
 import java.awt.CardLayout;
 
-public class RegistrarPersona extends JDialog {
+public class modificarPersona extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JSpinner spnFechaNacimiento;
@@ -55,32 +55,21 @@ public class RegistrarPersona extends JDialog {
 	private JTextField txtApellidos;
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
-	private JRadioButton rdbtnObrero;
-	private JRadioButton rdbtnTcnico;
-	private JRadioButton rdbtnUniversitario;
 	private JRadioButton rdbtnHombre;
 	private JRadioButton rdbtnMujer;
 	private ButtonGroup btngroup = new ButtonGroup();
 	private JSpinner spnAñoGraduacion;
-	private JComboBox cbxCarrera;
 	private JSpinner spnAñosExperiencia;
-	private JPanel panel_7;
-	private JPanel panel_6;
-	private JPanel panel_8;
 	private ArrayList<String> stringDisponibles = new ArrayList<String>();
 	private ArrayList<String> stringSelected = new ArrayList<String>();
 	private DefaultListModel<String> modelDisponibles;
 	private DefaultListModel<String> modelSelected;
-	private JList JlistOficiosSeleccionados;
-	private JList JlistOficiosDisponibles;
 	private ArrayList<String> stringIdiomasDisponibles = new ArrayList<String>();
 	private ArrayList<String> stringIdiomasSelected = new ArrayList<String>();
 	private DefaultListModel<String> modelIdiomasDisponibles;
 	private DefaultListModel<String> modelIdiomasSelected;
 	private int selected = -1;
 	private int idiomaSelected = -1;
-	private JButton btnAgregar;
-	private JButton btnQuitar;
 	private JButton btnAgregar2;
 	private JButton btnQuitar2;
 	private JList JlistIdiomasDisponibles;
@@ -88,11 +77,14 @@ public class RegistrarPersona extends JDialog {
 	private Persona TestPersona = null;
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
-
-	public RegistrarPersona() {
+	private Persona persona;
+	private JButton btnNewButton;
+	
+	public modificarPersona(final Persona persona) {
+		this.persona = persona;
 		setResizable(false);
-		setTitle("Registrar Persona");
-		setBounds(100, 100, 583, 601);
+		setTitle("Modificar Persona");
+		setBounds(100, 100, 583, 376);
 		setLocationRelativeTo(null);;
 		modelDisponibles = new DefaultListModel<String>();
 		modelSelected = new DefaultListModel<String>();
@@ -273,254 +265,30 @@ public class RegistrarPersona extends JDialog {
 			btnQuitar2.setBounds(267, 226, 51, 25);
 			panel_1.add(btnQuitar2);
 			btnQuitar2.setEnabled(false);
-			
-			JPanel panel_2 = new JPanel();
-			panel_2.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Tipo", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel_2.setBounds(12, 292, 537, 65);
-			panel.add(panel_2);
-			panel_2.setLayout(null);
-			
-			
-			
-			rdbtnUniversitario = new JRadioButton("Universitario");
-			rdbtnUniversitario.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					panel_6.setVisible(true);
-					panel_7.setVisible(false);
-					panel_8.setVisible(false);
-					
-				}
-			});
-			rdbtnUniversitario.setBounds(8, 20, 127, 25);
-			panel_2.add(rdbtnUniversitario);
-			
-			rdbtnTcnico = new JRadioButton("T\u00E9cnico");
-			rdbtnTcnico.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					panel_7.setVisible(true);
-					panel_6.setVisible(false);
-					panel_8.setVisible(false);
-				}
-			});
-			rdbtnTcnico.setBounds(204, 20, 127, 25);
-			panel_2.add(rdbtnTcnico);
-			
-			rdbtnObrero = new JRadioButton("Obrero");
-			rdbtnObrero.setSelected(true);
-			rdbtnObrero.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					panel_8.setVisible(true);
-					panel_7.setVisible(false);
-					panel_6.setVisible(false);
-
-				}
-			});
-			rdbtnObrero.setBounds(402, 20, 127, 25);
-			panel_2.add(rdbtnObrero);
-			
-			btngroup.add(rdbtnUniversitario);
-			btngroup.add(rdbtnTcnico);
-			btngroup.add(rdbtnObrero);
-
-			
-			JPanel panel_3 = new JPanel();
-			panel_3.setBorder(new TitledBorder(UIManager.getBorder("TitledBorder.border"), "Extra", TitledBorder.LEADING, TitledBorder.TOP, null, new Color(0, 0, 0)));
-			panel_3.setBounds(12, 370, 537, 131);
-			panel.add(panel_3);
-			panel_3.setLayout(new CardLayout(0, 0));
-			
-			panel_8 = new JPanel();
-			panel_3.add(panel_8, "name_128748216872200");
-			panel_8.setLayout(null);
-			
-			JLabel lblNewLabel_10 = new JLabel("Oficios:");
-			lblNewLabel_10.setBounds(12, 53, 56, 16);
-			panel_8.add(lblNewLabel_10);
-			
-			JPanel panel_9 = new JPanel();
-			panel_9.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel_9.setBounds(71, 13, 179, 80);
-			panel_8.add(panel_9);
-			panel_9.setLayout(new BorderLayout(0, 0));
-			
-			JScrollPane scrollPane_2 = new JScrollPane();
-			panel_9.add(scrollPane_2, BorderLayout.CENTER);
-			
-			JlistOficiosDisponibles = new JList();
-			JlistOficiosDisponibles.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					selected = JlistOficiosDisponibles.getSelectedIndex();
-					if(selected > -1) {
-						btnAgregar.setEnabled(true);
-					}
-				}
-			});
-			JlistOficiosDisponibles.setModel(modelDisponibles);
-			JlistOficiosDisponibles.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			scrollPane_2.setViewportView(JlistOficiosDisponibles);
-			
-			JPanel panel_10 = new JPanel();
-			panel_10.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
-			panel_10.setBounds(334, 13, 179, 80);
-			panel_8.add(panel_10);
-			panel_10.setLayout(new BorderLayout(0, 0));
-			
-			JScrollPane scrollPane_3 = new JScrollPane();
-			scrollPane_3.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-			panel_10.add(scrollPane_3, BorderLayout.CENTER);
-			
-			JlistOficiosSeleccionados = new JList();
-			JlistOficiosSeleccionados.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					selected = JlistOficiosSeleccionados.getSelectedIndex();
-					if(selected > -1) {
-						btnQuitar.setEnabled(true);
-					}
-				}
-			});
-			JlistOficiosSeleccionados.setModel(modelSelected);
-			JlistOficiosSeleccionados.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-			scrollPane_3.setViewportView(JlistOficiosSeleccionados);
-			
-			btnAgregar = new JButton(">>");
-			btnAgregar.setBounds(271, 13, 51, 25);
-			panel_8.add(btnAgregar);
-			btnAgregar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					btnAgregar.setEnabled(false);
-					String temp = stringDisponibles.get(selected);
-					stringSelected.add(temp);
-					modelSelected.addElement(temp);
-					stringDisponibles.remove(selected);
-					reloadDisponibles();
-					reloadSelected();
-					selected = -1;
-				}
-			});
-			btnAgregar.setEnabled(false);
-			
-			btnQuitar = new JButton("<<");
-			btnQuitar.setBounds(271, 68, 51, 25);
-			panel_8.add(btnQuitar);
-			btnQuitar.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent e) {
-					btnQuitar.setEnabled(false);
-					String temp = stringSelected.get(selected);
-					stringDisponibles.add(temp);
-					modelDisponibles.addElement(temp);
-					stringSelected.remove(selected);
-					reloadDisponibles();
-					reloadSelected();
-					selected = -1;
-				}
-			});
-			btnQuitar.setEnabled(false);
-			
-			panel_7 = new JPanel();
-			panel_3.add(panel_7, "name_128060057537800");
-			panel_7.setLayout(null);
-			
-			JLabel lblNewLabel_8 = new JLabel("Area de Especialidad:");
-			lblNewLabel_8.setBounds(12, 55, 131, 16);
-			panel_7.add(lblNewLabel_8);
-			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Electricidad Industrial", "Electricidad Residencial", "Electricidad Automotriz", "Mec\u00E1nica Automotriz", "Mec\u00E1nica Industrial", "Inform\u00E1tica", "Producci\u00F3n Audiovisual", "Confecci\u00F3n y Patronaje", "Reparaci\u00F3n de Equipos", "Electr\u00F3nicos", "Ebanister\u00EDa", "Reposter\u00EDa"}));
-			comboBox.setBounds(140, 52, 143, 22);
-			panel_7.add(comboBox);
-			
-			JLabel lblNewLabel_9 = new JLabel("A\u00F1os de Experiencia:");
-			lblNewLabel_9.setBounds(295, 55, 131, 16);
-			panel_7.add(lblNewLabel_9);
-			
-			spnAñosExperiencia = new JSpinner();
-			spnAñosExperiencia.setModel(new SpinnerNumberModel(new Integer(2017), new Integer(2017), null, new Integer(1)));
-			spnAñosExperiencia.setBounds(427, 52, 86, 22);
-			JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spnAñosExperiencia, "#");
-			spnAñosExperiencia.setEditor(editor);
-			panel_7.add(spnAñosExperiencia);
-			
-			panel_6 = new JPanel();
-			panel_3.add(panel_6, "name_127485802592200");
-			panel_6.setLayout(null);
-			
-			JLabel lblCarrera = new JLabel("Carrera:");
-			lblCarrera.setBounds(12, 53, 56, 16);
-			panel_6.add(lblCarrera);
-			
-			cbxCarrera = new JComboBox();
-			cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {"Direcci\u00F3n Empresarial", "Administraci\u00F3n Hotelera", "Arquitectura", "Comunicaci\u00F3n", "Social", "Derecho", "Dise\u00F1o e Interiorismo", "Econom\u00EDa", "Educaci\u00F3n", "Estomatolog\u00EDa", "Filosof\u00EDa", "Gesti\u00F3n Financiera y Auditor\u00EDa", "Ingenier\u00EDa Civil", "Ingenier\u00EDa Mec\u00E1nica", "Ingenier\u00EDa El\u00E9ctrica", "Ingenier\u00EDa Industrial", "Ingenier\u00EDa Mecatr\u00F3nica", "Ingenier\u00EDa de Ciencias de la Computaci\u00F3n", "Ingenier\u00EDa Telem\u00E1tica", "Medicina", "Marketing", "Nutrici\u00F3n y Diet\u00E9tica", "Terapia F\u00EDsica", "Trabajo Social", "Hospitalidad\u00A0y\u00A0Turismo"}));
-			cbxCarrera.setBounds(65, 50, 211, 22);
-			panel_6.add(cbxCarrera);
-			
-			JLabel lblAñoGraduacion = new JLabel("A\u00F1o de Graduaci\u00F3n:\r\n");
-			lblAñoGraduacion.setBounds(288, 53, 123, 16);
-			panel_6.add(lblAñoGraduacion);
-			
-			spnAñoGraduacion = new JSpinner();
-			spnAñoGraduacion.setModel(new SpinnerNumberModel(new Integer(2017), new Integer(2017), null, new Integer(1)));
-			spnAñoGraduacion.setBounds(423, 50, 90, 22);
-			JSpinner.NumberEditor ne_spnAñoGraduacion = new JSpinner.NumberEditor(spnAñoGraduacion, "#");
-			spnAñoGraduacion.setEditor(ne_spnAñoGraduacion);
-			panel_6.add(spnAñoGraduacion);
-			
-
 		}
 		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
-			{			
-				btnRegistrar = new JButton("Registrar");
-				btnRegistrar.addActionListener(new ActionListener() {
+			{		
+				btnNewButton = new JButton("Modificar");
+				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						char sexo = 'A';
-						ArrayList<String> auxIdioma = new ArrayList<>();
-						ArrayList<String> auxOficio = new ArrayList<>();
-						Persona personaAux = null;
-						if (rdbtnHombre.isSelected()) {
-							sexo = 'H';
+						persona.setNombres(txtNombre.getText());
+						persona.setApellidos(txtApellidos.getText());
+						persona.setDireccion(txtDireccion.getText());
+						persona.setTelefono(txtTelefono.getText());
+						if(persona.getSexo() == 'H') {
+							persona.setSexo('H');
+						}else{
+							persona.setSexo('M');
 						}
-						else if (rdbtnMujer.isSelected()) {
-							sexo = 'M';
-						}
-						
-						if (rdbtnObrero.isSelected())
-						{
-							personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						else if (rdbtnUniversitario.isSelected())
-						{
-							personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						else if (rdbtnTcnico.isSelected())
-						{
-							personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, spnFechaNacimiento.getValue().toString(), Integer.valueOf(spnAñoGraduacion.getValue().toString())) ;
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						
-						BolsaLaboral.getInstance().getPersonas().add(personaAux);
-						loadDisponibles();
-						loadIdiomasDisponibles();
-						limpiarIdiomasSelected();
-						limpiarSelected();
-						clean();		
+						persona.setIdiomas(stringIdiomasDisponibles);
+						ListarPersona.loadPersona();
+						dispose();
 					}
-					
-						
-					
 				});
-				btnRegistrar.setActionCommand("OK");
-				buttonPane.add(btnRegistrar);
-				getRootPane().setDefaultButton(btnRegistrar);
 			}
 			{
 				btnCancelar = new JButton("Cancelar");
@@ -529,24 +297,29 @@ public class RegistrarPersona extends JDialog {
 					dispose();
 					}
 				});
+				
+				
+				buttonPane.add(btnNewButton);
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}
 		}
-		clean();
+		loadPersona();
 		loadIdiomasDisponibles();
 		loadDisponibles();
 	}
-	private void clean() {
-		txtCedula.setText("");
-		txtNombre.setText("");
-		txtApellidos.setText("");
-		txtDireccion.setText("");
-		txtTelefono.setText("");
-		spnAñoGraduacion.setValue(new Float("2017"));
-		spnFechaNacimiento.setValue(new Date());
-		rdbtnHombre.setSelected(true);
-		cbxCarrera.setSelectedIndex(1);
+	private void loadPersona() {
+		txtCedula.setText(persona.getCedula());
+		txtNombre.setText(persona.getNombres());
+		txtApellidos.setText(persona.getApellidos());
+		txtDireccion.setText(persona.getDireccion());
+		txtTelefono.setText(persona.getTelefono());
+		if(persona.getSexo() == 'H') {
+			btngroup.setSelected(rdbtnHombre.getModel(), true);
+		}else{
+			btngroup.setSelected(rdbtnMujer.getModel(), true);
+		}
+		stringIdiomasDisponibles = persona.getIdiomas();
 	}
 	
 	private void loadDisponibles(){
@@ -614,4 +387,7 @@ public class RegistrarPersona extends JDialog {
 		stringIdiomasSelected = new ArrayList<String>();
 		reloadIdiomasSelected();
 	}
+	
+	
+	
 }
