@@ -28,7 +28,6 @@ public class RegistrarCentroEmpleador extends JDialog {
 	private JTextField txtDireccion;
 	private JTextField txtTelefono;
 	private JComboBox cbxTipo;
-
 	/**
 	 * Launch the application.
 	 */
@@ -45,7 +44,7 @@ public class RegistrarCentroEmpleador extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public RegistrarCentroEmpleador(CentroEmpleador Centro)
+	public RegistrarCentroEmpleador(final CentroEmpleador Centro)
 	{
 		CentroEmpleador TestCentro = Centro;
 		if (TestCentro == null ) {
