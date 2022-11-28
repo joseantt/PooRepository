@@ -441,7 +441,7 @@ public class RegistrarPersona extends JDialog {
 			panel_7.add(lblNewLabel_9);
 			
 			spnAñosExperiencia = new JSpinner();
-			spnAñosExperiencia.setModel(new SpinnerNumberModel(new Integer(2017), new Integer(2017), null, new Integer(1)));
+			spnAñosExperiencia.setModel(new SpinnerNumberModel(new Integer(0), new Integer(0), null, new Integer(1)));
 			spnAñosExperiencia.setBounds(427, 52, 86, 22);
 			JSpinner.NumberEditor editor = new JSpinner.NumberEditor(spnAñosExperiencia, "#");
 			spnAñosExperiencia.setEditor(editor);
