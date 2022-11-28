@@ -82,8 +82,9 @@ public class login extends JFrame {
 	 * Create the frame.
 	 */
 	public login() {
+		setTitle("Iniciar Sesi\u00F3n");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 450, 300);
+		setBounds(100, 100, 383, 299);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(new BorderLayout(0, 0));
@@ -95,16 +96,16 @@ public class login extends JFrame {
 		panel.setLayout(null);
 		
 		JLabel lblUsuario = new JLabel("Usuario:");
-		lblUsuario.setBounds(39, 39, 57, 14);
+		lblUsuario.setBounds(137, 38, 57, 14);
 		panel.add(lblUsuario);
 		
 		JLabel lblContrasea = new JLabel("Contrase\u00F1a:");
-		lblContrasea.setBounds(39, 98, 105, 14);
+		lblContrasea.setBounds(129, 96, 81, 14);
 		panel.add(lblContrasea);
 		
 		
 		textField = new JTextField();
-		textField.setBounds(39, 64, 191, 20);
+		textField.setBounds(70, 63, 191, 20);
 		panel.add(textField);
 		textField.setColumns(10);
 		
@@ -122,11 +123,11 @@ public class login extends JFrame {
 		});
 		
 
-		btnLogin.setBounds(37, 175, 89, 23);
+		btnLogin.setBounds(121, 174, 89, 23);
 		panel.add(btnLogin);
 		
 		textField_1 = new JPasswordField();
-		textField_1.setBounds(39, 125, 191, 22);
+		textField_1.setBounds(70, 124, 191, 22);
 		panel.add(textField_1);
 		
 		textField_1.addActionListener(new ActionListener() {

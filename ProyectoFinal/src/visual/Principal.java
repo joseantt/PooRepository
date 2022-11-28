@@ -105,14 +105,7 @@ public class Principal extends JFrame {
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado Solicitudes de Personas");
-		mntmNewMenuItem_6.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ListarPersona ListPersona = new ListarPersona();
-				ListPersona.setModal(true);
-				ListPersona.setLocationRelativeTo(null);
-				ListPersona.setVisible(true);
-			}
-		});
+
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
 		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listado Solicitudes de Centros");
@@ -177,6 +170,14 @@ public class Principal extends JFrame {
 		mnNewMenu.add(mntmNewMenuItem_1);
 		
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado de Personas");
+		mntmNewMenuItem_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarPersona ListPersona = new ListarPersona();
+				ListPersona.setModal(true);
+				ListPersona.setLocationRelativeTo(null);
+				ListPersona.setVisible(true);
+			}
+		});
 		mnNewMenu.add(mntmNewMenuItem_2);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));

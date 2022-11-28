@@ -117,8 +117,8 @@ public class RegistrarPersona extends JDialog {
 			spnFechaNacimiento = new JSpinner();
 			spnFechaNacimiento.setBounds(386, 91, 127, 22);
 			panel_1.add(spnFechaNacimiento);
-			spnFechaNacimiento.setModel(new SpinnerDateModel(new Date(), new Date(), null, Calendar.MONTH));
-			JSpinner.DateEditor de_spnFechaNacimiento = new JSpinner.DateEditor(spnFechaNacimiento, "dd/MM/yyyy");
+			spnFechaNacimiento.setModel(new SpinnerDateModel(new Date(1669660052532L), new Date(1669660052406L), null, Calendar.MONTH));
+			JSpinner.DateEditor de_spnFechaNacimiento = new JSpinner.DateEditor(spnFechaNacimiento, "dd/MM/yy");
 			spnFechaNacimiento.setEditor(de_spnFechaNacimiento);
 			
 			JLabel lblNewLabel = new JLabel("C\u00E9dula:");
