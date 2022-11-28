@@ -163,6 +163,7 @@ public class RegistrarCentroEmpleador extends JDialog {
 		txtDireccion.setText("");
 		txtNombre.setText("");
 		cbxTipo.setSelectedIndex(0);
+		txtNombre.requestFocus();
 	}
 	
 	public boolean camposVacios() {
