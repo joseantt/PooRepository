@@ -122,7 +122,7 @@ public class login extends JFrame {
 					dispose();
 					frame.setVisible(true);
 				}else {
-				JOptionPane.showMessageDialog(null, "El nombre de usuario o la contraseña son incorrectas, intente de nuevo", "Información", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "El nombre de usuario o la contraseña son incorrectas, intente de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
 				clean();
 
 				};
@@ -149,7 +149,7 @@ public class login extends JFrame {
 					dispose();
 					frame.setVisible(true);
 				}else {
-					JOptionPane.showMessageDialog(null, "El nombre de usuario o la contraseña son incorrectas, intente de nuevo", "Información", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "El nombre de usuario o la contraseña son incorrectas, intente de nuevo", "Error", JOptionPane.ERROR_MESSAGE);
 					clean();
 				};
 			}
