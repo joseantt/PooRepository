@@ -22,6 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.JSpinner;
 import javax.swing.SpinnerDateModel;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.ArrayList;
 import java.util.Calendar;
 import javax.swing.UIManager;
@@ -88,6 +89,7 @@ public class RegistrarPersona extends JDialog {
 	private Persona TestPersona = null;
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
+	private ButtonGroup btnGroup_2 = new ButtonGroup();
 
 	public RegistrarPersona() {
 		setResizable(false);
@@ -117,8 +119,8 @@ public class RegistrarPersona extends JDialog {
 			spnFechaNacimiento = new JSpinner();
 			spnFechaNacimiento.setBounds(386, 91, 127, 22);
 			panel_1.add(spnFechaNacimiento);
-			spnFechaNacimiento.setModel(new SpinnerDateModel(new Date(1669660052532L), new Date(1669660052406L), null, Calendar.MONTH));
-			JSpinner.DateEditor de_spnFechaNacimiento = new JSpinner.DateEditor(spnFechaNacimiento, "dd/MM/yy");
+			spnFechaNacimiento.setModel(new SpinnerDateModel(new Date(1669667191441L), null, null, Calendar.MONTH));
+			JSpinner.DateEditor de_spnFechaNacimiento = new JSpinner.DateEditor(spnFechaNacimiento, "dd/MM/yyyy");
 			spnFechaNacimiento.setEditor(de_spnFechaNacimiento);
 			
 			JLabel lblNewLabel = new JLabel("C\u00E9dula:");
@@ -182,6 +184,9 @@ public class RegistrarPersona extends JDialog {
 			rdbtnMujer = new JRadioButton("Mujer");
 			rdbtnMujer.setBounds(319, 132, 67, 25);
 			panel_1.add(rdbtnMujer);
+			
+			btnGroup_2.add(rdbtnHombre);
+			btnGroup_2.add(rdbtnMujer);
 			
 			JLabel lblNewLabel_7 = new JLabel("Idiomas:");
 			lblNewLabel_7.setBounds(12, 208, 56, 16);
@@ -487,32 +492,41 @@ public class RegistrarPersona extends JDialog {
 						else if (rdbtnMujer.isSelected()) {
 							sexo = 'M';
 						}
+						if(!camposVacios()) {
+							if (rdbtnObrero.isSelected())
+							{
+								personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
+							else if (rdbtnUniversitario.isSelected())
+							{
+								personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
+							else if (rdbtnTcnico.isSelected())
+							{
+								personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, spnFechaNacimiento.getValue().toString(), Integer.valueOf(spnAñoGraduacion.getValue().toString())) ;
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
+							
+							BolsaLaboral.getInstance().getPersonas().add(personaAux);
+							loadDisponibles();
+							loadIdiomasDisponibles();
+							limpiarIdiomasSelected();
+							limpiarSelected();
+							clean();
+						}else {
+							if(!esMayorEdad()) {
+								JOptionPane.showMessageDialog(null, "La persona debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+							
+						}
 						
-						if (rdbtnObrero.isSelected())
-						{
-							personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						else if (rdbtnUniversitario.isSelected())
-						{
-							personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						else if (rdbtnTcnico.isSelected())
-						{
-							personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-								txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, spnFechaNacimiento.getValue().toString(), Integer.valueOf(spnAñoGraduacion.getValue().toString())) ;
-								JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						}
-						
-						BolsaLaboral.getInstance().getPersonas().add(personaAux);
-						loadDisponibles();
-						loadIdiomasDisponibles();
-						limpiarIdiomasSelected();
-						limpiarSelected();
-						clean();		
 					}
 					
 						
@@ -610,8 +624,35 @@ public class RegistrarPersona extends JDialog {
 			modelIdiomasSelected.addElement(aux);
 		}
 	}
+	
 	private void limpiarIdiomasSelected() {
 		stringIdiomasSelected = new ArrayList<String>();
 		reloadIdiomasSelected();
+	}
+	
+	private boolean camposVacios() {
+		boolean existenVacios = false;
+		if(txtCedula.getText().equals("") || txtApellidos.getText().equals("") ||
+				txtTelefono.equals("") || txtNombre.equals("") || txtDireccion.equals("")) {
+			existenVacios = true;
+		}else if(stringIdiomasSelected.isEmpty() || (rdbtnObrero.isSelected() && stringSelected.isEmpty())) {
+			existenVacios = true;
+		}else if(!esMayorEdad()) {
+			existenVacios = true;
+		}
+		
+		return existenVacios;
+	}
+	private boolean esMayorEdad() {
+		boolean esMayor = false;
+		Calendar calNacimiento = new GregorianCalendar();
+		calNacimiento.setTime((Date)spnFechaNacimiento.getValue());
+		Calendar calHoy = new GregorianCalendar();
+		calHoy.setTime(new Date());
+		
+		if(calHoy.get(Calendar.YEAR) - calNacimiento.get(Calendar.YEAR) >= 18) {
+			esMayor = true;
+		}
+		return esMayor;
 	}
 }
