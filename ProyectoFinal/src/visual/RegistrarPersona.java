@@ -653,6 +653,6 @@ public class RegistrarPersona extends JDialog {
 		if(calHoy.get(Calendar.YEAR) - calNacimiento.get(Calendar.YEAR) >= 18) {
 			esMayor = true;
 		}
-		return esMayor;ñ
+		return esMayor;
 	}
 }
