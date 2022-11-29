@@ -1,9 +1,11 @@
 package logical;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class BolsaLaboral {
+public class BolsaLaboral implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
 	private static BolsaLaboral bolsalaboral = null;
 	ArrayList<Persona> personas;
 	ArrayList<CentroEmpleador> centroEmpleados;
@@ -42,7 +44,20 @@ public class BolsaLaboral {
 		this.solicitudes = solicitudes;
 	}
 	
+	public void regPersona(Persona persona){
+		personas.add(persona);
+		
+	}
 	
+	public void regCentro(CentroEmpleador centro){
+		centroEmpleados.add(centro);
+		
+	}
+	
+	public void regSolicitud(Solicitud solicitud){
+		solicitudes.add(solicitud);
+		
+	}
 	public Solicitud buscarSolicitudByCode(String codigo) {
 		Solicitud solicitud = null;
 		int ind = 0;

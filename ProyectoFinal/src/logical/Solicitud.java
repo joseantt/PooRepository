@@ -1,8 +1,13 @@
 package logical;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public abstract class Solicitud {
+public abstract class Solicitud implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	protected String codigoSolicitud;
 	protected Date fechaCreacion;
 	protected float sueldo;
