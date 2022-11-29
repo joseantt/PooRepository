@@ -104,12 +104,18 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listado Solicitudes de Personas");
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listar solicitudes");
+		mntmNewMenuItem_6.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarSolicitud lSL = new ListarSolicitud();
+				lSL.setModal(true);
+				lSL.setLocationRelativeTo(null);
+				lSL.setVisible(true);
+			}
+		});
 
 		mnNewMenu_2.add(mntmNewMenuItem_6);
 		
-		JMenuItem mntmNewMenuItem_7 = new JMenuItem("Listado Solicitudes de Centros");
-		mnNewMenu_2.add(mntmNewMenuItem_7);
 		
 		JMenu mnNewMenu_1 = new JMenu("Centro Empleador");
 		menuBar.add(mnNewMenu_1);

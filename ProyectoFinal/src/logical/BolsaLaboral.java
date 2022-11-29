@@ -83,9 +83,14 @@ public class BolsaLaboral {
 		
 	}
 	
+	public boolean eliminarSolicitud(Solicitud solicitud) {
+		
+		return solicitudes.remove(solicitud);
+		
+	}
+	
 	public CentroEmpleador buscarCentro(String codigo) {
 		CentroEmpleador centro = null;
-		boolean aparecio=false;
 		int ind = 0;
 		
 		while(ind < centroEmpleados.size() && centro == null) {
@@ -95,6 +100,19 @@ public class BolsaLaboral {
 			ind++;
 		} 
 		return centro;
+	}
+	
+	public Solicitud buscarSolicitud(String codigo) {
+		Solicitud solicitud = null;
+		int ind = 0;
+		
+		while(ind < solicitudes.size() && solicitud == null) {
+			if(centroEmpleados.get(ind).getCodigo().equalsIgnoreCase(codigo)) {
+				solicitud =  solicitudes.get(ind);
+			}
+			ind++;
+		} 
+		return solicitud;
 	}
 	
 	
