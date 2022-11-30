@@ -158,7 +158,7 @@ public class BolsaLaboral implements Serializable{
 		int ind = 0;
 		
 		while(ind < solicitudes.size() && solicitud == null) {
-			if(centroEmpleados.get(ind).getCodigo().equalsIgnoreCase(codigo)) {
+			if(solicitudes.get(ind).getCodigoSolicitud().equalsIgnoreCase(codigo)) {
 				solicitud =  solicitudes.get(ind);
 			}
 			ind++;
