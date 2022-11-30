@@ -8,14 +8,18 @@ public class BolsaLaboral implements Serializable{
 	private static final long serialVersionUID = 1L;
 	private static BolsaLaboral bolsalaboral = null;
 	ArrayList<Persona> personas;
+	private ArrayList<User> misUsers;
 	ArrayList<CentroEmpleador> centroEmpleados;
 	ArrayList<Solicitud> solicitudes;
+	private User loginUser;
 
 	public BolsaLaboral() {
 		super();
 		personas = new ArrayList<Persona>();
 		centroEmpleados = new ArrayList<CentroEmpleador>();
 		solicitudes = new ArrayList<Solicitud>();
+		misUsers = new ArrayList<>();
+
 	}
 	
 	public static BolsaLaboral getInstance() {
@@ -23,6 +27,10 @@ public class BolsaLaboral implements Serializable{
 			bolsalaboral = new BolsaLaboral(); 	
 		}
 		return bolsalaboral;
+	}
+	
+	public static void setBolsaLaboral(BolsaLaboral bolsa) {
+		BolsaLaboral.bolsalaboral = bolsa;
 	}
 	
 	public ArrayList<Persona> getPersonas() {
@@ -44,11 +52,23 @@ public class BolsaLaboral implements Serializable{
 		this.solicitudes = solicitudes;
 	}
 	
+	public ArrayList<User> getMisUsers() {
+		return misUsers;
+	}
+
+	public void setMisUsers(ArrayList<User> misUsers) {
+		this.misUsers = misUsers;
+	}
+	
+	public User getLoginUser() {
+		return loginUser;
+	}
+	
 	public void regPersona(Persona persona){
 		personas.add(persona);
 		
 	}
-	
+
 	public void regCentro(CentroEmpleador centro){
 		centroEmpleados.add(centro);
 		
@@ -56,6 +76,22 @@ public class BolsaLaboral implements Serializable{
 	
 	public void regSolicitud(Solicitud solicitud){
 		solicitudes.add(solicitud);
+		
+	}
+	
+	public boolean confirmLogin(String text, String text2) {
+		boolean login = false;
+		for (User user : misUsers) {
+			if(user.getUserName().equals(text) && user.getPass().equals(text2)){
+				loginUser = user;
+				login = true;
+			}
+		}
+		return login;
+	}
+	
+	public void regUser(User user) {
+		misUsers.add(user);
 		
 	}
 	public Solicitud buscarSolicitudByCode(String codigo) {

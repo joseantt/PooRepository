@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+
 import java.awt.FlowLayout;
 
 import javax.swing.JButton;
@@ -8,7 +9,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logical.Control;
+import logical.BolsaLaboral;
 import logical.User;
 
 import javax.swing.JLabel;
@@ -103,7 +104,7 @@ public class regUser extends JDialog {
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						User user = new User(comboBox.getSelectedItem().toString(),textField.getText(),textField_1.getText());
-					    Control.getInstance().regUser(user);
+					    BolsaLaboral.getInstance().regUser(user);
 					}
 				});
 				btnRegistrar.setActionCommand("OK");

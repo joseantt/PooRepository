@@ -1,6 +1,7 @@
 package visual;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -13,7 +14,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import logical.Control;
+import logical.BolsaLaboral;
 import logical.User;
 
 import javax.swing.JLabel;
@@ -45,8 +46,8 @@ public class login extends JFrame {
 				try {
 					empresa = new FileInputStream ("empresa.dat");
 					empresaRead = new ObjectInputStream(empresa);
-					Control temp = (Control)empresaRead.readObject();
-					Control.setControl(temp);
+					BolsaLaboral temp = (BolsaLaboral)empresaRead.readObject();
+					BolsaLaboral.setBolsaLaboral(temp);
 					empresa.close();
 					empresaRead.close();
 				} catch (FileNotFoundException e) {
@@ -54,8 +55,8 @@ public class login extends JFrame {
 						empresa2 = new  FileOutputStream("empresa.dat");
 						empresaWrite = new ObjectOutputStream(empresa2);
 						User aux = new User("Administrador", "Admin", "Admin");
-						Control.getInstance().regUser(aux);
-						empresaWrite.writeObject(Control.getInstance());
+						BolsaLaboral.getInstance().regUser(aux);
+						empresaWrite.writeObject(BolsaLaboral.getInstance());
 						empresa2.close();
 						empresaWrite.close();
 					} catch (FileNotFoundException e1) {
@@ -116,7 +117,7 @@ public class login extends JFrame {
 		btnLogin.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String myPass=String.valueOf(txtContraseña.getPassword());
-				if(Control.getInstance().confirmLogin(txtUsuario.getText(),myPass)){
+				if(BolsaLaboral.getInstance().confirmLogin(txtUsuario.getText(),myPass)){
 					JOptionPane.showMessageDialog(null, "Bienvenido señor/a "+txtUsuario.getText(), "Información", JOptionPane.INFORMATION_MESSAGE);
 					Principal frame = new Principal();
 					dispose();
@@ -143,7 +144,7 @@ public class login extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				String myPass=String.valueOf(txtContraseña.getPassword());
-				if(Control.getInstance().confirmLogin(txtUsuario.getText(),myPass)){
+				if(BolsaLaboral.getInstance().confirmLogin(txtUsuario.getText(),myPass)){
 					JOptionPane.showMessageDialog(null, "Bienvenido señor/a "+txtUsuario.getText(), "Información", JOptionPane.INFORMATION_MESSAGE);
 					Principal frame = new Principal();
 					dispose();
@@ -154,7 +155,6 @@ public class login extends JFrame {
 				};
 			}
 
-			
 
 		});
 	}

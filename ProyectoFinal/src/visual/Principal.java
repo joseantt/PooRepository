@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.TitledBorder;
 
-import logical.Control;
+import logical.BolsaLaboral;
 
 import javax.swing.JMenuBar;
 import javax.swing.JMenu; 
@@ -50,7 +50,7 @@ public class Principal extends JFrame {
 
 
 	public Principal() {
-		if(Control.getInstance().getLoginUser()!= null)
+		if(BolsaLaboral.getInstance().getLoginUser()!= null)
 		{
 			addWindowListener(new WindowAdapter() {
 				@Override
@@ -60,7 +60,7 @@ public class Principal extends JFrame {
 					try {
 						empresa2 = new  FileOutputStream("empresa.dat");
 						empresaWrite = new ObjectOutputStream(empresa2);
-						empresaWrite.writeObject(Control.getInstance());
+						empresaWrite.writeObject(BolsaLaboral.getInstance());
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -82,7 +82,7 @@ public class Principal extends JFrame {
 		JMenuBar menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
 		
-		if(Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador") || Control.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria"))
+		if(BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador") || BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria"))
 		{
 			JMenu mnNewMenu_3 = new JMenu("Administraci\u00F3n");
 			menuBar.add(mnNewMenu_3);
