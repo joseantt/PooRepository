@@ -135,6 +135,18 @@ public class Principal extends JFrame {
 		
 		mnNewMenu_8.add(mntmNewMenuItem_8);
 		
+		JMenuItem mntmNewMenuItem_List = new JMenuItem("Listado de Usuarios");
+		mntmNewMenuItem_List.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarUsuarios lU = new ListarUsuarios();
+				lU.setModal(true);
+				lU.setLocationRelativeTo(null);
+				lU.setVisible(true);
+			}
+		});
+		
+		mnNewMenu_8.add(mntmNewMenuItem_List);
+		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar Centro Empleador");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

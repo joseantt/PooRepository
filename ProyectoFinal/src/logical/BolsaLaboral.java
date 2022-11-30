@@ -166,5 +166,24 @@ public class BolsaLaboral implements Serializable{
 		return solicitud;
 	}
 	
-	
+	public float matching() {
+		float porcentaje = 0f;
+		
+		
+		
+		return porcentaje;
+	}
+
+	public User buscarUsuarioByNombre(String nombre) {
+		User user = null;
+		int ind = 0;
+		
+		while(ind < misUsers.size() && user == null) {
+			if(misUsers.get(ind).getUserName().equalsIgnoreCase(nombre)) {
+				user =  misUsers.get(ind);
+			}
+			ind++;
+		} 
+		return user;
+	}
 }
