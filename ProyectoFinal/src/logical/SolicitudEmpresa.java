@@ -8,15 +8,17 @@ public class SolicitudEmpresa extends Solicitud {
 	private int cantMatcheo;
 	private int empleadosNecesarios;
 	private ArrayList<String> oficios;
+	private ArrayList<String> idiomas;
 	private String areaEspecialidad;
 	private int añosExperiencia;
 	private String carrera;
 	private int añoGraduacion;
+	private String tipo;
 	
 	
 	public SolicitudEmpresa(String codigoSolicitud, float sueldo, float sueldoMax, boolean puedeMudarse, boolean licenciaConducir,
 			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String codigoEmpresa, int cantMatcheo, int empleadosNecesarios,
-			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion, Date fechaCreacion) {
+			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion, Date fechaCreacion, ArrayList<String> idioma, String tipo) {
 		super(codigoSolicitud, sueldo, sueldoMax, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
 		this.codigoEmpresa = codigoEmpresa;
 		this.cantMatcheo = cantMatcheo;
@@ -26,6 +28,8 @@ public class SolicitudEmpresa extends Solicitud {
 		this.añosExperiencia = añosExperiencia;
 		this.carrera = carrera;
 		this.añoGraduacion = añoGraduacion;
+		this.idiomas = idioma;
+		this.setTipo(tipo);
 	}
 
 
@@ -76,5 +80,25 @@ public class SolicitudEmpresa extends Solicitud {
 	}
 	public void setAñoGraduacion(int añoGraduacion) {
 		this.añoGraduacion = añoGraduacion;
+	}
+
+
+	public ArrayList<String> getIdiomas() {
+		return idiomas;
+	}
+
+
+	public void setIdiomas(String idioma) {
+		this.idiomas.add(idioma);
+	}
+
+
+	public String getTipo() {
+		return tipo;
+	}
+
+
+	public void setTipo(String tipo) {
+		this.tipo = tipo;
 	}
 }

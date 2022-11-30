@@ -81,12 +81,6 @@ public class ListarSolicitud extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				btnCancelar = new JButton("Cancelar");
-				btnCancelar.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-					dispose();
-					}
-				});
 				{
 					btnEliminar = new JButton("Eliminar");
 					btnEliminar.addActionListener(new ActionListener() {
@@ -109,23 +103,18 @@ public class ListarSolicitud extends JDialog {
 					btnDetalles = new JButton("Detalles");
 					btnDetalles.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
-							int aux;
 							if (selected != null) {
-								aux = JOptionPane.showConfirmDialog(null, "Está seguro que quiere elimninar esta persona", "Confirmación", JOptionPane.YES_NO_OPTION);   
-								if (aux == JOptionPane.OK_OPTION) {
-									BolsaLaboral.getInstance().eliminarSolicitud(selected);
-									loadPersona();
-									btnEliminar.setEnabled(false);
-								}
+								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected);
+								modSolicitud.setModal(true);
+								modSolicitud.setVisible(true);
 							}
 						}
 					});
 					btnEliminar.setHorizontalAlignment(SwingConstants.LEFT);
-					buttonPane.add(btnEliminar);
+					buttonPane.add(btnDetalles);
 				}
 				btnEliminar.setEnabled(false);
-				btnCancelar.setActionCommand("Cancel");
-				buttonPane.add(btnCancelar);
+				btnDetalles.setEnabled(true);
 			}
 		}
 		loadPersona();

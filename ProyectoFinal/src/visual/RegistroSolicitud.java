@@ -101,11 +101,15 @@ public class RegistroSolicitud extends JDialog {
 	private JRadioButton rdbtnCentroEmp;
 	private JRadioButton rdbtnPersona;
 	private JSlider sliderMatcheo;
+	private JButton btnRegistrar;
+	private JLabel lblNewLabel_5;
+	private JLabel label_8;
+	private JLabel label_7;
 	
 
 	public static void main(String[] args) {
 		try {
-			RegistroSolicitud dialog = new RegistroSolicitud();
+			RegistroSolicitud dialog = new RegistroSolicitud(null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -114,8 +118,15 @@ public class RegistroSolicitud extends JDialog {
 	}
 
 	
-	public RegistroSolicitud() {
-		setTitle("Registro de solicitud");
+	public RegistroSolicitud(Solicitud solicitud) {
+		
+		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
+		rdbtnNewRadioButton.setSelected(true);
+		getContentPane().add(rdbtnNewRadioButton, BorderLayout.CENTER);
+		if(solicitud == null)
+			setTitle("Registro de solicitud");
+		else 
+			setTitle("Detalles de solicitud");
 		setBounds(100, 100, 697, 840);
 		modelDisponibles = new DefaultListModel<String>();
 		modelSelected = new DefaultListModel<String>();
@@ -231,7 +242,7 @@ public class RegistroSolicitud extends JDialog {
 			panel_2.add(panelUniversitario, "name_368647319830800");
 			panelUniversitario.setLayout(null);
 			
-			JLabel lblNewLabel_5 = new JLabel("Carrera:");
+			lblNewLabel_5 = new JLabel("Carrera:");
 			lblNewLabel_5.setBounds(12, 62, 56, 16);
 			panelUniversitario.add(lblNewLabel_5);
 			
@@ -374,7 +385,7 @@ public class RegistroSolicitud extends JDialog {
 			btnAtras.setBounds(552, 317, 65, 25);
 			panelDetalles2.add(btnAtras);
 			
-			JLabel label_7 = new JLabel("Cantidad de empleados:");
+			label_7 = new JLabel("Cantidad de empleados:");
 			label_7.setHorizontalAlignment(SwingConstants.CENTER);
 			label_7.setBounds(12, 291, 633, 16);
 			panelDetalles2.add(label_7);
@@ -387,7 +398,7 @@ public class RegistroSolicitud extends JDialog {
 			sliderMatcheo.setPaintLabels(true);
 			panelDetalles2.add(sliderMatcheo);
 			
-			JLabel label_8 = new JLabel("Porcentaje de Matching:");
+			label_8 = new JLabel("Porcentaje de Matching:");
 			label_8.setHorizontalAlignment(SwingConstants.CENTER);
 			label_8.setBounds(12, 189, 633, 16);
 			panelDetalles2.add(label_8);
@@ -414,7 +425,7 @@ public class RegistroSolicitud extends JDialog {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					selected2 = listIdiomasDisponibles.getSelectedIndex();
-					if(selected2 > -1) {
+					if(selected2 > -1 && solicitud==null) {
 						btnAddIdiomas.setEnabled(true);
 					}
 				}
@@ -436,7 +447,7 @@ public class RegistroSolicitud extends JDialog {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 					selected2 = listIdiomasSelected.getSelectedIndex();
-					if(selected2 > -1) {
+					if(selected2 > -1 && solicitud==null) {
 						btnRemoveIdiomas.setEnabled(true);
 					}
 				}
@@ -580,7 +591,7 @@ public class RegistroSolicitud extends JDialog {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
-				JButton btnRegistrar = new JButton("Registrar");
+				btnRegistrar = new JButton("Registrar");
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						CentroEmpleador centro = BolsaLaboral.getInstance().buscarCentro(txtCodigoTipo.getText());
@@ -610,8 +621,15 @@ public class RegistroSolicitud extends JDialog {
 								JOptionPane.showMessageDialog(null, "Ha ocurrido un error al realizar la solicitud", "Error", JOptionPane.ERROR_MESSAGE);	
 							}
 						}else if(rdbtnCentroEmp.isSelected() && !camposVacios() && centro != null) {
+							String tipo = "";
+							if(rdbtnUniversitario.isSelected())
+								tipo = "Universitario";
+							else if(rdbtnTecnico.isSelected())
+								tipo = "Tecnico";
+							else if(rdbtnObrero.isSelected())
+								tipo = "Obrero";
 							SolicitudEmpresa sE = new SolicitudEmpresa(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-									Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date());
+									Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date(),stringIdiomasSelected, tipo);
 							BolsaLaboral.getInstance().getSolicitudes().add(sE);
 							clean();
 							JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
@@ -639,6 +657,156 @@ public class RegistroSolicitud extends JDialog {
 		clean();
 		loadDisponibles();
 		loadDisponiblesIdiomas();
+		if(solicitud!=null)
+		{
+			if(solicitud instanceof SolicitudEmpresa)
+			{
+				rdbtnCentroEmp.setSelected(true);
+				rdbtnPersona.setSelected(false);
+				txtCodigoSol.setText(solicitud.getCodigoSolicitud());
+				txtFecha.setText(solicitud.getFechaCreacion().toString());
+				chkbxMudarse.setSelected(solicitud.isPuedeMudarse());
+				chkbxLicencia.setSelected(solicitud.isLicenciaConducir());
+				chkbxVehiculo.setSelected(solicitud.isTieneVehiculo());
+				cbxTipoContrato.setSelectedItem(solicitud.getTipoContrato());
+				cbxCondFisica.setSelectedItem(solicitud.getCondicionFisica());
+				spnSueldoMin.setValue(solicitud.getSueldo());
+				spnSueldoMax.setValue(solicitud.getSueldoMax());
+				txtCodigoTipo.setText(((SolicitudEmpresa) solicitud).getCodigoEmpresa());
+				if(((SolicitudEmpresa) solicitud).getTipo().equalsIgnoreCase("Universitario"))
+				{
+					rdbtnUniversitario.setSelected(true);
+					rdbtnObrero.setSelected(false);
+					rdbtnTecnico.setSelected(false);
+				}
+				if(((SolicitudEmpresa) solicitud).getTipo().equalsIgnoreCase("Obrero"))
+				{
+					rdbtnUniversitario.setSelected(false);
+					rdbtnObrero.setSelected(true);
+					rdbtnTecnico.setSelected(false);
+				}
+				if(((SolicitudEmpresa) solicitud).getTipo().equalsIgnoreCase("Tecnico"))
+				{
+					rdbtnUniversitario.setSelected(false);
+					rdbtnObrero.setSelected(false);
+					rdbtnTecnico.setSelected(true);
+				}
+				cbxCarrera.setSelectedItem(((SolicitudEmpresa) solicitud).getCarrera());
+				spnGraduacion.setValue(((SolicitudEmpresa) solicitud).getAñoGraduacion());
+				String temp;
+				for (int index=0; index < ((SolicitudEmpresa) solicitud).getIdiomas().size(); index++)
+				{
+					temp = ((SolicitudEmpresa) solicitud).getIdiomas().get(index);
+					stringIdiomasSelected.add(temp);
+					modelIdiomasSelected.addElement(temp);
+				}
+				sliderMatcheo.setValue(((SolicitudEmpresa) solicitud).getCantMatcheo());
+				spnEmpleados.setValue(((SolicitudEmpresa) solicitud).getEmpleadosNecesarios());
+				btnRegistrar.setVisible(false);
+				rdbtnCentroEmp.setEnabled(false);
+				rdbtnPersona.setEnabled(false);
+				txtCodigoSol.setEnabled(false);
+				txtFecha.setEnabled(false);
+				chkbxMudarse.setEnabled(false);
+				chkbxLicencia.setEnabled(false);
+				chkbxVehiculo.setEnabled(false);
+				cbxTipoContrato.setEnabled(false);
+				cbxCondFisica.setEnabled(false);
+				spnSueldoMin.setEnabled(false);
+				spnSueldoMax.setEnabled(false);
+				txtCodigoTipo.setEnabled(false);
+				rdbtnUniversitario.setEnabled(false);
+				rdbtnObrero.setEnabled(false);
+				rdbtnTecnico.setEnabled(false);
+				cbxCarrera.setEnabled(false);
+				spnGraduacion.setEnabled(false);
+				sliderMatcheo.setEnabled(false);
+				btnAddIdiomas.setEnabled(false);
+				btnRemoveIdiomas.setEnabled(false);
+				spnEmpleados.setEnabled(false);
+				
+			}
+			if(solicitud instanceof SolicitudPersona)
+			{
+				rdbtnCentroEmp.setSelected(false);
+				rdbtnPersona.setSelected(true);
+				txtCodigoSol.setText(solicitud.getCodigoSolicitud());
+				txtFecha.setText(solicitud.getFechaCreacion().toString());
+				chkbxMudarse.setSelected(solicitud.isPuedeMudarse());
+				chkbxLicencia.setSelected(solicitud.isLicenciaConducir());
+				chkbxVehiculo.setSelected(solicitud.isTieneVehiculo());
+				cbxTipoContrato.setSelectedItem(solicitud.getTipoContrato());
+				cbxCondFisica.setSelectedItem(solicitud.getCondicionFisica());
+				spnSueldoMin.setValue(solicitud.getSueldo());
+				spnSueldoMax.setValue(solicitud.getSueldoMax());
+				txtCodigoTipo.setText(((SolicitudPersona) solicitud).getCedula());
+				if(solicitud instanceof SolicitudUniversitario)
+				{
+					rdbtnUniversitario.setSelected(true);
+					rdbtnObrero.setSelected(false);
+					rdbtnTecnico.setSelected(false);
+				}
+				if(solicitud instanceof SolicitudObrero)
+				{
+					rdbtnUniversitario.setSelected(false);
+					rdbtnObrero.setSelected(true);
+					rdbtnTecnico.setSelected(false);
+					spnGraduacion.setEnabled(false);
+					panel_2.setVisible(false);
+				}
+				if(solicitud instanceof SolicitudTecnico)
+				{
+					rdbtnUniversitario.setSelected(false);
+					rdbtnObrero.setSelected(false);
+					rdbtnTecnico.setSelected(true);
+					panel_2.setVisible(false);
+					//spnGraduacion.setVisible(false);
+					//lblNewLabel_5.setVisible(false);
+				}
+				Persona personaax = BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona) solicitud).getCedula());
+				if(personaax!=null)
+				{
+					String temp;
+					for (int index=0; index < personaax.getIdiomas().size(); index++)
+					{
+						temp = personaax.getIdiomas().get(index);
+						stringIdiomasSelected.add(temp);
+						modelIdiomasSelected.addElement(temp);
+					}
+					if(personaax instanceof Universitario)
+						spnGraduacion.setValue(((Universitario) personaax).getAñoGraduacion());
+				}
+				sliderMatcheo.setVisible(false);
+				spnEmpleados.setVisible(false);
+				if(solicitud instanceof SolicitudUniversitario)
+					cbxCarrera.setSelectedItem(((SolicitudUniversitario) solicitud).getCarrera());
+				btnRegistrar.setVisible(false);
+				rdbtnCentroEmp.setEnabled(false);
+				rdbtnPersona.setEnabled(false);
+				txtCodigoSol.setEnabled(false);
+				txtFecha.setEnabled(false);
+				chkbxMudarse.setEnabled(false);
+				chkbxLicencia.setEnabled(false);
+				chkbxVehiculo.setEnabled(false);
+				cbxTipoContrato.setEnabled(false);
+				cbxCondFisica.setEnabled(false);
+				spnSueldoMin.setEnabled(false);
+				spnSueldoMax.setEnabled(false);
+				txtCodigoTipo.setEnabled(false);
+				rdbtnUniversitario.setEnabled(false);
+				rdbtnObrero.setEnabled(false);
+				rdbtnTecnico.setEnabled(false);
+				cbxCarrera.setEnabled(false);
+				spnGraduacion.setEnabled(false);
+				sliderMatcheo.setEnabled(false);
+				btnAddIdiomas.setEnabled(false);
+				btnRemoveIdiomas.setEnabled(false);
+				spnEmpleados.setEnabled(false);
+				lblCedulaCodigo.setText("Cédula");
+				label_8.setVisible(false);
+				label_7.setVisible(false);
+			}
+		}
 	}
 	private void clean() {
 		txtCodigoSol.setText("SOL-"+(BolsaLaboral.getInstance().getSolicitudes().size()+1));
