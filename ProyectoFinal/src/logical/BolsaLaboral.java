@@ -7,10 +7,10 @@ public class BolsaLaboral implements Serializable{
 	
 	private static final long serialVersionUID = 1L;
 	private static BolsaLaboral bolsalaboral = null;
-	ArrayList<Persona> personas;
+	private ArrayList<Persona> personas;
 	private ArrayList<User> misUsers;
-	ArrayList<CentroEmpleador> centroEmpleados;
-	ArrayList<Solicitud> solicitudes;
+	private ArrayList<CentroEmpleador> centroEmpleados;
+	private ArrayList<Solicitud> solicitudes;
 	private User loginUser;
 
 	public BolsaLaboral() {
