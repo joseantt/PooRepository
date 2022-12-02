@@ -19,6 +19,7 @@ import javax.swing.WindowConstants;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
 import javax.swing.border.TitledBorder;
@@ -70,7 +71,7 @@ public class regUser extends JDialog {
 		txtNombre.setColumns(10);
 		
 		cbxTipo = new JComboBox();
-		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"<Seleccione>", "Administrador", "Secretario"}));
+		cbxTipo.setModel(new DefaultComboBoxModel(new String[] {"Secretario", "Administrador"}));
 		cbxTipo.setBounds(45, 112, 127, 20);
 		contentPanel.add(cbxTipo);
 		
@@ -104,10 +105,23 @@ public class regUser extends JDialog {
 				btnRegistrar.setFont(new Font("Tahoma", Font.PLAIN, 13));
 				btnRegistrar.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						User user = new User(cbxTipo.getSelectedItem().toString(),txtNombre.getText(),txtPassword.getText());
-						JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-						BolsaLaboral.getInstance().regUser(user);
-						clean();
+						String password = String.valueOf(txtPassword.getPassword());
+						String confirm=String.valueOf(txtConfirmPassword.getPassword());
+						
+						if(!camposVacios() && password.equals(confirm)) {
+							User user = new User(cbxTipo.getSelectedItem().toString(),txtNombre.getText(),txtPassword.getText());
+							JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							BolsaLaboral.getInstance().regUser(user);
+							clean();
+						}
+						
+						else {
+							if(!password.equals(confirm)) {
+								JOptionPane.showMessageDialog(null, "La contraseña y su confirmación no son validos", "Error",JOptionPane.ERROR_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error",JOptionPane.ERROR_MESSAGE);
+							}
+						}
 					}
 				});
 				btnRegistrar.setActionCommand("OK");
@@ -126,11 +140,24 @@ public class regUser extends JDialog {
 			}
 		}
 	}
-	public void clean () {
+	private void clean () {
 		txtNombre.setText("");
 		txtPassword.setText("");
 		cbxTipo.setSelectedIndex(0);
 		txtConfirmPassword.setText("");
+	}
+	
+	private boolean camposVacios(){
+		boolean existen = false;
+		String password = String.valueOf(txtPassword.getPassword());
+		String confirm=String.valueOf(txtConfirmPassword.getPassword());
+		
+		if(txtNombre.getText().equals("") || password.equals("")
+				|| confirm.equals("")) {
+			existen = true;
+		}
+		
+			return existen;
 	}
 	
 }
