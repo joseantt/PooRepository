@@ -35,23 +35,16 @@ public class ListarCentros extends JDialog {
 	private CentroEmpleador selected = null;
 	private JButton btnEliminar;
 	private JButton btnModificar;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ListarCentros dialog = new ListarCentros();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+	private JButton btnSolicitud;
+	private JButton btnCancelar;
+	
+	public static final int PORDEFECTO = 0;
+	public static final int SOLICITUD = 1;
 
 	/**
 	 * Create the dialog.
 	 */
-	public ListarCentros() {
+	public ListarCentros(int modo) {
 		this.addWindowFocusListener(new WindowAdapter() {
 		    public void windowGainedFocus(WindowEvent e) {
 		        loadClientes();
@@ -83,6 +76,9 @@ public class ListarCentros extends JDialog {
 							int rowSelected = -1;
 							rowSelected = table.getSelectedRow();
 							if(rowSelected >= 0) {
+								if(modo == SOLICITUD) {
+									btnSolicitud.setEnabled(true);
+								}
 								btnEliminar.setEnabled(true);
 								btnModificar.setEnabled(true);
 								selected = BolsaLaboral.getInstance().buscarCentro(table.getValueAt(rowSelected, 0).toString());
@@ -146,6 +142,22 @@ public class ListarCentros extends JDialog {
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
 			}
+			if(modo == SOLICITUD) {
+				btnSolicitud = new JButton("Ver solicitudes");
+				btnEliminar.setVisible(false);
+				btnModificar.setVisible(false);
+				btnSolicitud.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ListarSolicitud solicitudes = new ListarSolicitud("", selected.getCodigo());
+						solicitudes.setModal(true);
+						solicitudes.setVisible(true);
+						btnSolicitud.setEnabled(false);
+					}
+				});
+				btnSolicitud.setEnabled(false);
+				buttonPane.add(btnSolicitud);
+			}
+			
 		}
 		loadClientes();
 		

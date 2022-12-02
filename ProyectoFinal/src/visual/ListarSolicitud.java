@@ -13,6 +13,7 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 
 import logical.BolsaLaboral;
+import logical.CentroEmpleador;
 import logical.Persona;
 import logical.Solicitud;
 
@@ -24,6 +25,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.ListSelectionModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+
 import javax.swing.SwingConstants;
 
 public class ListarSolicitud extends JDialog {
@@ -36,8 +40,14 @@ public class ListarSolicitud extends JDialog {
 	private JButton btnEliminar;
 	private JButton btnCancelar;
 	private JButton btnDetalles;
-
-	public ListarSolicitud() {
+	private static SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy") ;
+	private static String cedula = null;
+	private static String codigoCentro = null;
+	
+	
+	public ListarSolicitud(String cedula, String codigoCentro) {
+		this.cedula = cedula;
+		this.codigoCentro = codigoCentro;
 		setTitle("Listado de solicitudes");
 		setBounds(100, 100, 753, 436);
 		setLocationRelativeTo(null);
@@ -92,7 +102,7 @@ public class ListarSolicitud extends JDialog {
 								aux = JOptionPane.showConfirmDialog(null, "Está seguro que quiere elimninar esta persona", "Confirmación", JOptionPane.YES_NO_OPTION);   
 								if (aux == JOptionPane.OK_OPTION) {
 									BolsaLaboral.getInstance().eliminarSolicitud(selected);
-									loadPersona();
+									loadSolicitudes();
 									btnEliminar.setEnabled(false);
 								}
 							}
@@ -119,32 +129,56 @@ public class ListarSolicitud extends JDialog {
 				btnDetalles.setEnabled(false);
 			}
 		}
-		loadPersona();
+		loadSolicitudes();
 	}
 
-		public static void loadPersona() {
+		public static void loadSolicitudes() {
+			String condFisica = "";
 			model.setRowCount(0);
 			rows = new Object[model.getColumnCount()];
-			for (Solicitud solicitudaux : BolsaLaboral.getInstance().getSolicitudes()) {
-				
-				rows[0] = solicitudaux.getCodigoSolicitud();
-				rows[1] = solicitudaux.getFechaCreacion();
-				rows[2] = solicitudaux.getSueldo();
-				rows[3] = solicitudaux.isEstado();
-				rows[4] = solicitudaux.isPuedeMudarse();
-				rows[5] = solicitudaux.isLicenciaConducir();
-				rows[6] = solicitudaux.getCondicionFisica();
-				/*
-				if (solicitudaux.isEstado() == true) {
-					rows [6] = "Empleado";
-				}
-				else {
-					rows [6] = "Desempleado";
-				}
-				*/
-				model.addRow(rows);
-				
+			ArrayList<Solicitud> solicitudes = null; 
+			if(!cedula.equals("")) {
+				solicitudes = BolsaLaboral.getInstance().buscarPersonadByCedula(cedula).getSolicitudes();
+			}else {
+				solicitudes = BolsaLaboral.getInstance().buscarCentro(codigoCentro).getSolicitudes();
 			}
+			for (Solicitud solicitudaux : solicitudes) {
+				rows[0] = solicitudaux.getCodigoSolicitud();
+				rows[1] = formato.format(solicitudaux.getFechaCreacion());
+				rows[2] = solicitudaux.getSueldo();
+				if(solicitudaux.isEstado()) {
+					rows[3] = "Activa";
+				}else {
+					rows[3] = "Inactiva";
+				}
+				if(solicitudaux.isPuedeMudarse()) {
+					rows[4] = "Sí";
+				}else {
+					rows[4] = "No";
+				}
+				if(solicitudaux.isLicenciaConducir()) {
+					rows[5] = "Sí";
+				}else {
+					rows[5] = "No";
+				}
+				switch(solicitudaux.getCondicionFisica()) {
+					case ('M'):
+						condFisica = "Muy buena";
+						break;
+					case('B'):
+						condFisica = "Buena";
+						break;
+					case('I'):
+						condFisica = "Intermedia";
+						break;
+					case('R'):
+						condFisica = "Regular";
+						break;
+				}
+				rows[6] = condFisica;
+				model.addRow(rows);
+			}
+			
 	}
 
 }

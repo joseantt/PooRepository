@@ -65,7 +65,7 @@ public class RegistroSolicitud extends JDialog {
 	private JPanel panelObrero;
 	private JPanel panelTecnico;
 	private JPanel panelUniversitario;
-	private DateFormat dateFormat = new SimpleDateFormat("dd/mm/yyyy");
+	private DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 	private JList listOficiosDisp;
 	private JList listOficiosSelected;
 	private DefaultListModel<String> modelDisponibles;
@@ -531,7 +531,7 @@ public class RegistroSolicitud extends JDialog {
 			panelDetalles1.add(chkbxVehiculo);
 			
 			cbxCondFisica = new JComboBox();
-			cbxCondFisica.setModel(new DefaultComboBoxModel(new String[] {"Muy buena", "Buena", "Intermedia", "Mala"}));
+			cbxCondFisica.setModel(new DefaultComboBoxModel(new String[] {"Muy buena", "Buena", "Intermedia", "Regular"}));
 			cbxCondFisica.setBounds(454, 159, 163, 22);
 			panelDetalles1.add(cbxCondFisica);
 			
@@ -631,6 +631,7 @@ public class RegistroSolicitud extends JDialog {
 							SolicitudEmpresa sE = new SolicitudEmpresa(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
 									Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date(),stringIdiomasSelected, tipo);
 							BolsaLaboral.getInstance().getSolicitudes().add(sE);
+							centro.getSolicitudes().add(sE);
 							clean();
 							JOptionPane.showMessageDialog(null, "Solicitud realizada exitosamente", "Información", JOptionPane.INFORMATION_MESSAGE);
 						}else {
@@ -664,7 +665,7 @@ public class RegistroSolicitud extends JDialog {
 				rdbtnCentroEmp.setSelected(true);
 				rdbtnPersona.setSelected(false);
 				txtCodigoSol.setText(solicitud.getCodigoSolicitud());
-				txtFecha.setText(solicitud.getFechaCreacion().toString());
+				txtFecha.setText(dateFormat.format(solicitud.getFechaCreacion()));
 				chkbxMudarse.setSelected(solicitud.isPuedeMudarse());
 				chkbxLicencia.setSelected(solicitud.isLicenciaConducir());
 				chkbxVehiculo.setSelected(solicitud.isTieneVehiculo());
@@ -705,8 +706,8 @@ public class RegistroSolicitud extends JDialog {
 				btnRegistrar.setVisible(false);
 				rdbtnCentroEmp.setEnabled(false);
 				rdbtnPersona.setEnabled(false);
-				txtCodigoSol.setEnabled(false);
-				txtFecha.setEnabled(false);
+				txtCodigoSol.setEditable(false);
+				txtFecha.setEditable(false);
 				chkbxMudarse.setEnabled(false);
 				chkbxLicencia.setEnabled(false);
 				chkbxVehiculo.setEnabled(false);
@@ -714,7 +715,7 @@ public class RegistroSolicitud extends JDialog {
 				cbxCondFisica.setEnabled(false);
 				spnSueldoMin.setEnabled(false);
 				spnSueldoMax.setEnabled(false);
-				txtCodigoTipo.setEnabled(false);
+				txtCodigoTipo.setEditable(false);
 				rdbtnUniversitario.setEnabled(false);
 				rdbtnObrero.setEnabled(false);
 				rdbtnTecnico.setEnabled(false);
@@ -731,7 +732,7 @@ public class RegistroSolicitud extends JDialog {
 				rdbtnCentroEmp.setSelected(false);
 				rdbtnPersona.setSelected(true);
 				txtCodigoSol.setText(solicitud.getCodigoSolicitud());
-				txtFecha.setText(solicitud.getFechaCreacion().toString());
+				txtFecha.setText(dateFormat.format(solicitud.getFechaCreacion()));
 				chkbxMudarse.setSelected(solicitud.isPuedeMudarse());
 				chkbxLicencia.setSelected(solicitud.isLicenciaConducir());
 				chkbxVehiculo.setSelected(solicitud.isTieneVehiculo());
@@ -760,8 +761,6 @@ public class RegistroSolicitud extends JDialog {
 					rdbtnObrero.setSelected(false);
 					rdbtnTecnico.setSelected(true);
 					panel_2.setVisible(false);
-					//spnGraduacion.setVisible(false);
-					//lblNewLabel_5.setVisible(false);
 				}
 				Persona personaax = BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona) solicitud).getCedula());
 				if(personaax!=null)
@@ -778,33 +777,34 @@ public class RegistroSolicitud extends JDialog {
 				}
 				sliderMatcheo.setVisible(false);
 				spnEmpleados.setVisible(false);
-				if(solicitud instanceof SolicitudUniversitario)
+				if(solicitud instanceof SolicitudUniversitario) {
 					cbxCarrera.setSelectedItem(((SolicitudUniversitario) solicitud).getCarrera());
-				btnRegistrar.setVisible(false);
-				rdbtnCentroEmp.setEnabled(false);
-				rdbtnPersona.setEnabled(false);
-				txtCodigoSol.setEnabled(false);
-				txtFecha.setEnabled(false);
-				chkbxMudarse.setEnabled(false);
-				chkbxLicencia.setEnabled(false);
-				chkbxVehiculo.setEnabled(false);
-				cbxTipoContrato.setEnabled(false);
-				cbxCondFisica.setEnabled(false);
-				spnSueldoMin.setEnabled(false);
-				spnSueldoMax.setEnabled(false);
-				txtCodigoTipo.setEnabled(false);
-				rdbtnUniversitario.setEnabled(false);
-				rdbtnObrero.setEnabled(false);
-				rdbtnTecnico.setEnabled(false);
-				cbxCarrera.setEnabled(false);
-				spnGraduacion.setEnabled(false);
-				sliderMatcheo.setEnabled(false);
-				btnAddIdiomas.setEnabled(false);
-				btnRemoveIdiomas.setEnabled(false);
-				spnEmpleados.setEnabled(false);
-				lblCedulaCodigo.setText("Cédula");
-				label_8.setVisible(false);
-				label_7.setVisible(false);
+					btnRegistrar.setVisible(false);
+					rdbtnCentroEmp.setEnabled(false);
+					rdbtnPersona.setEnabled(false);
+					txtCodigoSol.setEditable(false);
+					txtFecha.setEditable(false);
+					chkbxMudarse.setEnabled(false);
+					chkbxLicencia.setEnabled(false);
+					chkbxVehiculo.setEnabled(false);
+					cbxTipoContrato.setEnabled(false);
+					cbxCondFisica.setEnabled(false);
+					spnSueldoMin.setEnabled(false);
+					spnSueldoMax.setEnabled(false);
+					txtCodigoTipo.setEditable(false);
+					rdbtnUniversitario.setEnabled(false);
+					rdbtnObrero.setEnabled(false);
+					rdbtnTecnico.setEnabled(false);
+					cbxCarrera.setEnabled(false);
+					spnGraduacion.setEnabled(false);
+					sliderMatcheo.setEnabled(false);
+					btnAddIdiomas.setEnabled(false);
+					btnRemoveIdiomas.setEnabled(false);
+					spnEmpleados.setEnabled(false);
+					lblCedulaCodigo.setText("Cédula");
+					label_8.setVisible(false);
+					label_7.setVisible(false);
+				}
 			}
 		}
 	}

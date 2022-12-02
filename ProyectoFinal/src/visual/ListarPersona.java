@@ -35,8 +35,12 @@ public class ListarPersona extends JDialog {
 	private JButton btnEliminar;
 	private JButton btnModificar;
 	private JButton btnCancelar;
+	private JButton btnSolicitudes;
+	
+	public static final int PORDEFECTO = 0;
+	public static final int SOLICITUD = 1;
 
-	public ListarPersona() {
+	public ListarPersona(int modo) {
 		setTitle("Listado de Personas");
 		setBounds(100, 100, 753, 436);
 		setLocationRelativeTo(null);
@@ -63,6 +67,9 @@ public class ListarPersona extends JDialog {
 							int rowSelected = -1;
 							rowSelected = table.getSelectedRow();
 							if(rowSelected >= 0) {
+								if(modo == SOLICITUD) {
+									btnSolicitudes.setEnabled(true);
+								}
 								btnEliminar.setEnabled(true);
 								btnModificar.setEnabled(true);
 								selected = BolsaLaboral.getInstance().buscarPersonadByCedula(table.getValueAt(rowSelected, 0).toString());
@@ -87,6 +94,8 @@ public class ListarPersona extends JDialog {
 					dispose();
 					}
 				});
+				
+					
 				{
 					btnModificar = new JButton("Modificar");
 					btnModificar.addActionListener(new ActionListener() {
@@ -125,6 +134,23 @@ public class ListarPersona extends JDialog {
 				btnEliminar.setEnabled(false);
 				btnCancelar.setActionCommand("Cancel");
 				buttonPane.add(btnCancelar);
+			
+				if(modo == SOLICITUD){
+				btnCancelar.setText("Cerrar");
+				btnEliminar.setVisible(false);
+				btnModificar.setVisible(false);
+				btnSolicitudes = new JButton("Ver solicitudes");
+				btnSolicitudes.setEnabled(false);
+				btnSolicitudes.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						ListarSolicitud solicitudes = new ListarSolicitud(selected.getCedula(), "");
+						solicitudes.setModal(true);
+						solicitudes.setVisible(true);
+					}
+				});
+				
+				buttonPane.add(btnSolicitudes);
+			}
 			}
 		}
 		loadPersona();

@@ -104,17 +104,26 @@ public class Principal extends JFrame {
 		});
 		mnNewMenu_2.add(mntmNewMenuItem_5);
 		
-		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listar solicitudes");
+		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listar solicitudes de Centros");
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarSolicitud lSL = new ListarSolicitud();
-				lSL.setModal(true);
-				lSL.setLocationRelativeTo(null);
-				lSL.setVisible(true);
+				ListarCentros lCE = new ListarCentros(ListarCentros.SOLICITUD);
+				lCE.setModal(true);
+				lCE.setLocationRelativeTo(null);
+				lCE.setVisible(true);
 			}
 		});
-
+		JMenuItem mntmNewMenuItem_ListPersonas = new JMenuItem("Listar solicitudes de Personas");
+		mntmNewMenuItem_ListPersonas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListarPersona ListPersona = new ListarPersona(ListarPersona.SOLICITUD);
+				ListPersona.setModal(true);
+				ListPersona.setLocationRelativeTo(null);
+				ListPersona.setVisible(true);
+			}
+		});
 		mnNewMenu_2.add(mntmNewMenuItem_6);
+		mnNewMenu_2.add(mntmNewMenuItem_ListPersonas);
 		
 		
 		JMenu mnNewMenu_1 = new JMenu("Centro Empleador");
@@ -165,7 +174,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_4);
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarCentros lCE = new ListarCentros();
+				ListarCentros lCE = new ListarCentros(ListarCentros.PORDEFECTO);
 				lCE.setModal(true);
 				lCE.setLocationRelativeTo(null);
 				lCE.setVisible(true);
@@ -190,7 +199,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_2 = new JMenuItem("Listado de Personas");
 		mntmNewMenuItem_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarPersona ListPersona = new ListarPersona();
+				ListarPersona ListPersona = new ListarPersona(ListarPersona.PORDEFECTO);
 				ListPersona.setModal(true);
 				ListPersona.setLocationRelativeTo(null);
 				ListPersona.setVisible(true);
