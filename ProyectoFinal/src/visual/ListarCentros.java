@@ -44,7 +44,7 @@ public class ListarCentros extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListarCentros(int modo) {
+	public ListarCentros(final int modo) {
 		this.addWindowFocusListener(new WindowAdapter() {
 		    public void windowGainedFocus(WindowEvent e) {
 		        loadClientes();

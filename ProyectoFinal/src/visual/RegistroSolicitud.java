@@ -118,7 +118,7 @@ public class RegistroSolicitud extends JDialog {
 	}
 
 	
-	public RegistroSolicitud(Solicitud solicitud) {
+	public RegistroSolicitud(final Solicitud solicitud) {
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
 		rdbtnNewRadioButton.setSelected(true);
@@ -611,7 +611,7 @@ public class RegistroSolicitud extends JDialog {
 									persona.getSolicitudes().add(sT);
 								}else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Obrero) {
 									SolicitudObrero sO = new SolicitudObrero(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), stringSelected, new Date());
+											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Obrero)persona).getOficios(), new Date());
 									BolsaLaboral.getInstance().getSolicitudes().add(sO);
 									persona.getSolicitudes().add(sO);
 								}
@@ -746,14 +746,71 @@ public class RegistroSolicitud extends JDialog {
 					rdbtnUniversitario.setSelected(true);
 					rdbtnObrero.setSelected(false);
 					rdbtnTecnico.setSelected(false);
+					cbxCarrera.setEnabled(false);
+					cbxEspecialidad.setEnabled(false);
+					spnExperiencia.setEnabled(false);
+					listOficiosDisp.setEnabled(false);
+					listOficiosSelected.setEnabled(false);
+					cbxTipoContrato.setEnabled(false);
+					cbxCondFisica.setEnabled(false);
+					spnSueldoMax.setEnabled(false);
+					spnSueldoMin.setEnabled(false);
+					chkbxLicencia.setEnabled(false);
+					chkbxMudarse.setEnabled(false);
+					chkbxVehiculo.setEnabled(false);
+					txtCodigoTipo.setEnabled(false);
+					sliderMatcheo.setEnabled(false);
+					spnEmpleados.setEnabled(false);
+					if (rdbtnUniversitario.isSelected()) {
+						panelUniversitario.setVisible(true);
+						panelObrero.setVisible(false);
+						panelTecnico.setVisible(false);
+					}
+					rdbtnObrero.setEnabled(false);
+					rdbtnUniversitario.setEnabled(false);
+					rdbtnTecnico.setEnabled(false);
+					rdbtnCentroEmp.setEnabled(false);
+					rdbtnPersona.setEnabled(false);
+					listIdiomasDisponibles.setEnabled(false);
+					listIdiomasSelected.setEnabled(false);
 				}
 				if(solicitud instanceof SolicitudObrero)
 				{
+					Obrero persona = (Obrero) BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona) solicitud).getCedula());
+					stringSelected = persona.getOficios();
+					reloadSelected(modelSelected, stringSelected);
 					rdbtnUniversitario.setSelected(false);
 					rdbtnObrero.setSelected(true);
 					rdbtnTecnico.setSelected(false);
 					spnGraduacion.setEnabled(false);
-					panel_2.setVisible(false);
+					cbxCarrera.setEnabled(false);
+					cbxEspecialidad.setEnabled(false);
+					spnExperiencia.setEnabled(false);
+					listOficiosDisp.setEnabled(false);
+					listOficiosSelected.setEnabled(false);
+					cbxTipoContrato.setEnabled(false);
+					cbxCondFisica.setEnabled(false);
+					spnSueldoMax.setEnabled(false);
+					spnSueldoMin.setEnabled(false);
+					chkbxLicencia.setEnabled(false);
+					chkbxMudarse.setEnabled(false);
+					chkbxVehiculo.setEnabled(false);
+					txtCodigoTipo.setEnabled(false);
+					sliderMatcheo.setEnabled(false);
+					spnEmpleados.setEnabled(false);
+					panelObrero.setVisible(true);
+					if (rdbtnObrero.isSelected()) {
+						panelUniversitario.setVisible(false);
+						panelObrero.setVisible(true);
+						panelTecnico.setVisible(false);
+					}
+					rdbtnObrero.setEnabled(false);
+					rdbtnUniversitario.setEnabled(false);
+					rdbtnTecnico.setEnabled(false);
+					rdbtnCentroEmp.setEnabled(false);
+					rdbtnPersona.setEnabled(false);
+					listIdiomasDisponibles.setEnabled(false);
+					listIdiomasSelected.setEnabled(false);
 				}
 				if(solicitud instanceof SolicitudTecnico)
 				{
@@ -761,6 +818,34 @@ public class RegistroSolicitud extends JDialog {
 					rdbtnObrero.setSelected(false);
 					rdbtnTecnico.setSelected(true);
 					panel_2.setVisible(false);
+					cbxCarrera.setEnabled(false);
+					cbxEspecialidad.setEnabled(false);
+					spnExperiencia.setEnabled(false);
+					listOficiosDisp.setEnabled(false);
+					listOficiosSelected.setEnabled(false);
+					cbxTipoContrato.setEnabled(false);
+					cbxCondFisica.setEnabled(false);
+					spnSueldoMax.setEnabled(false);
+					spnSueldoMin.setEnabled(false);
+					chkbxLicencia.setEnabled(false);
+					chkbxMudarse.setEnabled(false);
+					chkbxVehiculo.setEnabled(false);
+					txtCodigoTipo.setEnabled(false);
+					sliderMatcheo.setEnabled(false);
+					spnEmpleados.setEnabled(false);
+					panelTecnico.setVisible(true);
+					if (rdbtnTecnico.isSelected()) {
+						panelUniversitario.setVisible(false);
+						panelObrero.setVisible(false);
+						panelTecnico.setVisible(true);
+					}
+					rdbtnObrero.setEnabled(false);
+					rdbtnUniversitario.setEnabled(false);
+					rdbtnTecnico.setEnabled(false);
+					rdbtnCentroEmp.setEnabled(false);
+					rdbtnPersona.setEnabled(false);
+					listIdiomasDisponibles.setEnabled(false);
+					listIdiomasSelected.setEnabled(false);
 				}
 				Persona personaax = BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona) solicitud).getCedula());
 				if(personaax!=null)
@@ -775,8 +860,8 @@ public class RegistroSolicitud extends JDialog {
 					if(personaax instanceof Universitario)
 						spnGraduacion.setValue(((Universitario) personaax).getAñoGraduacion());
 				}
-				sliderMatcheo.setVisible(false);
-				spnEmpleados.setVisible(false);
+				//sliderMatcheo.setVisible(false);
+				//spnEmpleados.setVisible(false);
 				if(solicitud instanceof SolicitudUniversitario) {
 					cbxCarrera.setSelectedItem(((SolicitudUniversitario) solicitud).getCarrera());
 					btnRegistrar.setVisible(false);
@@ -910,4 +995,5 @@ public class RegistroSolicitud extends JDialog {
 		}
 		return formateado;
 	}
+
 }
