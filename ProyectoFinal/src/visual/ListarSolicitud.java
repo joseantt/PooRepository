@@ -65,6 +65,8 @@ public class ListarSolicitud extends JDialog {
 							rowSelected = table.getSelectedRow();
 							if(rowSelected >= 0) {
 								btnEliminar.setEnabled(true);
+								btnDetalles.setEnabled(true);
+
 								selected = BolsaLaboral.getInstance().buscarSolicitud(table.getValueAt(rowSelected, 0).toString());
 							}
 						}
@@ -114,7 +116,7 @@ public class ListarSolicitud extends JDialog {
 					buttonPane.add(btnDetalles);
 				}
 				btnEliminar.setEnabled(false);
-				btnDetalles.setEnabled(true);
+				btnDetalles.setEnabled(false);
 			}
 		}
 		loadPersona();
