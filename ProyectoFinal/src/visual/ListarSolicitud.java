@@ -45,7 +45,7 @@ public class ListarSolicitud extends JDialog {
 	private static SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy") ;
 	private static String cedula = null;
 	private static String codigoCentro = null;
-	
+
 	
 	public ListarSolicitud(String cedula, String codigoCentro) {
 		this.cedula = cedula;
@@ -75,8 +75,10 @@ public class ListarSolicitud extends JDialog {
 						public void mouseClicked(MouseEvent e) {
 							int rowSelected = -1;
 							rowSelected = table.getSelectedRow();
-							if(rowSelected >= 0) {
-								btnEliminar.setEnabled(true);
+							if(rowSelected >= 0 ) {
+								if (BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
+									btnEliminar.setEnabled(true);
+								}
 								btnDetalles.setEnabled(true);
 
 								selected = BolsaLaboral.getInstance().buscarSolicitud(table.getValueAt(rowSelected, 0).toString());

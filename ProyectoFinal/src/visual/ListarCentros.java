@@ -58,7 +58,9 @@ public class ListarCentros extends JDialog {
 		getContentPane().add(contentPanel, BorderLayout.CENTER);
 		contentPanel.setLayout(new BorderLayout(0, 0));
 		{
+			
 			JPanel panel = new JPanel();
+			
 			panel.setBorder(new TitledBorder(null, "", TitledBorder.LEADING, TitledBorder.TOP, null, null));
 			contentPanel.add(panel, BorderLayout.CENTER);
 			panel.setLayout(new BorderLayout(0, 0));
@@ -75,12 +77,15 @@ public class ListarCentros extends JDialog {
 						public void mouseClicked(MouseEvent e) {
 							int rowSelected = -1;
 							rowSelected = table.getSelectedRow();
-							if(rowSelected >= 0) {
+							if(rowSelected >= 0 ) {
 								if(modo == SOLICITUD) {
 									btnSolicitud.setEnabled(true);
 								}
-								btnEliminar.setEnabled(true);
-								btnModificar.setEnabled(true);
+								if (BolsaLaboral.getInstance().getLoginUser().getTipo().equals("Administrador")) {
+									btnEliminar.setEnabled(true);
+									btnModificar.setEnabled(true);
+								}
+						
 								selected = BolsaLaboral.getInstance().buscarCentro(table.getValueAt(rowSelected, 0).toString());
 							}
 						}
@@ -112,6 +117,7 @@ public class ListarCentros extends JDialog {
 						}  
 					}
 				});
+				
 				btnEliminar.setEnabled(false);
 				btnEliminar.setActionCommand("Cancel");
 				buttonPane.add(btnEliminar);
@@ -159,6 +165,7 @@ public class ListarCentros extends JDialog {
 			}
 			
 		}
+		
 		loadClientes();
 		
 	}
@@ -175,7 +182,11 @@ public class ListarCentros extends JDialog {
 				rows[4] = Centro.getTipo();
 				
 				model.addRow(rows);
+				
+				
+	
 			}
+			
 		
 	}
 

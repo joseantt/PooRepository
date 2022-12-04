@@ -80,7 +80,7 @@ public class Principal extends JFrame {
 		setLocationRelativeTo(null); 
 		
 		JMenuBar menuBar = new JMenuBar();
-		setJMenuBar(menuBar);
+		setJMenuBar(menuBar); 
 		
 		if(BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador") || BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Secretaria"))
 		{
@@ -88,6 +88,29 @@ public class Principal extends JFrame {
 			menuBar.add(mnNewMenu_3);
 			JMenuItem mntmNewMenuItem = new JMenuItem("Realizar Matching");
 			mnNewMenu_3.add(mntmNewMenuItem);
+			
+			JMenuItem mntmNewMenuItem_8 = new JMenuItem("Registrar Usuario");
+			mntmNewMenuItem_8.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					regUser rCE = new regUser();
+					rCE.setModal(true);
+					rCE.setLocationRelativeTo(null);
+					rCE.setVisible(true);
+				}
+			});
+			mnNewMenu_3.add(mntmNewMenuItem_8);
+
+			JMenuItem mntmNewMenuItem_List = new JMenuItem("Listado de Usuarios");
+			mntmNewMenuItem_List.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					ListarUsuarios lU = new ListarUsuarios();
+					lU.setModal(true);
+					lU.setLocationRelativeTo(null);
+					lU.setVisible(true);
+				}
+			});
+			mnNewMenu_3.add(mntmNewMenuItem_List);
+
 		}
 		
 		JMenu mnNewMenu_2 = new JMenu("Solicitud");
@@ -129,32 +152,10 @@ public class Principal extends JFrame {
 		JMenu mnNewMenu_1 = new JMenu("Centro Empleador");
 		menuBar.add(mnNewMenu_1);
 		
-		JMenu mnNewMenu_8 = new JMenu("Usuarios");
-		menuBar.add(mnNewMenu_8);
+
 		
-		JMenuItem mntmNewMenuItem_8 = new JMenuItem("Registrar Usuario");
-		mntmNewMenuItem_8.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				regUser rCE = new regUser();
-				rCE.setModal(true);
-				rCE.setLocationRelativeTo(null);
-				rCE.setVisible(true);
-			}
-		});
-		
-		mnNewMenu_8.add(mntmNewMenuItem_8);
-		
-		JMenuItem mntmNewMenuItem_List = new JMenuItem("Listado de Usuarios");
-		mntmNewMenuItem_List.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				ListarUsuarios lU = new ListarUsuarios();
-				lU.setModal(true);
-				lU.setLocationRelativeTo(null);
-				lU.setVisible(true);
-			}
-		});
-		
-		mnNewMenu_8.add(mntmNewMenuItem_List);
+				
+
 		
 		JMenuItem mntmNewMenuItem_3 = new JMenuItem("Registrar Centro Empleador");
 		mntmNewMenuItem_3.addActionListener(new ActionListener() {

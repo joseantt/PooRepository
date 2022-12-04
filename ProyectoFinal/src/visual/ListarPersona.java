@@ -70,8 +70,11 @@ public class ListarPersona extends JDialog {
 								if(modo == SOLICITUD) {
 									btnSolicitudes.setEnabled(true);
 								}
-								btnEliminar.setEnabled(true);
-								btnModificar.setEnabled(true);
+								if (BolsaLaboral.getInstance().getLoginUser().getTipo().equals("Administrador")) {
+									btnEliminar.setEnabled(true);
+									btnModificar.setEnabled(true);	
+								}
+								
 								selected = BolsaLaboral.getInstance().buscarPersonadByCedula(table.getValueAt(rowSelected, 0).toString());
 							}
 						}

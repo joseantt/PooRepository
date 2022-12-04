@@ -65,7 +65,7 @@ public class login extends JFrame {
 					}
 				} catch (IOException e) {
 					
-					
+				
 				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
