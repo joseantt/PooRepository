@@ -40,7 +40,7 @@ public class ListarPersona extends JDialog {
 	public static final int PORDEFECTO = 0;
 	public static final int SOLICITUD = 1;
 
-	public ListarPersona(int modo) {
+	public ListarPersona(final int modo) {
 		setTitle("Listado de Personas");
 		setBounds(100, 100, 753, 436);
 		setLocationRelativeTo(null);
