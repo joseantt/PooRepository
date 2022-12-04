@@ -16,6 +16,8 @@ import logical.BolsaLaboral;
 import logical.CentroEmpleador;
 import logical.Persona;
 import logical.Solicitud;
+import logical.SolicitudEmpresa;
+import logical.SolicitudPersona;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -119,6 +121,13 @@ public class ListarSolicitud extends JDialog {
 								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected);
 								modSolicitud.setModal(true);
 								modSolicitud.setVisible(true);
+								
+								for(Solicitud soli : BolsaLaboral.getInstance().getSolicitudes()) {
+									System.out.println("XD");
+									if(soli instanceof SolicitudPersona) {
+										System.out.println(BolsaLaboral.getInstance().matching((SolicitudEmpresa)selected, (SolicitudPersona)soli));
+									}
+								}
 							}
 						}
 					});

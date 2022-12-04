@@ -166,12 +166,114 @@ public class BolsaLaboral implements Serializable{
 		return solicitud;
 	}
 	
-	public float matching() {
-		float porcentaje = 0f;
+	public float matching(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {
+		float suma = 0;
+		float sumaAux = 0;
+		int cantRequisitos = solicitudEmpresa.getCantidadRequisitios();
+		Persona persona = buscarPersonadByCedula(solicitudPersona.getCedula());
+		
+		if(!solicitudEmpresa.isPuedeMudarse())
+			cantRequisitos--;
+		
+		if(!solicitudEmpresa.isLicenciaConducir())
+			cantRequisitos--;
+		
+		if(!solicitudEmpresa.isTieneVehiculo())
+			cantRequisitos--;
+		
+		if(solicitudEmpresa.getSueldo() >= solicitudPersona.getSueldo())
+			suma++;
+		
+		if(solicitudEmpresa.isPuedeMudarse() && (solicitudEmpresa.isPuedeMudarse() && solicitudPersona.isPuedeMudarse())) {
+			suma++;
+		}
+		if (solicitudEmpresa.isLicenciaConducir() &&(solicitudEmpresa.isLicenciaConducir() == solicitudPersona.isLicenciaConducir())) {
+			suma++;
+		}
+		if(solicitudEmpresa.isTieneVehiculo() &&(solicitudEmpresa.isTieneVehiculo() == solicitudPersona.isTieneVehiculo())) {
+			suma++;
+		}
+		if(solicitudEmpresa.getCondicionFisica() == solicitudPersona.getCondicionFisica()) {
+			suma++;
+		}
+		if(solicitudEmpresa.getTipoContrato().equals(solicitudPersona.getTipoContrato())) {
+			suma++;
+		}else {
+			return 0f;
+		}
+		if(solicitudEmpresa.getTipo().equalsIgnoreCase("Universitario") && solicitudPersona instanceof SolicitudUniversitario) {
+			if(((SolicitudUniversitario)solicitudPersona).getCarrera().equals(solicitudEmpresa.getCarrera())) {
+				suma += sumaRequisitosUniversitario(solicitudEmpresa, solicitudPersona);
+			}
+			else {
+				return 0f;
+			}
+		}
+		else if(solicitudEmpresa.getTipo().equalsIgnoreCase("Tecnico") && solicitudPersona instanceof SolicitudTecnico){
+			if(((SolicitudTecnico)solicitudPersona).getAreaEspecialidad().equals(solicitudEmpresa.getAreaEspecialidad())) {
+				suma += sumaRequisitosTecnico(solicitudEmpresa, solicitudPersona);
+			}
+			else {
+				return 0f;
+			}
+		}
+		else if(solicitudEmpresa.getTipo().equalsIgnoreCase("Obrero") && solicitudPersona instanceof SolicitudObrero) {
+			sumaAux = sumaRequisitosStrList(solicitudEmpresa.getOficios(), ((SolicitudObrero)solicitudPersona).getOficios());
+			if(sumaAux != 0) {
+				suma += sumaAux;
+			}else {
+				return 0f;
+			}
+		}
+		sumaAux = 0;
+		sumaAux = sumaRequisitosStrList(solicitudEmpresa.getIdiomas(),persona.getIdiomas());
+		if(sumaAux != 0) {
+			suma += sumaAux;
+		}else {
+			return 0f;
+		}
 		
 		
 		
-		return porcentaje;
+		return (suma / cantRequisitos) * 100;
+	}
+	
+	public int sumaRequisitosUniversitario(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {
+		int suma = 0;
+		if(solicitudPersona instanceof SolicitudUniversitario) {
+			if(solicitudEmpresa.getCarrera().equals(((SolicitudUniversitario) solicitudPersona).getCarrera())) {
+				suma++;
+			}
+			if(solicitudEmpresa.getAñoGraduacion() == ((SolicitudUniversitario) solicitudPersona).getAñoGraduacion()){
+				suma++;
+			}
+		}
+		return suma;
+	}
+	
+	public int sumaRequisitosTecnico(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {
+		int suma = 0;
+		if(solicitudPersona instanceof SolicitudTecnico) {
+			if(solicitudEmpresa.getAreaEspecialidad().equals(((SolicitudTecnico)solicitudPersona).getAreaEspecialidad())) {
+				suma++;
+			}
+			if(solicitudEmpresa.getAñosExperiencia() == ((SolicitudTecnico)solicitudPersona).getAñosExperiencia()) {
+				suma++;
+			}
+		}
+		return suma;
+	}
+	
+	public int sumaRequisitosStrList(ArrayList<String> list, ArrayList<String> list2) {
+		int suma = 0;
+		
+		for(String str : list2) {
+			if(list.contains(str)) {
+				suma++;
+			}
+		}
+		
+		return suma;
 	}
 
 	public User buscarUsuarioByNombre(String nombre) {

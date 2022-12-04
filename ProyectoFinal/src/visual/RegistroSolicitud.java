@@ -629,7 +629,7 @@ public class RegistroSolicitud extends JDialog {
 							else if(rdbtnObrero.isSelected())
 								tipo = "Obrero";
 							SolicitudEmpresa sE = new SolicitudEmpresa(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-									Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date(),stringIdiomasSelected, tipo);
+									chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), sliderMatcheo.getValue(), Integer.valueOf(spnEmpleados.getValue().toString()), stringSelected, cbxEspecialidad.getSelectedItem().toString(), Integer.valueOf(spnExperiencia.getValue().toString()), cbxCarrera.getSelectedItem().toString(), Integer.valueOf(spnGraduacion.getValue().toString()), new Date(),stringIdiomasSelected, tipo);
 							BolsaLaboral.getInstance().getSolicitudes().add(sE);
 							centro.getSolicitudes().add(sE);
 							clean();
@@ -672,7 +672,6 @@ public class RegistroSolicitud extends JDialog {
 				cbxTipoContrato.setSelectedItem(solicitud.getTipoContrato());
 				cbxCondFisica.setSelectedItem(solicitud.getCondicionFisica());
 				spnSueldoMin.setValue(solicitud.getSueldo());
-				spnSueldoMax.setValue(solicitud.getSueldoMax());
 				txtCodigoTipo.setText(((SolicitudEmpresa) solicitud).getCodigoEmpresa());
 				if(((SolicitudEmpresa) solicitud).getTipo().equalsIgnoreCase("Universitario"))
 				{
@@ -739,7 +738,6 @@ public class RegistroSolicitud extends JDialog {
 				cbxTipoContrato.setSelectedItem(solicitud.getTipoContrato());
 				cbxCondFisica.setSelectedItem(solicitud.getCondicionFisica());
 				spnSueldoMin.setValue(solicitud.getSueldo());
-				spnSueldoMax.setValue(solicitud.getSueldoMax());
 				txtCodigoTipo.setText(((SolicitudPersona) solicitud).getCedula());
 				if(solicitud instanceof SolicitudUniversitario)
 				{

@@ -16,10 +16,10 @@ public class SolicitudEmpresa extends Solicitud {
 	private String tipo;
 	
 	
-	public SolicitudEmpresa(String codigoSolicitud, float sueldo, float sueldoMax, boolean puedeMudarse, boolean licenciaConducir,
+	public SolicitudEmpresa(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
 			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String codigoEmpresa, int cantMatcheo, int empleadosNecesarios,
 			ArrayList<String> oficios, String areaEspecialidad, int añosExperiencia, String carrera, int añoGraduacion, Date fechaCreacion, ArrayList<String> idioma, String tipo) {
-		super(codigoSolicitud, sueldo, sueldoMax, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
+		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato, fechaCreacion);
 		this.codigoEmpresa = codigoEmpresa;
 		this.cantMatcheo = cantMatcheo;
 		this.empleadosNecesarios = empleadosNecesarios;
@@ -101,4 +101,13 @@ public class SolicitudEmpresa extends Solicitud {
 	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
+	
+	public int getCantidadRequisitios() {
+		int cant = 6;
+		if(tipo.equalsIgnoreCase("Universitario") || tipo.equalsIgnoreCase("Tecnico")) {
+			cant = 8;
+		}
+		return cant + idiomas.size() + oficios.size();
+	}
+
 }
