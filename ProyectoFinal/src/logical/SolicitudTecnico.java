@@ -7,9 +7,9 @@ public class SolicitudTecnico extends SolicitudPersona {
 	private int añosExperiencia;
 	
 	
-	public SolicitudTecnico(String codigoSolicitud, float sueldo, float sueldoMax, boolean puedeMudarse, boolean licenciaConducir,
+	public SolicitudTecnico(String codigoSolicitud, float sueldo, boolean puedeMudarse, boolean licenciaConducir,
 			boolean tieneVehiculo, char condicionFisica, String tipoContrato, String cedula, String areaEspecialidad, int añosExperiencia, Date fechaCreacion) {
-		super(codigoSolicitud, sueldo, sueldoMax, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato,
+		super(codigoSolicitud, sueldo, puedeMudarse, licenciaConducir, tieneVehiculo, condicionFisica, tipoContrato,
 				cedula, fechaCreacion);
 		this.areaEspecialidad = areaEspecialidad;
 		this.añosExperiencia = añosExperiencia;

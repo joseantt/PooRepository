@@ -96,7 +96,6 @@ public class RegistroSolicitud extends JDialog {
 	private JButton btnAddIdiomas;
 	private JButton btnRemoveIdiomas;
 	private JSpinner spnSueldoMin;
-	private JSpinner spnSueldoMax;
 	private JSpinner spnEmpleados;
 	private JRadioButton rdbtnCentroEmp;
 	private JRadioButton rdbtnPersona;
@@ -548,23 +547,15 @@ public class RegistroSolicitud extends JDialog {
 			label_3.setBounds(12, 159, 117, 16);
 			panelDetalles1.add(label_3);
 			
-			JLabel label_4 = new JLabel("Sueldo m\u00EDnimo:");
-			label_4.setBounds(12, 224, 105, 16);
-			panelDetalles1.add(label_4);
+			JLabel lblSueldoEsperado = new JLabel("Sueldo esperado:");
+			lblSueldoEsperado.setHorizontalAlignment(SwingConstants.CENTER);
+			lblSueldoEsperado.setBounds(12, 210, 633, 16);
+			panelDetalles1.add(lblSueldoEsperado);
 			
 			spnSueldoMin = new JSpinner();
 			spnSueldoMin.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
-			spnSueldoMin.setBounds(122, 221, 198, 22);
+			spnSueldoMin.setBounds(223, 236, 198, 22);
 			panelDetalles1.add(spnSueldoMin);
-			
-			JLabel label_5 = new JLabel("Sueldo m\u00E1ximo:");
-			label_5.setBounds(344, 224, 105, 16);
-			panelDetalles1.add(label_5);
-			
-			spnSueldoMax = new JSpinner();
-			spnSueldoMax.setModel(new SpinnerNumberModel(new Float(1), new Float(1), null, new Float(1)));
-			spnSueldoMax.setBounds(454, 221, 163, 22);
-			panelDetalles1.add(spnSueldoMax);
 			
 			txtCodigoTipo = new JTextField();
 			txtCodigoTipo.setColumns(10);
@@ -597,21 +588,21 @@ public class RegistroSolicitud extends JDialog {
 						CentroEmpleador centro = BolsaLaboral.getInstance().buscarCentro(txtCodigoTipo.getText());
 						Persona persona = BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText());	
 						if(rdbtnPersona.isSelected() && !camposVacios()) {
-							if(sueldoEnFormato() && persona != null) {
+							if(persona != null) {
 								if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Universitario) {
 									SolicitudUniversitario sU = new SolicitudUniversitario(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Universitario)persona).getCarrera(),((Universitario)persona).getAñoGraduacion(), new Date());
+											chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Universitario)persona).getCarrera(),((Universitario)persona).getAñoGraduacion(), new Date());
 									BolsaLaboral.getInstance().getSolicitudes().add(sU);
 									persona.getSolicitudes().add(sU);
 								}
 								else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Tecnico) {
 									SolicitudTecnico sT = new SolicitudTecnico(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Tecnico)persona).getAreaEspecialidad(), ((Tecnico)persona).getAñosExperiencia(), new Date());
+											chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Tecnico)persona).getAreaEspecialidad(), ((Tecnico)persona).getAñosExperiencia(), new Date());
 									BolsaLaboral.getInstance().getSolicitudes().add(sT);
 									persona.getSolicitudes().add(sT);
 								}else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCodigoTipo.getText()) instanceof Obrero) {
 									SolicitudObrero sO = new SolicitudObrero(txtCodigoSol.getText(), Float.valueOf(spnSueldoMin.getValue().toString()),
-											Float.valueOf(spnSueldoMax.getValue().toString()), chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Obrero)persona).getOficios(), new Date());
+											chkbxMudarse.isSelected(), chkbxLicencia.isSelected(), chkbxVehiculo.isSelected(), cbxCondFisica.getSelectedItem().toString().charAt(0), cbxTipoContrato.getSelectedItem().toString(), txtCodigoTipo.getText(), ((Obrero)persona).getOficios(), new Date());
 									BolsaLaboral.getInstance().getSolicitudes().add(sO);
 									persona.getSolicitudes().add(sO);
 								}
@@ -713,7 +704,6 @@ public class RegistroSolicitud extends JDialog {
 				cbxTipoContrato.setEnabled(false);
 				cbxCondFisica.setEnabled(false);
 				spnSueldoMin.setEnabled(false);
-				spnSueldoMax.setEnabled(false);
 				txtCodigoTipo.setEditable(false);
 				rdbtnUniversitario.setEnabled(false);
 				rdbtnObrero.setEnabled(false);
@@ -751,7 +741,6 @@ public class RegistroSolicitud extends JDialog {
 					listOficiosSelected.setEnabled(false);
 					cbxTipoContrato.setEnabled(false);
 					cbxCondFisica.setEnabled(false);
-					spnSueldoMax.setEnabled(false);
 					spnSueldoMin.setEnabled(false);
 					chkbxLicencia.setEnabled(false);
 					chkbxMudarse.setEnabled(false);
@@ -788,7 +777,6 @@ public class RegistroSolicitud extends JDialog {
 					listOficiosSelected.setEnabled(false);
 					cbxTipoContrato.setEnabled(false);
 					cbxCondFisica.setEnabled(false);
-					spnSueldoMax.setEnabled(false);
 					spnSueldoMin.setEnabled(false);
 					chkbxLicencia.setEnabled(false);
 					chkbxMudarse.setEnabled(false);
@@ -823,7 +811,6 @@ public class RegistroSolicitud extends JDialog {
 					listOficiosSelected.setEnabled(false);
 					cbxTipoContrato.setEnabled(false);
 					cbxCondFisica.setEnabled(false);
-					spnSueldoMax.setEnabled(false);
 					spnSueldoMin.setEnabled(false);
 					chkbxLicencia.setEnabled(false);
 					chkbxMudarse.setEnabled(false);
@@ -873,7 +860,6 @@ public class RegistroSolicitud extends JDialog {
 					cbxTipoContrato.setEnabled(false);
 					cbxCondFisica.setEnabled(false);
 					spnSueldoMin.setEnabled(false);
-					spnSueldoMax.setEnabled(false);
 					txtCodigoTipo.setEditable(false);
 					rdbtnUniversitario.setEnabled(false);
 					rdbtnObrero.setEnabled(false);
@@ -903,7 +889,6 @@ public class RegistroSolicitud extends JDialog {
 		cbxTipoContrato.setSelectedIndex(0);
 		spnExperiencia.setValue(0);
 		spnGraduacion.setValue(2017);
-		spnSueldoMax.setValue(1);
 		spnSueldoMin.setValue(1);
 		txtCodigoTipo.setText("");
 		spnEmpleados.setValue(1);
@@ -984,14 +969,6 @@ public class RegistroSolicitud extends JDialog {
 			existenVacios = true;
 		}
 		return existenVacios;
-	}
-	
-	private boolean sueldoEnFormato() {
-		boolean formateado = false;
-		if(Float.valueOf(spnSueldoMin.getValue().toString()) < Float.valueOf(spnSueldoMax.getValue().toString())) {
-			formateado = true;
-		}
-		return formateado;
 	}
 
 }
