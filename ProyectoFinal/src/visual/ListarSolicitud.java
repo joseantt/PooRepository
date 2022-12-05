@@ -120,13 +120,13 @@ public class ListarSolicitud extends JDialog {
 					btnDetalles.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (selected != null) {
-								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected, false, null);
+								Solicitud solicitudempresa = BolsaLaboral.getInstance().buscarSolicitudByCode(codigoCentro);
+								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected, false, solicitudempresa);
 								modSolicitud.setLocationRelativeTo(null);
 								modSolicitud.setModal(true);
 								modSolicitud.setVisible(true);
-								
 								for(Solicitud soli : BolsaLaboral.getInstance().getSolicitudes()) {
-									System.out.println("XD");
+									//System.out.println("XD");
 									if(soli instanceof SolicitudPersona) {
 										System.out.println(BolsaLaboral.getInstance().matching((SolicitudEmpresa)selected, (SolicitudPersona)soli));
 									}
