@@ -44,7 +44,7 @@ public class ListarCentros extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListarCentros(final int modo) {
+	public ListarCentros(final int modo, boolean matcheo) {
 		this.addWindowFocusListener(new WindowAdapter() {
 		    public void windowGainedFocus(WindowEvent e) {
 		        loadClientes();
@@ -154,7 +154,7 @@ public class ListarCentros extends JDialog {
 				btnModificar.setVisible(false);
 				btnSolicitud.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListarSolicitud solicitudes = new ListarSolicitud("", selected.getCodigo());
+						ListarSolicitud solicitudes = new ListarSolicitud("", selected.getCodigo(), matcheo);
 						solicitudes.setModal(true);
 						solicitudes.setVisible(true);
 						btnSolicitud.setEnabled(false);

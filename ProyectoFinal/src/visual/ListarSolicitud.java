@@ -45,9 +45,10 @@ public class ListarSolicitud extends JDialog {
 	private static SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy") ;
 	private static String cedula = null;
 	private static String codigoCentro = null;
+	private JButton btnMatcheo;
 
 	
-	public ListarSolicitud(String cedula, String codigoCentro) {
+	public ListarSolicitud(String cedula, String codigoCentro, boolean matcheo) {
 		this.cedula = cedula;
 		this.codigoCentro = codigoCentro;
 		setTitle("Listado de solicitudes");
@@ -78,6 +79,7 @@ public class ListarSolicitud extends JDialog {
 							if(rowSelected >= 0 ) {
 								if (BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 									btnEliminar.setEnabled(true);
+									btnMatcheo.setEnabled(true);
 								}
 								btnDetalles.setEnabled(true);
 
@@ -112,6 +114,21 @@ public class ListarSolicitud extends JDialog {
 							}
 						}
 					});
+					{
+						btnMatcheo = new JButton("Buscar solicitudes");
+						btnMatcheo.setEnabled(false);
+						btnMatcheo.addActionListener(new ActionListener() {
+							public void actionPerformed(ActionEvent e) {
+								btnMatcheo.setEnabled(false);
+								ListadoMatching listMatch = new ListadoMatching((SolicitudEmpresa) selected);
+								listMatch.setModal(true);
+								listMatch.setLocationRelativeTo(null);
+								listMatch.setVisible(true);
+							}
+						});
+						buttonPane.add(btnMatcheo);
+						
+					}
 					btnEliminar.setHorizontalAlignment(SwingConstants.LEFT);
 					buttonPane.add(btnEliminar);
 				}
@@ -126,7 +143,6 @@ public class ListarSolicitud extends JDialog {
 								modSolicitud.setModal(true);
 								modSolicitud.setVisible(true);
 								for(Solicitud soli : BolsaLaboral.getInstance().getSolicitudes()) {
-									//System.out.println("XD");
 									if(soli instanceof SolicitudPersona) {
 										System.out.println(BolsaLaboral.getInstance().matching((SolicitudEmpresa)selected, (SolicitudPersona)soli));
 									}
@@ -139,6 +155,13 @@ public class ListarSolicitud extends JDialog {
 				}
 				btnEliminar.setEnabled(false);
 				btnDetalles.setEnabled(false);
+				
+				if(!matcheo) {
+					btnMatcheo.setVisible(false);
+				}else {
+					btnDetalles.setVisible(false);
+					btnEliminar.setVisible(false);
+				}
 			}
 		}
 		loadSolicitudes();

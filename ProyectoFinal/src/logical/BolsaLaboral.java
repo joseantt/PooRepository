@@ -201,7 +201,7 @@ public class BolsaLaboral implements Serializable{
 		}else {
 			return 0f;
 		}
-		if(solicitudEmpresa.getTipo().equalsIgnoreCase("Universitario") && solicitudPersona instanceof SolicitudUniversitario) {
+		if(solicitudEmpresa.getTipo().equalsIgnoreCase("Universitario") && solicitudPersona instanceof SolicitudUniversitario) { //Este decline no funciona
 			if(((SolicitudUniversitario)solicitudPersona).getCarrera().equals(solicitudEmpresa.getCarrera())) {
 				suma += sumaRequisitosUniversitario(solicitudEmpresa, solicitudPersona);
 			}
@@ -236,6 +236,44 @@ public class BolsaLaboral implements Serializable{
 		
 		
 		return (suma / cantRequisitos) * 100;
+	}
+	
+	public ArrayList<Solicitud> solicitudesMatchean(SolicitudEmpresa soliEmpresa){
+		ArrayList<Solicitud> solicitudesMatch = new ArrayList<Solicitud>();
+		ArrayList<Float> resultados = new ArrayList<Float>();
+		float porcentajeAux = 0f; 
+		
+		for(Solicitud soliAux : solicitudes) {
+			if(soliAux instanceof SolicitudPersona) {
+				porcentajeAux = matching((SolicitudEmpresa)soliEmpresa, (SolicitudPersona)soliAux);
+				if(porcentajeAux > soliEmpresa.getSueldo()) {
+					solicitudesMatch.add(soliAux);
+					resultados.add(porcentajeAux);
+				}
+			}
+		}
+		organizarSolicitudes(solicitudesMatch, resultados);
+		return solicitudesMatch;
+	}
+	
+	public void organizarSolicitudes(ArrayList<Solicitud> solicitudesMatch, ArrayList<Float> resultados) {
+		Solicitud tempSolicitud = null;
+		float tempFloat = 0f;
+		int size = resultados.size();
+		
+		for(int i = 0, j; i < size - 1; i++) {
+			for (j = 0; j < size - i - 1; j++) {
+				if (resultados.get(j) < resultados.get(j + 1)) {
+	              	tempFloat = resultados.get(j);
+	               	tempSolicitud = solicitudesMatch.get(j);
+	               	
+	               	solicitudesMatch.set(j, solicitudesMatch.get(j + 1));
+	               	solicitudesMatch.set(j + 1, tempSolicitud);
+	                resultados.set(j, resultados.get(j + 1));
+	                resultados.set(j + 1, tempFloat);
+	           }
+			}
+		}
 	}
 	
 	public int sumaRequisitosUniversitario(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {

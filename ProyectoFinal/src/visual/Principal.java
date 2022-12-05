@@ -89,7 +89,7 @@ public class Principal extends JFrame {
 			JMenuItem mntmNewMenuItem_Match = new JMenuItem("Realizar Matching");
 			mntmNewMenuItem_Match.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					ListarCentros listCentros = new ListarCentros(ListarCentros.SOLICITUD);
+					ListarCentros listCentros = new ListarCentros(ListarCentros.SOLICITUD, true);
 					listCentros.setModal(true);
 					listCentros.setLocationRelativeTo(null);
 					listCentros.setVisible(true);
@@ -138,7 +138,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_6 = new JMenuItem("Listar solicitudes de Centros");
 		mntmNewMenuItem_6.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarCentros lCE = new ListarCentros(ListarCentros.SOLICITUD);
+				ListarCentros lCE = new ListarCentros(ListarCentros.SOLICITUD, false);
 				lCE.setModal(true);
 				lCE.setLocationRelativeTo(null);
 				lCE.setVisible(true);
@@ -183,7 +183,7 @@ public class Principal extends JFrame {
 		mnNewMenu_1.add(mntmNewMenuItem_4);
 		mntmNewMenuItem_4.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListarCentros lCE = new ListarCentros(ListarCentros.PORDEFECTO);
+				ListarCentros lCE = new ListarCentros(ListarCentros.PORDEFECTO, false);
 				lCE.setModal(true);
 				lCE.setLocationRelativeTo(null);
 				lCE.setVisible(true);

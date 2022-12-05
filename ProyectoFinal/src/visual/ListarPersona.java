@@ -146,7 +146,7 @@ public class ListarPersona extends JDialog {
 				btnSolicitudes.setEnabled(false);
 				btnSolicitudes.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ListarSolicitud solicitudes = new ListarSolicitud(selected.getCedula(), "");
+						ListarSolicitud solicitudes = new ListarSolicitud(selected.getCedula(), "", false);
 						solicitudes.setModal(true);
 						solicitudes.setVisible(true);
 					}
