@@ -119,7 +119,7 @@ public class Principal extends JFrame {
 		JMenuItem mntmNewMenuItem_5 = new JMenuItem("Realizar Solicitud");
 		mntmNewMenuItem_5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				RegistroSolicitud rS = new RegistroSolicitud(null);
+				RegistroSolicitud rS = new RegistroSolicitud(null, false, null);
 				rS.setModal(true);
 				rS.setLocationRelativeTo(null);
 				rS.setVisible(true);
