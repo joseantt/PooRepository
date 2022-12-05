@@ -33,7 +33,7 @@ public class ListadoMatching extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public ListadoMatching(SolicitudEmpresa solicitudEmpresa) {
+	public ListadoMatching(final SolicitudEmpresa solicitudEmpresa) {
 		this.solicitudEmpresa = solicitudEmpresa;
 		setTitle("Solicitudes convergentes");
 		setBounds(100, 100, 753, 436);

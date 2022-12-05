@@ -48,7 +48,7 @@ public class ListarSolicitud extends JDialog {
 	private JButton btnMatcheo;
 
 	
-	public ListarSolicitud(String cedula, String codigoCentro, boolean matcheo) {
+	public ListarSolicitud(String cedula, final String codigoCentro, boolean matcheo) {
 		this.cedula = cedula;
 		this.codigoCentro = codigoCentro;
 		setTitle("Listado de solicitudes");

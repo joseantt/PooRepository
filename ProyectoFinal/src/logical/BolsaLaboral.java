@@ -169,6 +169,7 @@ public class BolsaLaboral implements Serializable{
 	public float matching(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {
 		float suma = 0;
 		float sumaAux = 0;
+		boolean cumpleLaboralmente = false;
 		int cantRequisitos = solicitudEmpresa.getCantidadRequisitios();
 		Persona persona = buscarPersonadByCedula(solicitudPersona.getCedula());
 		
@@ -202,6 +203,7 @@ public class BolsaLaboral implements Serializable{
 			return 0f;
 		}
 		if(solicitudEmpresa.getTipo().equalsIgnoreCase("Universitario") && solicitudPersona instanceof SolicitudUniversitario) { //Este decline no funciona
+			cumpleLaboralmente = true;
 			if(((SolicitudUniversitario)solicitudPersona).getCarrera().equals(solicitudEmpresa.getCarrera())) {
 				suma += sumaRequisitosUniversitario(solicitudEmpresa, solicitudPersona);
 			}
@@ -210,6 +212,7 @@ public class BolsaLaboral implements Serializable{
 			}
 		}
 		else if(solicitudEmpresa.getTipo().equalsIgnoreCase("Tecnico") && solicitudPersona instanceof SolicitudTecnico){
+			cumpleLaboralmente = true;
 			if(((SolicitudTecnico)solicitudPersona).getAreaEspecialidad().equals(solicitudEmpresa.getAreaEspecialidad())) {
 				suma += sumaRequisitosTecnico(solicitudEmpresa, solicitudPersona);
 			}
@@ -218,6 +221,7 @@ public class BolsaLaboral implements Serializable{
 			}
 		}
 		else if(solicitudEmpresa.getTipo().equalsIgnoreCase("Obrero") && solicitudPersona instanceof SolicitudObrero) {
+			cumpleLaboralmente = true;
 			sumaAux = sumaRequisitosStrList(solicitudEmpresa.getOficios(), ((SolicitudObrero)solicitudPersona).getOficios());
 			if(sumaAux != 0) {
 				suma += sumaAux;
@@ -234,7 +238,9 @@ public class BolsaLaboral implements Serializable{
 		}
 		
 		
-		
+		if(!cumpleLaboralmente)
+			return 0f;
+			
 		return (suma / cantRequisitos) * 100;
 	}
 	
@@ -246,7 +252,7 @@ public class BolsaLaboral implements Serializable{
 		for(Solicitud soliAux : solicitudes) {
 			if(soliAux instanceof SolicitudPersona) {
 				porcentajeAux = matching((SolicitudEmpresa)soliEmpresa, (SolicitudPersona)soliAux);
-				if(porcentajeAux > soliEmpresa.getSueldo()) {
+				if(porcentajeAux > soliEmpresa.getCantMatcheo()) {
 					solicitudesMatch.add(soliAux);
 					resultados.add(porcentajeAux);
 				}
