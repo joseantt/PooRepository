@@ -104,11 +104,12 @@ public class RegistroSolicitud extends JDialog {
 	private JLabel lblNewLabel_5;
 	private JLabel label_8;
 	private JLabel label_7;
+	private JButton btnEmplear;
 	
 
 	public static void main(String[] args) {
 		try {
-			RegistroSolicitud dialog = new RegistroSolicitud(null);
+			RegistroSolicitud dialog = new RegistroSolicitud(null, false, null);
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -117,7 +118,7 @@ public class RegistroSolicitud extends JDialog {
 	}
 
 	
-	public RegistroSolicitud(final Solicitud solicitud) {
+	public RegistroSolicitud(final Solicitud solicitud, boolean matcheo, Solicitud solicitudEmpresa) {
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
 		rdbtnNewRadioButton.setSelected(true);
@@ -651,6 +652,21 @@ public class RegistroSolicitud extends JDialog {
 		loadDisponiblesIdiomas();
 		if(solicitud!=null)
 		{
+			if(matcheo && solicitudEmpresa!=null) {
+				btnEmplear = new JButton("Emplear");
+				btnEmplear.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					if(!solicitud.isEstado()) {
+						solicitud.setEstado(true);
+						if(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()>0)
+						{
+							((SolicitudEmpresa) solicitudEmpresa).setEmpleadosNecesarios(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()-1);
+							((SolicitudEmpresa) solicitudEmpresa).setEstado(true);
+						}
+						}
+					}
+				});
+			}
 			if(solicitud instanceof SolicitudEmpresa)
 			{
 				rdbtnCentroEmp.setSelected(true);

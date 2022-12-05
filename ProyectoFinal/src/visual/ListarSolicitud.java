@@ -120,7 +120,7 @@ public class ListarSolicitud extends JDialog {
 					btnDetalles.addActionListener(new ActionListener() {
 						public void actionPerformed(ActionEvent e) {
 							if (selected != null) {
-								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected);
+								RegistroSolicitud modSolicitud = new RegistroSolicitud(selected, false, null);
 								modSolicitud.setLocationRelativeTo(null);
 								modSolicitud.setModal(true);
 								modSolicitud.setVisible(true);
