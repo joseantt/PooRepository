@@ -118,7 +118,7 @@ public class RegistroSolicitud extends JDialog {
 	}
 
 	
-	public RegistroSolicitud(final Solicitud solicitud, boolean matcheo, Solicitud solicitudEmpresa) {
+	public RegistroSolicitud(final Solicitud solicitud, boolean matcheo, final Solicitud solicitudEmpresa) {
 		
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
 		rdbtnNewRadioButton.setSelected(true);
