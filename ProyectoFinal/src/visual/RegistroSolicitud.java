@@ -14,6 +14,8 @@ import logical.*;
 import javax.swing.JRadioButton;
 import javax.swing.JLabel;
 import java.awt.Color;
+import java.awt.Container;
+
 import javax.swing.UIManager;
 import javax.swing.JTextField; 
 import javax.swing.JSpinner;
@@ -105,6 +107,7 @@ public class RegistroSolicitud extends JDialog {
 	private JLabel label_8;
 	private JLabel label_7;
 	private JButton btnEmplear;
+	private JPanel buttonPane;
 	
 
 	public static void main(String[] args) {
@@ -579,7 +582,7 @@ public class RegistroSolicitud extends JDialog {
 			panelDetalles1.add(btnSiguiente);
 		}
 		{
-			JPanel buttonPane = new JPanel();
+			buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
@@ -656,16 +659,26 @@ public class RegistroSolicitud extends JDialog {
 				btnEmplear = new JButton("Emplear");
 				btnEmplear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
-					if(!solicitud.isEstado()) {
-						solicitud.setEstado(true);
+					Persona persona = null;
 						if(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()>0)
 						{
 							((SolicitudEmpresa) solicitudEmpresa).setEmpleadosNecesarios(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()-1);
-							((SolicitudEmpresa) solicitudEmpresa).setEstado(true);
+							persona = BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona)solicitud).getCedula());
+							persona.setEstado(true);
+							
+							for(Solicitud solicitud : persona.getSolicitudes()) {
+								solicitud.setEstado(false);
+							}
+							
+							if(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios() == 0) {
+								solicitudEmpresa.setEstado(false);
+							}
+							//TODO:  
 						}
-						}
-					}
+				}
 				});
+				buttonPane.add(btnEmplear);
+				btnRegistrar.setVisible(false);
 			}
 			if(solicitud instanceof SolicitudEmpresa)
 			{

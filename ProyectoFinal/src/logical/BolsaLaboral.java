@@ -250,7 +250,7 @@ public class BolsaLaboral implements Serializable{
 		float porcentajeAux = 0f; 
 		
 		for(Solicitud soliAux : solicitudes) {
-			if(soliAux instanceof SolicitudPersona) {
+			if(soliAux instanceof SolicitudPersona && soliAux.estado) {
 				porcentajeAux = matching((SolicitudEmpresa)soliEmpresa, (SolicitudPersona)soliAux);
 				if(porcentajeAux > soliEmpresa.getCantMatcheo()) {
 					solicitudesMatch.add(soliAux);
