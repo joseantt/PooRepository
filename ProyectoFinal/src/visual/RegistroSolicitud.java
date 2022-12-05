@@ -660,8 +660,13 @@ public class RegistroSolicitud extends JDialog {
 				btnEmplear.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					Persona persona = null;
+					int option;
+					
 						if(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()>0)
 						{
+							option = JOptionPane.showConfirmDialog(null, "Está seguro que desea emplear esta persona ","Confirmación",JOptionPane.YES_NO_OPTION);
+							if (option == JOptionPane.OK_OPTION) {
+							
 							((SolicitudEmpresa) solicitudEmpresa).setEmpleadosNecesarios(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios()-1);
 							persona = BolsaLaboral.getInstance().buscarPersonadByCedula(((SolicitudPersona)solicitud).getCedula());
 							persona.setEstado(true);
@@ -673,7 +678,9 @@ public class RegistroSolicitud extends JDialog {
 							if(((SolicitudEmpresa) solicitudEmpresa).getEmpleadosNecesarios() == 0) {
 								solicitudEmpresa.setEstado(false);
 							}
-							//TODO:  
+							//TODO: 
+							dispose();
+							}
 						}
 				}
 				});
@@ -832,7 +839,7 @@ public class RegistroSolicitud extends JDialog {
 					rdbtnUniversitario.setSelected(false);
 					rdbtnObrero.setSelected(false);
 					rdbtnTecnico.setSelected(true);
-					panel_2.setVisible(false);
+					
 					cbxCarrera.setEnabled(false);
 					cbxEspecialidad.setEnabled(false);
 					spnExperiencia.setEnabled(false);
@@ -874,8 +881,6 @@ public class RegistroSolicitud extends JDialog {
 					if(personaax instanceof Universitario)
 						spnGraduacion.setValue(((Universitario) personaax).getAñoGraduacion());
 				}
-				//sliderMatcheo.setVisible(false);
-				//spnEmpleados.setVisible(false);
 				if(solicitud instanceof SolicitudUniversitario) {
 					cbxCarrera.setSelectedItem(((SolicitudUniversitario) solicitud).getCarrera());
 					btnRegistrar.setVisible(false);

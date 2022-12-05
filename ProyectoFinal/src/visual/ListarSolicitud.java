@@ -142,11 +142,6 @@ public class ListarSolicitud extends JDialog {
 								modSolicitud.setLocationRelativeTo(null);
 								modSolicitud.setModal(true);
 								modSolicitud.setVisible(true);
-								for(Solicitud soli : BolsaLaboral.getInstance().getSolicitudes()) {
-									if(soli instanceof SolicitudPersona) {
-										System.out.println(BolsaLaboral.getInstance().matching((SolicitudEmpresa)selected, (SolicitudPersona)soli));
-									}
-								}
 							}
 						}
 					});
