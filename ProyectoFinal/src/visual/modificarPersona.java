@@ -118,6 +118,7 @@ public class modificarPersona extends JDialog {
 			panel_1.add(lblNewLabel);
 			
 			txtCedula = new JTextField();
+			txtCedula.setEditable(false);
 			txtCedula.setBounds(72, 23, 167, 22);
 			panel_1.add(txtCedula);
 			txtCedula.setColumns(10);
