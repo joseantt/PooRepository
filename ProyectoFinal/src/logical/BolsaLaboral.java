@@ -123,21 +123,15 @@ public class BolsaLaboral implements Serializable{
 	}
 
 	public boolean eliminarPersona(Persona persona) {
-		
 		return personas.remove(persona);
-		
 	}
 	
 	public boolean eliminarCentro(CentroEmpleador centro) {
-		
 		return centroEmpleados.remove(centro);
-		
 	}
 	
 	public boolean eliminarSolicitud(Solicitud solicitud) {
-		
 		return solicitudes.remove(solicitud);
-		
 	}
 	
 	public CentroEmpleador buscarCentro(String codigo) {
@@ -151,19 +145,6 @@ public class BolsaLaboral implements Serializable{
 			ind++;
 		} 
 		return centro;
-	}
-	
-	public Solicitud buscarSolicitud(String codigo) {
-		Solicitud solicitud = null;
-		int ind = 0;
-		
-		while(ind < solicitudes.size() && solicitud == null) {
-			if(solicitudes.get(ind).getCodigoSolicitud().equalsIgnoreCase(codigo)) {
-				solicitud =  solicitudes.get(ind);
-			}
-			ind++;
-		} 
-		return solicitud;
 	}
 	
 	public float matching(SolicitudEmpresa solicitudEmpresa, SolicitudPersona solicitudPersona) {
@@ -199,9 +180,8 @@ public class BolsaLaboral implements Serializable{
 		}
 		if(solicitudEmpresa.getTipoContrato().equals(solicitudPersona.getTipoContrato())) {
 			suma++;
-		}else {
-			return 0f;
 		}
+		
 		if(solicitudEmpresa.getTipo().equalsIgnoreCase("Universitario") && solicitudPersona instanceof SolicitudUniversitario) { //Este decline no funciona
 			cumpleLaboralmente = true;
 			if(((SolicitudUniversitario)solicitudPersona).getCarrera().equals(solicitudEmpresa.getCarrera())) {

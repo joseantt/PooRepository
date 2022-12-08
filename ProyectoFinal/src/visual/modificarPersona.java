@@ -285,7 +285,7 @@ public class modificarPersona extends JDialog {
 						}else{
 							persona.setSexo('M');
 						}
-						persona.setIdiomas(stringIdiomasDisponibles);
+						persona.setIdiomas(stringIdiomasSelected);
 						ListarPersona.loadPersona();
 						dispose();
 					}

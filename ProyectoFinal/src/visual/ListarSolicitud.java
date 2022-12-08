@@ -83,7 +83,7 @@ public class ListarSolicitud extends JDialog {
 								}
 								btnDetalles.setEnabled(true);
 
-								selected = BolsaLaboral.getInstance().buscarSolicitud(table.getValueAt(rowSelected, 0).toString());
+								selected = BolsaLaboral.getInstance().buscarSolicitudByCode(table.getValueAt(rowSelected, 0).toString());
 							}
 						}
 					});

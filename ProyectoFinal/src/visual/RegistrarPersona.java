@@ -489,34 +489,32 @@ public class RegistrarPersona extends JDialog {
 						char sexo = 'A';
 						ArrayList<String> auxIdioma = new ArrayList<>();
 						ArrayList<String> auxOficio = new ArrayList<>();
-						Persona personaAux = BolsaLaboral.getInstance().buscarPersonadByCedula(txtCedula.getText());
+						Persona personaAux = null;
 						if (rdbtnHombre.isSelected()) {
 							sexo = 'H';
 						}
 						else if (rdbtnMujer.isSelected()) {
 							sexo = 'M';
 						}
-						if (personaAux == null) {
-							if(!camposVacios()) {
-								if (rdbtnObrero.isSelected())
-								{
-									personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
-										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-								}
-								else if (rdbtnUniversitario.isSelected())
-								{
-									personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
-										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-								}
-								else if (rdbtnTcnico.isSelected())
-								{
-									personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxAreaespecialidad.getSelectedItem().toString(), Integer.valueOf(spnAñosExperiencia.getValue().toString())) ;
-										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-								}
-						}
+						if(!camposVacios()) {
+							if (rdbtnObrero.isSelected())
+							{
+								personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
+							else if (rdbtnUniversitario.isSelected())
+							{
+								personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
+							else if (rdbtnTcnico.isSelected())
+							{
+								personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxAreaespecialidad.getSelectedItem().toString(), Integer.valueOf(spnAñosExperiencia.getValue().toString())) ;
+									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+							}
 							
 							BolsaLaboral.getInstance().getPersonas().add(personaAux);
 							loadDisponibles();
@@ -528,11 +526,11 @@ public class RegistrarPersona extends JDialog {
 							if(!esMayorEdad()) {
 								JOptionPane.showMessageDialog(null, "La persona debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								JOptionPane.showMessageDialog(null, "Verifique que todos los campos estén llenos y que la cedula no se esté repitiendo", "Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-						
+							
 						}
-					
+						
 					}
 					
 						

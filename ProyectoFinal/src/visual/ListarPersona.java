@@ -14,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 
 import logical.BolsaLaboral;
 import logical.Persona;
+import logical.Solicitud;
 
 import javax.swing.JScrollPane;
 import javax.swing.ScrollPaneConstants;
@@ -123,6 +124,9 @@ public class ListarPersona extends JDialog {
 							if (selected != null) {
 								aux = JOptionPane.showConfirmDialog(null, "Está seguro que quiere elimninar esta persona", "Confirmación", JOptionPane.YES_NO_OPTION);   
 								if (aux == JOptionPane.OK_OPTION) {
+									for(Solicitud soliAux : selected.getSolicitudes()) {
+										BolsaLaboral.getInstance().eliminarSolicitud(soliAux);
+									}
 									BolsaLaboral.getInstance().eliminarPersona(selected);
 									loadPersona();
 									btnEliminar.setEnabled(false);
