@@ -90,8 +90,12 @@ public class RegistrarPersona extends JDialog {
 	private JButton btnRegistrar;
 	private JButton btnCancelar;
 	private ButtonGroup btnGroup_2 = new ButtonGroup();
+	private JComboBox cbxAreaespecialidad;
 
 	public RegistrarPersona() {
+		
+		
+		
 		setResizable(false);
 		setTitle("Registrar Persona");
 		setBounds(100, 100, 583, 601);
@@ -431,10 +435,10 @@ public class RegistrarPersona extends JDialog {
 			lblNewLabel_8.setBounds(12, 55, 131, 16);
 			panel_7.add(lblNewLabel_8);
 			
-			JComboBox comboBox = new JComboBox();
-			comboBox.setModel(new DefaultComboBoxModel(new String[] {"Electricidad Industrial", "Electricidad Residencial", "Electricidad Automotriz", "Mec\u00E1nica Automotriz", "Mec\u00E1nica Industrial", "Inform\u00E1tica", "Producci\u00F3n Audiovisual", "Confecci\u00F3n y Patronaje", "Reparaci\u00F3n de Equipos", "Electr\u00F3nicos", "Ebanister\u00EDa", "Reposter\u00EDa"}));
-			comboBox.setBounds(140, 52, 143, 22);
-			panel_7.add(comboBox);
+			cbxAreaespecialidad = new JComboBox();
+			cbxAreaespecialidad.setModel(new DefaultComboBoxModel(new String[] {"Electricidad Industrial", "Electricidad Residencial", "Electricidad Automotriz", "Mec\u00E1nica Automotriz", "Mec\u00E1nica Industrial", "Inform\u00E1tica", "Producci\u00F3n Audiovisual", "Confecci\u00F3n y Patronaje", "Reparaci\u00F3n de Equipos", "Electr\u00F3nicos", "Ebanister\u00EDa", "Reposter\u00EDa"}));
+			cbxAreaespecialidad.setBounds(140, 52, 143, 22);
+			panel_7.add(cbxAreaespecialidad);
 			
 			JLabel lblNewLabel_9 = new JLabel("A\u00F1os de Experiencia:");
 			lblNewLabel_9.setBounds(295, 55, 131, 16);
@@ -485,32 +489,34 @@ public class RegistrarPersona extends JDialog {
 						char sexo = 'A';
 						ArrayList<String> auxIdioma = new ArrayList<>();
 						ArrayList<String> auxOficio = new ArrayList<>();
-						Persona personaAux = null;
+						Persona personaAux = BolsaLaboral.getInstance().buscarPersonadByCedula(txtCedula.getText());
 						if (rdbtnHombre.isSelected()) {
 							sexo = 'H';
 						}
 						else if (rdbtnMujer.isSelected()) {
 							sexo = 'M';
 						}
-						if(!camposVacios()) {
-							if (rdbtnObrero.isSelected())
-							{
-								personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
-									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-							}
-							else if (rdbtnUniversitario.isSelected())
-							{
-								personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
-									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-							}
-							else if (rdbtnTcnico.isSelected())
-							{
-								personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
-									txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, spnFechaNacimiento.getValue().toString(), Integer.valueOf(spnAñoGraduacion.getValue().toString())) ;
-									JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
-							}
+						if (personaAux == null) {
+							if(!camposVacios()) {
+								if (rdbtnObrero.isSelected())
+								{
+									personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, stringSelected);
+										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+								}
+								else if (rdbtnUniversitario.isSelected())
+								{
+									personaAux = new Universitario(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxCarrera.getSelectedItem().toString() , Integer.valueOf(spnAñoGraduacion.getValue().toString()));
+										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+								}
+								else if (rdbtnTcnico.isSelected())
+								{
+									personaAux = new Tecnico(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
+										txtTelefono.getText(), (Date)spnFechaNacimiento.getValue(), sexo, stringIdiomasSelected, cbxAreaespecialidad.getSelectedItem().toString(), Integer.valueOf(spnAñosExperiencia.getValue().toString())) ;
+										JOptionPane.showMessageDialog(null, "Registro Satisfactorio", "Información",JOptionPane.INFORMATION_MESSAGE);
+								}
+						}
 							
 							BolsaLaboral.getInstance().getPersonas().add(personaAux);
 							loadDisponibles();
@@ -522,11 +528,11 @@ public class RegistrarPersona extends JDialog {
 							if(!esMayorEdad()) {
 								JOptionPane.showMessageDialog(null, "La persona debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
 							}else {
-								JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error", JOptionPane.ERROR_MESSAGE);
+								JOptionPane.showMessageDialog(null, "Verifique que todos los campos estén llenos y que la cedula no se esté repitiendo", "Error", JOptionPane.ERROR_MESSAGE);
 							}
-							
-						}
 						
+						}
+					
 					}
 					
 						
@@ -557,10 +563,12 @@ public class RegistrarPersona extends JDialog {
 		txtApellidos.setText("");
 		txtDireccion.setText("");
 		txtTelefono.setText("");
-		spnAñoGraduacion.setValue(new Float("2017"));
+		spnAñoGraduacion.setValue(new Integer("2017"));
 		spnFechaNacimiento.setValue(new Date());
+		spnAñosExperiencia.setValue(0);
 		rdbtnHombre.setSelected(true);
 		cbxCarrera.setSelectedIndex(1);
+		cbxAreaespecialidad.setSelectedIndex(1);
 	}
 	
 	private void loadDisponibles(){
