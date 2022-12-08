@@ -460,7 +460,7 @@ public class RegistrarPersona extends JDialog {
 			panel_6.add(lblCarrera);
 			
 			cbxCarrera = new JComboBox();
-			cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {"Direcci\u00F3n Empresarial", "Administraci\u00F3n Hotelera", "Arquitectura", "Comunicaci\u00F3n", "Social", "Derecho", "Dise\u00F1o e Interiorismo", "Econom\u00EDa", "Educaci\u00F3n", "Estomatolog\u00EDa", "Filosof\u00EDa", "Gesti\u00F3n Financiera y Auditor\u00EDa", "Ingenier\u00EDa Civil", "Ingenier\u00EDa Mec\u00E1nica", "Ingenier\u00EDa El\u00E9ctrica", "Ingenier\u00EDa Industrial", "Ingenier\u00EDa Mecatr\u00F3nica", "Ingenier\u00EDa de Ciencias de la Computaci\u00F3n", "Ingenier\u00EDa Telem\u00E1tica", "Medicina", "Marketing", "Nutrici\u00F3n y Diet\u00E9tica", "Terapia F\u00EDsica", "Trabajo Social", "Hospitalidad\u00A0y\u00A0Turismo"}));
+			cbxCarrera.setModel(new DefaultComboBoxModel(new String[] {"Direcci\u00F3n Empresarial", "Administraci\u00F3n Hotelera", "Arquitectura", "Comunicaci\u00F3n Social", "Derecho", "Dise\u00F1o e Interiorismo", "Econom\u00EDa", "Educaci\u00F3n", "Estomatolog\u00EDa", "Filosof\u00EDa", "Gesti\u00F3n Financiera y Auditor\u00EDa", "Ingenier\u00EDa Civil", "Ingenier\u00EDa Mec\u00E1nica", "Ingenier\u00EDa El\u00E9ctrica", "Ingenier\u00EDa Industrial", "Ingenier\u00EDa Mecatr\u00F3nica", "Ingenier\u00EDa de Ciencias de la Computaci\u00F3n", "Ingenier\u00EDa Telem\u00E1tica", "Medicina", "Marketing", "Nutrici\u00F3n y Diet\u00E9tica", "Terapia F\u00EDsica", "Trabajo Social", "Hospitalidad\u00A0y\u00A0Turismo"}));
 			cbxCarrera.setBounds(65, 50, 211, 22);
 			panel_6.add(cbxCarrera);
 			
@@ -496,7 +496,7 @@ public class RegistrarPersona extends JDialog {
 						else if (rdbtnMujer.isSelected()) {
 							sexo = 'M';
 						}
-						if(!camposVacios()) {
+						if(!camposVacios() && BolsaLaboral.getInstance().buscarPersonadByCedula(txtCedula.getText()) == null) {
 							if (rdbtnObrero.isSelected())
 							{
 								personaAux = new Obrero(txtCedula.getText(), txtNombre.getText(), txtApellidos.getText(), txtDireccion.getText(),
@@ -525,7 +525,10 @@ public class RegistrarPersona extends JDialog {
 						}else {
 							if(!esMayorEdad()) {
 								JOptionPane.showMessageDialog(null, "La persona debe ser mayor de edad", "Error", JOptionPane.ERROR_MESSAGE);
-							}else {
+							}else if(BolsaLaboral.getInstance().buscarPersonadByCedula(txtCedula.getText()) != null) {
+								JOptionPane.showMessageDialog(null, "La cédula no puede ser igual a la de otra persona", "Error", JOptionPane.ERROR_MESSAGE);
+							}
+							else if(camposVacios()){
 								JOptionPane.showMessageDialog(null, "Todos los campos deben estar llenos", "Error", JOptionPane.ERROR_MESSAGE);
 							}
 							
