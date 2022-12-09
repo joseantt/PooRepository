@@ -47,7 +47,7 @@ public class ListarCentros extends JDialog {
 	public ListarCentros(final int modo, final boolean matcheo) {
 		this.addWindowFocusListener(new WindowAdapter() {
 		    public void windowGainedFocus(WindowEvent e) {
-		        loadClientes();
+		    	loadCentros();
 		    }
 		});
 		setTitle("Listado de Centros");
@@ -110,7 +110,7 @@ public class ListarCentros extends JDialog {
 							option = JOptionPane.showConfirmDialog(null, "Está seguro que desea eliminar el centro con código: "+selected.getCodigo(),"Confirmación",JOptionPane.YES_NO_OPTION);
 							if (option == JOptionPane.OK_OPTION) {
 								BolsaLaboral.getInstance().eliminarCentro(selected);
-								loadClientes();
+								loadCentros();
 								btnEliminar.setEnabled(false);
 								btnModificar.setEnabled(false);
 							}
@@ -166,28 +166,23 @@ public class ListarCentros extends JDialog {
 			
 		}
 		
-		loadClientes();
+		loadCentros();
 		
 	}
 
-		public static void loadClientes() {
-			model.setRowCount(0);
-			rows = new Object[model.getColumnCount()];
-			for (CentroEmpleador Centro : BolsaLaboral.getInstance().getCentroEmpleados()) {
-				
-				rows[0] = Centro.getCodigo();
-				rows[1] = Centro.getNombre();
-				rows[2] = Centro.getDireccion();
-				rows[3] = Centro.getTelefono();
-				rows[4] = Centro.getTipo();
-				
-				model.addRow(rows);
-				
-				
-	
-			}
+	public static void loadCentros() {
+		model.setRowCount(0);
+		rows = new Object[model.getColumnCount()];
+		for (CentroEmpleador Centro : BolsaLaboral.getInstance().getCentroEmpleados()) {
 			
-		
+			rows[0] = Centro.getCodigo();
+			rows[1] = Centro.getNombre();
+			rows[2] = Centro.getDireccion();
+			rows[3] = Centro.getTelefono();
+			rows[4] = Centro.getTipo();
+			
+			model.addRow(rows);
+		}
 	}
 
 }

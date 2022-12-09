@@ -79,7 +79,11 @@ public class ListarSolicitud extends JDialog {
 							if(rowSelected >= 0 ) {
 								if (BolsaLaboral.getInstance().getLoginUser().getTipo().equalsIgnoreCase("Administrador")) {
 									btnEliminar.setEnabled(true);
-									btnMatcheo.setEnabled(true);
+									if(table.getValueAt(rowSelected, 3).toString().equals("Activa")) {
+										btnMatcheo.setEnabled(true);
+									}else {
+										btnMatcheo.setEnabled(false);
+									}
 								}
 								btnDetalles.setEnabled(true);
 
@@ -105,8 +109,13 @@ public class ListarSolicitud extends JDialog {
 						public void actionPerformed(ActionEvent e) {
 							int aux;
 							if (selected != null) {
-								aux = JOptionPane.showConfirmDialog(null, "Está seguro que quiere elimninar esta persona", "Confirmación", JOptionPane.YES_NO_OPTION);   
+								aux = JOptionPane.showConfirmDialog(null, "¿Está seguro que quiere elimninar esta solicitud?", "Confirmación", JOptionPane.YES_NO_OPTION);   
 								if (aux == JOptionPane.OK_OPTION) {
+									if(!cedula.equals("")) {
+										BolsaLaboral.getInstance().buscarPersonadByCedula(cedula).getSolicitudes().remove(selected);
+									}else {
+										BolsaLaboral.getInstance().buscarCentro(codigoCentro).getSolicitudes().remove(selected);
+									}
 									BolsaLaboral.getInstance().eliminarSolicitud(selected);
 									loadSolicitudes();
 									btnEliminar.setEnabled(false);
@@ -124,6 +133,7 @@ public class ListarSolicitud extends JDialog {
 								listMatch.setModal(true);
 								listMatch.setLocationRelativeTo(null);
 								listMatch.setVisible(true);
+								loadSolicitudes();
 							}
 						});
 						buttonPane.add(btnMatcheo);

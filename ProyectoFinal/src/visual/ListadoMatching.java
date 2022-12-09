@@ -83,6 +83,7 @@ public class ListadoMatching extends JDialog {
 						regSoli.setLocationRelativeTo(null);
 						regSoli.setModal(true);
 						regSoli.setVisible(true);
+						loadSolicitudMatch();
 					}
 				});
 				btnDetalles.setEnabled(false);
