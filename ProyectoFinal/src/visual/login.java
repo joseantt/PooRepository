@@ -39,26 +39,26 @@ public class login extends JFrame {
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				FileInputStream empresa;
-				FileOutputStream empresa2;
-				ObjectInputStream empresaRead;
-				ObjectOutputStream empresaWrite;
+				FileInputStream bolsaInput;
+				FileOutputStream bolsaOutput;
+				ObjectInputStream bolsaRead;
+				ObjectOutputStream bolsaWrite;
 				try {
-					empresa = new FileInputStream ("empresa.dat");
-					empresaRead = new ObjectInputStream(empresa);
-					BolsaLaboral temp = (BolsaLaboral)empresaRead.readObject();
+					bolsaInput = new FileInputStream ("info.bin");
+					bolsaRead = new ObjectInputStream(bolsaInput);
+					BolsaLaboral temp = (BolsaLaboral)bolsaRead.readObject();
 					BolsaLaboral.setBolsaLaboral(temp);
-					empresa.close();
-					empresaRead.close();
+					bolsaInput.close();
+					bolsaRead.close();
 				} catch (FileNotFoundException e) {
 					try {
-						empresa2 = new  FileOutputStream("empresa.dat");
-						empresaWrite = new ObjectOutputStream(empresa2);
+						bolsaOutput = new  FileOutputStream("info.bin");
+						bolsaWrite = new ObjectOutputStream(bolsaOutput);
 						User aux = new User("Administrador", "Admin", "Admin");
 						BolsaLaboral.getInstance().regUser(aux);
-						empresaWrite.writeObject(BolsaLaboral.getInstance());
-						empresa2.close();
-						empresaWrite.close();
+						bolsaWrite.writeObject(BolsaLaboral.getInstance());
+						bolsaOutput.close();
+						bolsaWrite.close();
 					} catch (FileNotFoundException e1) {
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block

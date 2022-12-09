@@ -55,12 +55,12 @@ public class Principal extends JFrame {
 			addWindowListener(new WindowAdapter() {
 				@Override
 				public void windowClosing(WindowEvent e) {
-					FileOutputStream empresa2;
-					ObjectOutputStream empresaWrite;
+					FileOutputStream bolsaOutput;
+					ObjectOutputStream bolsaWrite;
 					try {
-						empresa2 = new  FileOutputStream("empresa.dat");
-						empresaWrite = new ObjectOutputStream(empresa2);
-						empresaWrite.writeObject(BolsaLaboral.getInstance());
+						bolsaOutput = new  FileOutputStream("info.bin");
+						bolsaWrite = new ObjectOutputStream(bolsaOutput);
+						bolsaWrite.writeObject(BolsaLaboral.getInstance());
 					} catch (FileNotFoundException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
