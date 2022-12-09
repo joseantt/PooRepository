@@ -642,7 +642,7 @@ public class RegistrarPersona extends JDialog {
 	private boolean camposVacios() {
 		boolean existenVacios = false;
 		if(txtCedula.getText().equals("") || txtApellidos.getText().equals("") ||
-				txtTelefono.equals("") || txtNombre.equals("") || txtDireccion.equals("")) {
+				txtTelefono.getText().equals("") || txtNombre.getText().equals("") || txtDireccion.getText().equals("")) {
 			existenVacios = true;
 		}else if(stringIdiomasSelected.isEmpty() || (rdbtnObrero.isSelected() && stringSelected.isEmpty())) {
 			existenVacios = true;
